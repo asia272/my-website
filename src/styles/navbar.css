@@ -1,0 +1,104 @@
+/* =================================
+   Navbar
+   ================================= */
+
+.nav-link {
+    position: relative;
+
+    display: inline-block;
+
+    padding: 6px 0;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: color 0.3s ease;
+}
+
+/* Underline */
+
+.nav-link::before {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 2px;
+
+    content: "";
+
+    background-color: var(--gold);
+
+    transition:
+        width 0.4s ease,
+        left 0.4s ease;
+}
+
+/* Hover */
+
+.nav-link:hover {
+    color: var(--gold);
+}
+
+.nav-link:hover::before {
+    right: auto;
+    left: 0;
+
+    width: 100%;
+}
+
+/* =================================
+   React Scroll Active Link
+   ================================= */
+
+.active-link {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.active-link::before {
+    right: auto;
+    left: 0;
+
+    width: 100%;
+}
+
+/* =================================
+   Route Active Link
+   ================================= */
+
+.nav-link-active {
+    color: var(--gold);
+}
+
+.nav-link-active::before {
+    right: auto;
+    left: 0;
+
+    width: 100%;
+}
+
+/* =================================
+   Mobile
+   ================================= */
+
+.mobile-nav-link {
+    padding: 8px 0;
+
+    font-size: 1.15rem;
+}
+
+/* Mobile menu underline */
+
+@media (max-width: 767px) {
+    .nav-link::before {
+        height: 2px;
+    }
+}
