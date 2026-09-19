@@ -1,30 +1,17 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Link as ScrollLink } from "react-scroll";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-
-const scrollConfig = {
-    smooth: true,
-    duration: 500,
-    offset: -60,
-    spy: true,
-    activeClass: "nav-link-active",
-    className: "nav-link cursor-pointer",
-};
 
 const Navbar = () => {
     const pathname = usePathname();
 
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const isHome = pathname === "/";
-    const isServices = pathname.startsWith("/services");
-    const isProjects = pathname.startsWith("/projects");
-    const isContact = pathname.startsWith("/contact");
 
     const closeMenu = () => {
         setIsMenuOpen(false);
@@ -36,8 +23,8 @@ const Navbar = () => {
                 <div className="flex h-20 items-center justify-between">
 
                     {/* =================================================
-                        LOGO
-                    ================================================== */}
+                    LOGO
+                ================================================== */}
 
                     <Link
                         href="/"
@@ -48,8 +35,8 @@ const Navbar = () => {
                     </Link>
 
                     {/* =================================================
-                        DESKTOP NAVIGATION
-                    ================================================== */}
+                    DESKTOP NAVIGATION
+                ================================================== */}
 
                     <div className="hidden md:flex">
                         <ul className="flex items-center gap-6">
@@ -57,12 +44,12 @@ const Navbar = () => {
                             {/* Home */}
                             <li>
                                 {isHome ? (
-                                    <ScrollLink
-                                        to="home"
-                                        {...scrollConfig}
+                                    <a
+                                        href="#home"
+                                        className="nav-link"
                                     >
                                         Home
-                                    </ScrollLink>
+                                    </a>
                                 ) : (
                                     <Link
                                         href="/"
@@ -76,31 +63,28 @@ const Navbar = () => {
                             {/* About */}
                             {isHome && (
                                 <li>
-                                    <ScrollLink
-                                        to="about"
-                                        {...scrollConfig}
+                                    <a
+                                        href="#about"
+                                        className="nav-link"
                                     >
                                         About
-                                    </ScrollLink>
+                                    </a>
                                 </li>
                             )}
 
                             {/* Services */}
                             <li>
                                 {isHome ? (
-                                    <ScrollLink
-                                        to="services"
-                                        {...scrollConfig}
+                                    <a
+                                        href="#services"
+                                        className="nav-link"
                                     >
                                         Services
-                                    </ScrollLink>
+                                    </a>
                                 ) : (
                                     <Link
                                         href="/services"
-                                        className={`nav-link ${isServices
-                                            ? "nav-link-active"
-                                            : ""
-                                            }`}
+                                        className="nav-link"
                                     >
                                         Services
                                     </Link>
@@ -110,43 +94,40 @@ const Navbar = () => {
                             {/* Team */}
                             {isHome && (
                                 <li>
-                                    <ScrollLink
-                                        to="team"
-                                        {...scrollConfig}
+                                    <a
+                                        href="#team"
+                                        className="nav-link"
                                     >
                                         Team
-                                    </ScrollLink>
+                                    </a>
                                 </li>
                             )}
 
                             {/* Testimonials */}
                             {isHome && (
                                 <li>
-                                    <ScrollLink
-                                        to="testimonials"
-                                        {...scrollConfig}
+                                    <a
+                                        href="#testimonials"
+                                        className="nav-link"
                                     >
                                         Testimonials
-                                    </ScrollLink>
+                                    </a>
                                 </li>
                             )}
 
                             {/* Contact */}
                             <li>
                                 {isHome ? (
-                                    <ScrollLink
-                                        to="contact"
-                                        {...scrollConfig}
+                                    <a
+                                        href="#contact"
+                                        className="nav-link"
                                     >
                                         Contact
-                                    </ScrollLink>
+                                    </a>
                                 ) : (
                                     <Link
                                         href="/contact"
-                                        className={`nav-link ${isContact
-                                            ? "nav-link-active"
-                                            : ""
-                                            }`}
+                                        className="nav-link"
                                     >
                                         Contact
                                     </Link>
@@ -157,10 +138,7 @@ const Navbar = () => {
                             <li>
                                 <Link
                                     href="/projects"
-                                    className={`nav-link ${isProjects
-                                        ? "nav-link-active"
-                                        : ""
-                                        }`}
+                                    className="nav-link"
                                 >
                                     Projects
                                 </Link>
@@ -170,8 +148,8 @@ const Navbar = () => {
                     </div>
 
                     {/* =================================================
-                        MOBILE MENU BUTTON
-                    ================================================== */}
+                    MOBILE MENU BUTTON
+                ================================================== */}
 
                     <button
                         type="button"
@@ -200,8 +178,8 @@ const Navbar = () => {
                     </button>
 
                     {/* =================================================
-                        MOBILE NAVIGATION
-                    ================================================== */}
+                    MOBILE NAVIGATION
+                ================================================== */}
 
                     {isMenuOpen && (
                         <div className="absolute left-0 top-full w-full border-t border-[var(--nav-border)] bg-[var(--nav-bg)] shadow-lg backdrop-blur-xl md:hidden">
@@ -211,13 +189,13 @@ const Navbar = () => {
                                 {/* Home */}
                                 <li>
                                     {isHome ? (
-                                        <ScrollLink
-                                            to="home"
-                                            {...scrollConfig}
+                                        <a
+                                            href="#home"
                                             onClick={closeMenu}
+                                            className="nav-link block py-3"
                                         >
                                             Home
-                                        </ScrollLink>
+                                        </a>
                                     ) : (
                                         <Link
                                             href="/"
@@ -232,26 +210,26 @@ const Navbar = () => {
                                 {/* About */}
                                 {isHome && (
                                     <li>
-                                        <ScrollLink
-                                            to="about"
-                                            {...scrollConfig}
+                                        <a
+                                            href="#about"
                                             onClick={closeMenu}
+                                            className="nav-link block py-3"
                                         >
                                             About
-                                        </ScrollLink>
+                                        </a>
                                     </li>
                                 )}
 
                                 {/* Services */}
                                 <li>
                                     {isHome ? (
-                                        <ScrollLink
-                                            to="services"
-                                            {...scrollConfig}
+                                        <a
+                                            href="#services"
                                             onClick={closeMenu}
+                                            className="nav-link block py-3"
                                         >
                                             Services
-                                        </ScrollLink>
+                                        </a>
                                     ) : (
                                         <Link
                                             href="/services"
@@ -266,39 +244,39 @@ const Navbar = () => {
                                 {/* Team */}
                                 {isHome && (
                                     <li>
-                                        <ScrollLink
-                                            to="team"
-                                            {...scrollConfig}
+                                        <a
+                                            href="#team"
                                             onClick={closeMenu}
+                                            className="nav-link block py-3"
                                         >
                                             Team
-                                        </ScrollLink>
+                                        </a>
                                     </li>
                                 )}
 
                                 {/* Testimonials */}
                                 {isHome && (
                                     <li>
-                                        <ScrollLink
-                                            to="testimonials"
-                                            {...scrollConfig}
+                                        <a
+                                            href="#testimonials"
                                             onClick={closeMenu}
+                                            className="nav-link block py-3"
                                         >
                                             Testimonials
-                                        </ScrollLink>
+                                        </a>
                                     </li>
                                 )}
 
                                 {/* Contact */}
                                 <li>
                                     {isHome ? (
-                                        <ScrollLink
-                                            to="contact"
-                                            {...scrollConfig}
+                                        <a
+                                            href="#contact"
                                             onClick={closeMenu}
+                                            className="nav-link block py-3"
                                         >
                                             Contact
-                                        </ScrollLink>
+                                        </a>
                                     ) : (
                                         <Link
                                             href="/contact"
@@ -315,10 +293,7 @@ const Navbar = () => {
                                     <Link
                                         href="/projects"
                                         onClick={closeMenu}
-                                        className={`nav-link block py-3 ${isProjects
-                                            ? "nav-link-active"
-                                            : ""
-                                            }`}
+                                        className="nav-link block py-3"
                                     >
                                         Projects
                                     </Link>
@@ -332,6 +307,8 @@ const Navbar = () => {
             </nav>
         </header>
     );
+
+
 };
 
 export default Navbar;

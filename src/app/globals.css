@@ -901,7 +901,7 @@ button:disabled {
 }
 
 .nav-link:hover::after {
-  width: 50%;
+  width: 70%;
 }
 
 
@@ -909,13 +909,14 @@ button:disabled {
    NAV LINK ACTIVE
    ========================================================= */
 
-.nav-link-active {
+/* .nav-link-active {
   color: var(--primary);
-}
+} */
 
+/* 
 .nav-link-active::after {
-  width: 50%;
-}
+  width: 70%;
+} */
 
 
 /* =========================================================
