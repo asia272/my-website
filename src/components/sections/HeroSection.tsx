@@ -5,84 +5,156 @@ const HeroSection = () => {
     return (
         <section
             id="home"
-            className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden"
+            aria-labelledby="hero-heading"
+            className="section relative isolate flex min-h-[calc(100svh-var(--nav-height))] items-center overflow-hidden"
         >
-            {/* Background glow */}
+            {/* =====================================================
+                BACKGROUND DECORATION
+            ====================================================== */}
+
             <div
                 aria-hidden="true"
-                className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.04] blur-3xl"
+                className="glow left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             />
 
-            <div className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-                <div className="mx-auto max-w-4xl text-center">
-                    {/* Badge */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10"
+            >
+                {/* Subtle center radial light */}
+                <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(245,185,66,0.035)] blur-3xl" />
+
+                {/* Top ambient glow */}
+                <div className="absolute left-1/2 top-0 h-[300px] w-[700px] -translate-x-1/2 rounded-full bg-[rgba(245,185,66,0.025)] blur-3xl" />
+            </div>
+
+            {/* =====================================================
+                CONTENT
+            ====================================================== */}
+
+            <div className="container w-full py-24 sm:py-28 lg:py-32">
+                <div className="mx-auto max-w-5xl text-center">
+
+                    {/* =================================================
+                        EYEBROW
+                    ================================================== */}
+
                     <div
                         data-aos="fade-down"
-                        className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-white/70 backdrop-blur-sm"
+                        className="mb-7"
                     >
-                        <Sparkles className="size-4" />
+                        <span className="section-label">
+                            <Sparkles
+                                aria-hidden="true"
+                                className="size-4"
+                            />
 
-                        <span>Building digital experiences that matter</span>
+                            Building Digital Experiences
+                        </span>
                     </div>
 
-                    {/* Heading */}
+                    {/* =================================================
+                        MAIN HEADING
+                    ================================================== */}
+
                     <h1
+                        id="hero-heading"
                         data-aos="fade-up"
                         data-aos-delay="100"
-                        className="text-balance text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl"
+                        className="mx-auto max-w-5xl text-[clamp(2.75rem,7vw,6.5rem)] font-bold leading-[1.02] tracking-[-0.045em]"
                     >
                         We build{" "}
-                        <span className="text-white/50">
+                        <span className="text-gradient">
                             modern digital solutions
                         </span>{" "}
                         for ambitious businesses.
                     </h1>
 
-                    {/* Description */}
+                    {/* =================================================
+                        DESCRIPTION
+                    ================================================== */}
+
                     <p
                         data-aos="fade-up"
                         data-aos-delay="200"
-                        className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-white/60 sm:text-lg"
+                        className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-secondary sm:text-lg"
                     >
-                        From high-performance websites to scalable applications, we
-                        transform ideas into reliable digital products designed for real
-                        business growth.
+                        From high-performance websites to scalable applications,
+                        we transform ideas into reliable digital products designed
+                        for real business growth.
                     </p>
 
-                    {/* CTA */}
+                    {/* =================================================
+                        CTA BUTTONS
+                    ================================================== */}
+
                     <div
                         data-aos="fade-up"
                         data-aos-delay="300"
-                        className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+                        className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
                     >
                         <Link
                             href="/projects"
-                            className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform duration-300 hover:scale-105"
+                            className="custom-btn-outline group"
                         >
-                            Explore Projects
+                            <span>Explore Projects</span>
 
-                            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                            <ArrowRight
+                                aria-hidden="true"
+                                className="ml-2 size-4 transition-transform duration-300 group-hover:translate-x-1"
+                            />
                         </Link>
 
-                        <Link href="/contact" className="custom-btn">
+                        <Link
+                            href="/contact"
+                            className="custom-btn"
+                        >
                             Start a Conversation
                         </Link>
                     </div>
 
-                    {/* Trust line */}
+                    {/* =================================================
+                        TRUST / VALUE POINTS
+                    ================================================== */}
+
                     <div
                         data-aos="fade-up"
                         data-aos-delay="400"
-                        className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-white/40 sm:text-sm"
+                        className="mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
                     >
-                        <span>Modern Technology</span>
-                        <span className="hidden size-1 rounded-full bg-white/20 sm:block" />
-                        <span>Scalable Solutions</span>
-                        <span className="hidden size-1 rounded-full bg-white/20 sm:block" />
-                        <span>Client-Focused Development</span>
+                        <span className="text-sm text-muted">
+                            Modern Technology
+                        </span>
+
+                        <span
+                            aria-hidden="true"
+                            className="hidden size-1 rounded-full bg-[var(--border-hover)] sm:block"
+                        />
+
+                        <span className="text-sm text-muted">
+                            Scalable Solutions
+                        </span>
+
+                        <span
+                            aria-hidden="true"
+                            className="hidden size-1 rounded-full bg-[var(--border-hover)] sm:block"
+                        />
+
+                        <span className="text-sm text-muted">
+                            Client-Focused Development
+                        </span>
                     </div>
                 </div>
             </div>
+
+            {/* =====================================================
+                BOTTOM FADE
+            ====================================================== */}
+
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--background)] to-transparent"
+            />
         </section>
     );
 };
