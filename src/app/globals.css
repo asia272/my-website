@@ -1118,6 +1118,11 @@ textarea::placeholder {
 
     opacity: 0.55;
   }
+
+  /* Hide nav underline on mobile */
+  .nav-link::after {
+    display: none;
+  }
 }
 
 

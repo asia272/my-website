@@ -1,13 +1,20 @@
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
     const pathname = usePathname();
-
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -23,8 +30,8 @@ const Navbar = () => {
                 <div className="flex h-20 items-center justify-between">
 
                     {/* =================================================
-                    LOGO
-                ================================================== */}
+                        LOGO
+                    ================================================== */}
 
                     <Link
                         href="/"
@@ -35,8 +42,8 @@ const Navbar = () => {
                     </Link>
 
                     {/* =================================================
-                    DESKTOP NAVIGATION
-                ================================================== */}
+                        DESKTOP NAVIGATION
+                    ================================================== */}
 
                     <div className="hidden md:flex">
                         <ul className="flex items-center gap-6">
@@ -134,22 +141,55 @@ const Navbar = () => {
                                 )}
                             </li>
 
-                            {/* Projects */}
+                            {/* =================================================
+                                PROJECTS DROPDOWN
+                            ================================================== */}
+
                             <li>
-                                <Link
-                                    href="/projects"
-                                    className="nav-link"
-                                >
-                                    Projects
-                                </Link>
+                                <DropdownMenu modal={false}>
+                                    <DropdownMenuTrigger
+                                        className="nav-link inline-flex items-center gap-1 outline-none"
+                                    >
+                                        Projects
+
+                                        <ChevronDown
+                                            aria-hidden="true"
+                                            className="size-4 transition-transform duration-300 data-[state=open]:rotate-180"
+                                        />
+                                    </DropdownMenuTrigger>
+
+                                    <DropdownMenuContent
+                                        align="end"
+                                        sideOffset={12}
+                                        className="min-w-52 border-border bg-background/95 p-2 shadow-xl shadow-purple-500/10 backdrop-blur-xl"
+                                    >
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/generative-ai"
+                                                className="cursor-pointer rounded-md text-sm text-foreground p-1"
+                                            >
+                                                Generative AI
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/web-development"
+                                                className="cursor-pointer rounded-md  text-sm text-foreground p-1"
+                                            >
+                                                Web Development
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </li>
 
                         </ul>
                     </div>
 
                     {/* =================================================
-                    MOBILE MENU BUTTON
-                ================================================== */}
+                        MOBILE MENU BUTTON
+                    ================================================== */}
 
                     <button
                         type="button"
@@ -178,8 +218,8 @@ const Navbar = () => {
                     </button>
 
                     {/* =================================================
-                    MOBILE NAVIGATION
-                ================================================== */}
+                        MOBILE NAVIGATION
+                    ================================================== */}
 
                     {isMenuOpen && (
                         <div className="absolute left-0 top-full w-full border-t border-[var(--nav-border)] bg-[var(--nav-bg)] shadow-lg backdrop-blur-xl md:hidden">
@@ -288,15 +328,37 @@ const Navbar = () => {
                                     )}
                                 </li>
 
-                                {/* Projects */}
+                                {/* =================================================
+                                    MOBILE PROJECTS
+                                ================================================== */}
+
                                 <li>
-                                    <Link
-                                        href="/projects"
-                                        onClick={closeMenu}
-                                        className="nav-link block py-3"
-                                    >
-                                        Projects
-                                    </Link>
+                                    <div className="flex flex-col">
+
+                                        <span className="nav-link block py-3">
+                                            Projects
+                                        </span>
+
+                                        <div className="ml-4 flex flex-col border-l border-border pl-4">
+
+                                            <Link
+                                                href="/projects/generative-ai"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                Generative AI
+                                            </Link>
+
+                                            <Link
+                                                href="/projects/web-development"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                Web Development
+                                            </Link>
+
+                                        </div>
+                                    </div>
                                 </li>
 
                             </ul>
@@ -307,8 +369,7 @@ const Navbar = () => {
             </nav>
         </header>
     );
-
-
 };
 
 export default Navbar;
+
