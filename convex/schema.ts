@@ -110,22 +110,11 @@ export default defineSchema({
      */
     projects: defineTable({
         name: v.string(),
-        slug: v.string(),
         description: v.string(),
 
-        /**
-         * URL of the project video.
-         */
-        videoUrl: v.optional(v.string()),
+        imageStorageId: v.id("_storage"),
 
-        /**
-         * URL of project thumbnail/cover image.
-         */
-        thumbnailUrl: v.optional(v.string()),
 
-        /**
-         * Structured project category.
-         */
         type: v.union(
             v.literal("GEN_AI"),
             v.literal("WEB_DEVELOPMENT"),
@@ -142,7 +131,6 @@ export default defineSchema({
         createdAt: v.number(),
         updatedAt: v.number(),
     })
-        .index("by_slug", ["slug"])
         .index("by_type", ["type"])
         .index("by_active", ["isActive"])
         .index("by_featured", ["isFeatured"]),
