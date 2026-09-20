@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 /* =========================================================
    THEME TOKENS
    Hope to Skills inspired dark theme
@@ -207,7 +209,6 @@
   --border-hover: rgba(245, 185, 66, 0.45);
 }
 
-
 /* =========================================================
    TAILWIND v4 / SHADCN SEMANTIC THEME MAPPING
    ========================================================= */
@@ -266,8 +267,22 @@
   --radius-lg: var(--radius-lg);
   --radius-xl: var(--radius-xl);
   --radius-2xl: var(--radius-2xl);
-}
+  --animate-shine: shine var(--duration) infinite linear;
 
+  @keyframes shine {
+    0% {
+      background-position: 0% 0%;
+    }
+
+    50% {
+      background-position: 100% 100%;
+    }
+
+    to {
+      background-position: 0% 0%;
+    }
+  }
+}
 
 /* =========================================================
    MODERN COLOR SUPPORT
@@ -284,8 +299,6 @@
 
     --popover: lab(2.24815% 2.64807 -9.68134);
     --popover-foreground: lab(97.6043% .652194 -3.72534);
-
-
 
     --primary: #f5b942;
     --primary-foreground: lab(1.37845% 2.15127 -7.5023);
@@ -309,7 +322,6 @@
     --border: lab(15.4403% 11.3647 -28.0773);
 
     --input: lab(6.67154% 6.23121 -17.4656);
-
 
     --ring: #f5b942;
 
@@ -351,7 +363,6 @@
   }
 }
 
-
 /* =========================================================
    BASE RESET
    ========================================================= */
@@ -388,7 +399,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 /* =========================================================
    BODY OVERFLOW / PAGE SAFETY
    ========================================================= */
@@ -396,7 +406,6 @@ body {
 body {
   overflow-x: hidden;
 }
-
 
 /* =========================================================
    SELECTION
@@ -407,9 +416,6 @@ body {
   color: #050505;
 
 }
-
-
-
 
 /* =========================================================
    TYPOGRAPHY
@@ -477,7 +483,6 @@ select {
   font: inherit;
 }
 
-
 /* =========================================================
    IMAGES / MEDIA
    ========================================================= */
@@ -493,7 +498,6 @@ canvas {
 img {
   height: auto;
 }
-
 
 /* =========================================================
    FORM ELEMENTS
@@ -511,7 +515,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-
 /* =========================================================
    CONTAINER
    ========================================================= */
@@ -522,7 +525,6 @@ button:disabled {
 
   margin-inline: auto;
 }
-
 
 /* =========================================================
    SECTIONS
@@ -543,7 +545,6 @@ button:disabled {
 .section-lg {
   padding-block: 140px;
 }
-
 
 /* =========================================================
    SECTION HEADING SYSTEM
@@ -566,7 +567,6 @@ button:disabled {
 
   margin: 20px auto 0;
 }
-
 
 /* =========================================================
    EYEBROW / SECTION LABEL
@@ -603,7 +603,6 @@ button:disabled {
     0 0 14px rgba(245, 185, 66, 0.55);
 }
 
-
 /* =========================================================
    TEXT UTILITIES
    ========================================================= */
@@ -632,7 +631,6 @@ button:disabled {
 
   color: transparent;
 }
-
 
 /* =========================================================
    CARDS
@@ -665,7 +663,6 @@ button:disabled {
   box-shadow: var(--shadow-md);
 }
 
-
 /* =========================================================
    GLASS EFFECT
    ========================================================= */
@@ -678,7 +675,6 @@ button:disabled {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 }
-
 
 /* =========================================================
    PRIMARY BUTTON
@@ -780,7 +776,6 @@ button:disabled {
   transform: none;
 }
 
-
 /* =========================================================
    SECONDARY / OUTLINE BUTTON
    ========================================================= */
@@ -838,12 +833,6 @@ button:disabled {
   outline-offset: 3px;
 }
 
-
-
-
-
-
-
 /* =========================================================
    NAVIGATION LINKS
    ========================================================= */
@@ -864,7 +853,6 @@ button:disabled {
   transition:
     color var(--duration-normal) var(--ease-standard);
 }
-
 
 /* =========================================================
    NAV LINK GOLD UNDERLINE
@@ -891,7 +879,6 @@ button:disabled {
     width var(--duration-normal) var(--ease-smooth);
 }
 
-
 /* =========================================================
    NAV LINK HOVER
    ========================================================= */
@@ -903,7 +890,6 @@ button:disabled {
 .nav-link:hover::after {
   width: 70%;
 }
-
 
 /* =========================================================
    NAV LINK ACTIVE
@@ -918,7 +904,6 @@ button:disabled {
   width: 70%;
 } */
 
-
 /* =========================================================
    NAV LINK FOCUS
    ========================================================= */
@@ -930,7 +915,6 @@ button:disabled {
 
   border-radius: 4px;
 }
-
 
 /* =========================================================
    INPUTS / TEXTAREAS / SELECTS
@@ -971,7 +955,6 @@ textarea::placeholder {
   color: var(--text-muted);
 }
 
-
 /* =========================================================
    DECORATIVE GLOW
    ========================================================= */
@@ -993,7 +976,6 @@ textarea::placeholder {
   z-index: -1;
 }
 
-
 /* =========================================================
    GRADIENT BORDER
    ========================================================= */
@@ -1011,7 +993,6 @@ textarea::placeholder {
     var(--gradient-primary) border-box;
 }
 
-
 /* =========================================================
    DIVIDER
    ========================================================= */
@@ -1022,7 +1003,6 @@ textarea::placeholder {
 
   background: var(--border);
 }
-
 
 /* =========================================================
    GOLD GLOW UTILITY
@@ -1038,7 +1018,6 @@ textarea::placeholder {
     0 0 45px rgba(245, 185, 66, 0.2);
 }
 
-
 /* =========================================================
    FOCUS ACCESSIBILITY
    ========================================================= */
@@ -1047,7 +1026,6 @@ textarea::placeholder {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
-
 
 /* =========================================================
    RESPONSIVE — TABLET
@@ -1066,7 +1044,6 @@ textarea::placeholder {
     padding-block: 110px;
   }
 }
-
 
 /* =========================================================
    RESPONSIVE — MOBILE
@@ -1125,7 +1102,6 @@ textarea::placeholder {
   }
 }
 
-
 /* =========================================================
    RESPONSIVE — SMALL MOBILE
    ========================================================= */
@@ -1151,7 +1127,6 @@ textarea::placeholder {
     font-size: 0.9rem;
   }
 }
-
 
 /* =========================================================
    REDUCED MOTION
@@ -1197,7 +1172,6 @@ textarea::placeholder {
   will-change: transform;
 }
 
-
 /* ============================================================
    LEFT ↔ RIGHT GRID MOTION
 ============================================================ */
@@ -1212,7 +1186,6 @@ textarea::placeholder {
   }
 }
 
-
 /* ============================================================
    REDUCED MOTION
 ============================================================ */
@@ -1221,5 +1194,30 @@ textarea::placeholder {
   .hero-grid {
     animation: none;
     transform: none;
+  }
+}
+
+
+@keyframes heroShine {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+
+  /* 15% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  85% {
+    opacity: 0.8;
+  } */
+
+  100% {
+    transform: translate(-50%, 2000%);
+    /* opacity: 0; */
   }
 }

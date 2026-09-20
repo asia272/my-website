@@ -8,13 +8,19 @@
  * @module
  */
 
+import type * as adminOtpChallenges from "../adminOtpChallenges.js";
+import type * as adminSessions from "../adminSessions.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  adminOtpChallenges: typeof adminOtpChallenges;
+  adminSessions: typeof adminSessions;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.
