@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -66,7 +67,6 @@ export default function AdminSidebar() {
           items-center
           justify-center
           rounded-xl
-          border
           border-border
           bg-background/90
           backdrop-blur
@@ -143,7 +143,7 @@ export default function AdminSidebar() {
                                 Admin Panel
                             </p>
 
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-secondary">
                                 My Website
                             </p>
                         </div>
@@ -159,7 +159,7 @@ export default function AdminSidebar() {
               items-center
               justify-center
               rounded-lg
-              text-muted-foreground
+              text-secondary
               hover:bg-muted
               lg:hidden
             "
@@ -178,7 +178,7 @@ export default function AdminSidebar() {
               font-semibold
               uppercase
               tracking-[0.16em]
-              text-muted-foreground
+              text-secondary
             "
                     >
                         Management
@@ -209,7 +209,7 @@ export default function AdminSidebar() {
                   transition
                   ${isActive
                                         ? "bg-primary/10 text-primary"
-                                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                        : "text-secondary hover:bg-muted hover:text-primary"
                                     }
                 `}
                             >
@@ -236,10 +236,10 @@ export default function AdminSidebar() {
               py-3
               text-sm
               font-medium
-              text-muted-foreground
+              text-secondary
               transition
               hover:bg-muted
-              hover:text-foreground
+              hover:text-primary
             "
                     >
                         <Settings className="size-5" />
@@ -259,7 +259,7 @@ export default function AdminSidebar() {
                 py-3
                 text-sm
                 font-medium
-                text-muted-foreground
+                text-secondary
                 transition
                 hover:bg-red-500/10
                 hover:text-red-500

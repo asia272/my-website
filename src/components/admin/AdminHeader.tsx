@@ -1,3 +1,4 @@
+
 import { Bell } from "lucide-react";
 
 type AdminHeaderProps = {
@@ -27,7 +28,7 @@ export default function AdminHeader({
       "
         >
             <div className="pl-12 lg:pl-0">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-secondary">
                     Welcome back
                 </p>
 
@@ -47,10 +48,10 @@ export default function AdminHeader({
           rounded-xl
           border
           border-border
-          text-muted-foreground
+          text-secondary
           transition
           hover:bg-muted
-          hover:text-foreground
+          hover:text-primary
         "
             >
                 <Bell className="size-5" />

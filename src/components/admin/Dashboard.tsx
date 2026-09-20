@@ -1,3 +1,4 @@
+
 import type { LucideIcon } from "lucide-react";
 
 type DashboardCardProps = {
@@ -30,7 +31,7 @@ export default function DashboardCard({
         >
             <div className="flex items-start justify-between gap-4">
                 <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-secondary">
                         {title}
                     </p>
 
@@ -38,7 +39,7 @@ export default function DashboardCard({
                         {value}
                     </p>
 
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p className="mt-1 text-xs text-secondary">
                         {description}
                     </p>
                 </div>

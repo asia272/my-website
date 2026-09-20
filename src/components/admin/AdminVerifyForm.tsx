@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -6,7 +7,11 @@ import {
     useState,
 } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Loader2, ShieldCheck } from "lucide-react";
+import {
+    ArrowLeft,
+    Loader2,
+    ShieldCheck,
+} from "lucide-react";
 
 import {
     requestAdminOtp,
@@ -143,7 +148,6 @@ export default function AdminVerifyForm() {
     }
 
     return (
-        // i want use shadcn magicui shine border insite my vrifouy login form
         <div className="space-y-6">
             <div className="text-center">
                 <div
@@ -162,11 +166,11 @@ export default function AdminVerifyForm() {
                     <ShieldCheck className="size-6" />
                 </div>
 
-                <h3 className="font-semibold mb-4">
+                <h3 className="mb-4 font-semibold">
                     Verify your login
                 </h3>
 
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-2 text-sm text-secondary">
                     We sent a 6-digit verification code to
                 </p>
 
@@ -205,18 +209,12 @@ export default function AdminVerifyForm() {
                         required
                         className="
               h-14
-              w-full
               rounded-xl
-              border
-              border-border
               bg-background
               text-center
               text-2xl
               font-semibold
               tracking-[0.45em]
-              outline-none
-              transition
-              focus:border-primary
               focus:ring-2
               focus:ring-primary/20
               disabled:cursor-not-allowed
@@ -229,7 +227,6 @@ export default function AdminVerifyForm() {
                     <div
                         role="alert"
                         className="
-        
               text-sm
               text-red-500
             "
@@ -246,14 +243,9 @@ export default function AdminVerifyForm() {
                     }
                     className="
             custom-btn
-            flex
             h-12
             w-full
-            items-center
-            justify-center
             gap-2
-            disabled:pointer-events-none
-            disabled:opacity-50
           "
                 >
                     {isLoading ? (
@@ -277,9 +269,9 @@ export default function AdminVerifyForm() {
             inline-flex
             items-center
             gap-1.5
-            text-muted-foreground
+            text-secondary
             transition
-            hover:text-foreground
+            hover:text-primary
           "
                 >
                     <ArrowLeft className="size-4" />
@@ -312,3 +304,4 @@ export default function AdminVerifyForm() {
         </div>
     );
 }
+

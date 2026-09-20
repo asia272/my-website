@@ -1,3 +1,4 @@
+
 "use client";
 
 import { FormEvent, useState } from "react";
@@ -67,7 +68,7 @@ export default function AdminLoginForm() {
               top-1/2
               size-4
               -translate-y-1/2
-              text-muted-foreground
+              text-secondary
             "
                     />
 
@@ -85,18 +86,11 @@ export default function AdminLoginForm() {
                         required
                         className="
               h-12
-              w-full
               rounded-xl
-              border
-              border-border
               bg-background
               pl-11
               pr-4
               text-sm
-              outline-none
-              transition
-              placeholder:text-muted-foreground
-              focus:border-primary
               focus:ring-2
               focus:ring-primary/20
               disabled:cursor-not-allowed
@@ -110,7 +104,6 @@ export default function AdminLoginForm() {
                 <div
                     role="alert"
                     className="
-        
             px-4
             py-3
             text-sm
@@ -126,14 +119,9 @@ export default function AdminLoginForm() {
                 disabled={isLoading || !email.trim()}
                 className="
           custom-btn
-          flex
           h-12
           w-full
-          items-center
-          justify-center
           gap-2
-          disabled:pointer-events-none
-          disabled:opacity-50
         "
             >
                 {isLoading ? (
