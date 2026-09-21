@@ -68,13 +68,7 @@ type ProjectFormProps = {
     };
 };
 
-function createSlug(value: string) {
-    return value
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-}
+
 
 export default function ProjectForm({
     mode,
@@ -103,18 +97,11 @@ export default function ProjectForm({
         project?.name ?? "",
     );
 
-    // Slug is kept internally so the existing backend
-    // contract continues to work. It is no longer shown
-    // as a form field.
-    const [slug, setSlug] = useState(
-        project?.slug ?? "",
-    );
+
 
     const [description, setDescription] =
         useState(project?.description ?? "");
 
-    const [videoUrl, setVideoUrl] =
-        useState(project?.videoUrl ?? "");
 
     const [type, setType] =
         useState<ProjectType>(
@@ -157,9 +144,9 @@ export default function ProjectForm({
         }
 
         setName(project.name);
-        setSlug(project.slug);
+
         setDescription(project.description);
-        setVideoUrl(project.videoUrl ?? "");
+
         setType(project.type);
         setIsFeatured(project.isFeatured);
         setIsActive(project.isActive);
@@ -172,13 +159,7 @@ export default function ProjectForm({
     }, [project]);
 
     function handleNameChange(value: string) {
-        setName(value);
-
-        // Keep automatic slug generation for new projects,
-        // but don't expose slug in the UI.
-        if (!isEditMode) {
-            setSlug(createSlug(value));
-        }
+        setName(value)
     }
 
     function handleImageChange(
@@ -271,18 +252,10 @@ export default function ProjectForm({
 
         const trimmedName = name.trim();
 
-        // Generate a fallback slug automatically.
-        // This keeps the backend contract unchanged
-        // without asking the admin to manage a slug.
-        const trimmedSlug =
-            (slug.trim().toLowerCase() ||
-                createSlug(trimmedName));
 
         const trimmedDescription =
             description.trim();
 
-        const trimmedVideoUrl =
-            videoUrl.trim();
 
         if (!trimmedName) {
             setError(
@@ -291,12 +264,7 @@ export default function ProjectForm({
             return;
         }
 
-        if (!trimmedSlug) {
-            setError(
-                "A valid project name is required.",
-            );
-            return;
-        }
+
 
         if (!trimmedDescription) {
             setError(
@@ -312,17 +280,7 @@ export default function ProjectForm({
             return;
         }
 
-        if (
-            trimmedVideoUrl &&
-            !/^https?:\/\/.+/i.test(
-                trimmedVideoUrl,
-            )
-        ) {
-            setError(
-                "Please enter a valid video URL.",
-            );
-            return;
-        }
+
 
         if (isEditMode && !project) {
             setError(
@@ -354,14 +312,10 @@ export default function ProjectForm({
                 await updateProject({
                     id: project._id,
                     name: trimmedName,
-                    slug: trimmedSlug,
                     description:
                         trimmedDescription,
                     imageStorageId:
                         finalImageStorageId,
-                    videoUrl:
-                        trimmedVideoUrl ||
-                        undefined,
                     type,
                     isFeatured,
                     isActive,
@@ -443,7 +397,7 @@ export default function ProjectForm({
                                 placeholder="Full Stack E-Commerce Website"
                                 disabled={isSubmitting}
                                 required
-                                className="rounded-md"
+                                className="rounded"
                             />
                         </div>
 
@@ -455,38 +409,65 @@ export default function ProjectForm({
                             <Select
                                 value={type}
                                 onValueChange={(value) =>
-                                    setType(
-                                        value as ProjectType,
-                                    )
+                                    setType(value as ProjectType)
                                 }
                                 disabled={isSubmitting}
                             >
                                 <SelectTrigger
                                     id="project-type"
-                                    className="w-full rounded-md"
+                                    className="
+        h-8
+        w-full
+        min-w-0
+        rounded
+        border
+        border-border
+        bg-transparent
+        px-2.5
+        py-1
+        text-sm
+        font-medium
+        text-foreground
+        shadow-none
+        transition-colors
+        focus:border-primary
+        focus:ring-0
+    "
                                 >
-                                    <SelectValue placeholder="Select project type">
-                                        {selectedTypeLabel}
-                                    </SelectValue>
+                                    <SelectValue placeholder="Select project type" />
                                 </SelectTrigger>
 
-                                <SelectContent>
-                                    {projectTypes.map(
-                                        (projectType) => (
-                                            <SelectItem
-                                                key={
-                                                    projectType.value
-                                                }
-                                                value={
-                                                    projectType.value
-                                                }
-                                            >
-                                                {
-                                                    projectType.label
-                                                }
-                                            </SelectItem>
-                                        ),
-                                    )}
+                                <SelectContent
+                                    className="
+            min-w-[var(--radix-select-trigger-width)]
+            rounded-md
+            border-border
+            bg-popover
+            p-1
+            shadow-lg
+        "
+                                >
+                                    {projectTypes.map((projectType) => (
+                                        <SelectItem
+                                            key={projectType.value}
+                                            value={projectType.value}
+                                            className="
+                    cursor-pointer
+                    rounded-sm
+                    px-3
+                    py-2
+                    text-left
+                    text-sm
+                    font-medium
+                    hover:text-primary
+                    outline-none
+                    data-[state=checked]:bg-primary/10
+                    data-[state=checked]:text-primary
+                "
+                                        >
+                                            {projectType.label}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -517,7 +498,7 @@ export default function ProjectForm({
                             maxLength={1000}
                             disabled={isSubmitting}
                             required
-                            className="resize-none rounded-md"
+                            className=" rounded"
                         />
                     </div>
 
@@ -541,10 +522,10 @@ export default function ProjectForm({
                                 isSubmitting ||
                                 isUploadingImage
                             }
-                            className="hidden"
+                            className="hidden rounded"
                         />
 
-                        <div className="flex min-h-10 items-center gap-3 rounded-md border bg-background px-3">
+                        <div className="flex min-h-10 items-center gap-3 rounded border bg-transparent px-3">
                             <ImagePlus className="size-4 shrink-0 text-muted-foreground" />
 
                             <button
@@ -640,19 +621,17 @@ export default function ProjectForm({
                                 )
                             }
                             disabled={isSubmitting}
-                            className={`flex items-center gap-3 rounded-md border px-4 py-3 text-left transition-colors ${isFeatured
-                                ? "border-foreground/20 bg-muted/50"
-                                : "hover:bg-muted/30"
-                                }`}
+                            className={`flex items-center gap-3 bg-muted/30 rounded border px-4 py-3 text-left transition-colors`}
+
                         >
                             <span
-                                className={`flex size-5 shrink-0 items-center justify-center rounded-sm border ${isFeatured
-                                    ? "border-foreground bg-foreground text-background"
+                                className={`flex size-5 shrink-0 items-center justify-center rounded border ${isFeatured
+                                    ? "border-foreground bg-primary  text-background"
                                     : "bg-background"
                                     }`}
                             >
                                 {isFeatured && (
-                                    <Check className="size-3.5" />
+                                    <Check className="size-3.5 " />
                                 )}
                             </span>
 
@@ -674,14 +653,11 @@ export default function ProjectForm({
                                 setIsActive(!isActive)
                             }
                             disabled={isSubmitting}
-                            className={`flex items-center gap-3 rounded-md border px-4 py-3 text-left transition-colors ${isActive
-                                ? "border-foreground/20 bg-muted/50"
-                                : "hover:bg-muted/30"
-                                }`}
+                            className={`flex items-center gap-3 rounded border bg-muted/30 px-4 py-3 text-left transition-colors `}
                         >
                             <span
                                 className={`relative flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors ${isActive
-                                    ? "border-foreground bg-foreground"
+                                    ? "border-foreground bg-primary"
                                     : "bg-muted"
                                     }`}
                             >
@@ -725,29 +701,34 @@ export default function ProjectForm({
                         type="button"
                         variant="outline"
                         onClick={() =>
-                            router.push(
-                                "/admin/dashboard/projects",
-                            )
+                            router.push("/admin/dashboard/projects")
                         }
-                        disabled={
-                            isSubmitting ||
-                            isUploadingImage
-                        }
-                        className="rounded-md"
+                        disabled={isSubmitting || isUploadingImage}
+                        className="
+            h-11
+            min-w-[120px]
+            rounded-[12px]
+            px-5
+            text-base
+            font-medium
+        "
                     >
                         Cancel
                     </Button>
 
                     <Button
                         type="submit"
-                        disabled={
-                            isSubmitting ||
-                            isUploadingImage
-                        }
-                        className="rounded-md"
+                        disabled={isSubmitting || isUploadingImage}
+                        className="
+            h-11
+            min-w-[170px]
+            rounded-[12px]
+            px-5
+            text-base
+            font-medium
+        "
                     >
-                        {isSubmitting ||
-                            isUploadingImage ? (
+                        {isSubmitting || isUploadingImage ? (
                             <>
                                 <Loader2 className="mr-2 size-4 animate-spin" />
 

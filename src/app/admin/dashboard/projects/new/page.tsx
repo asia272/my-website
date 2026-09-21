@@ -7,16 +7,26 @@ import ProjectForm from "@/components/admin/projects/ProjectForm";
 
 export default function NewProjectPage() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 mx-auto w-full max-w-7xl">
             <div className="flex items-start gap-4">
                 <Button
                     asChild
                     variant="outline"
-                    size="icon"
-                    className="mt-1 shrink-0"
+                    className="
+        mt-1 shrink-0
+        h-10 gap-2
+        border-border/60
+        bg-background/50
+        px-3.5
+        text-sm font-medium
+    "
                 >
-                    <Link href="/admin/dashboard/projects">
-                        <ArrowLeft className="size-4" />
+                    <Link
+                        href="/admin/dashboard/projects"
+                        className="flex items-center gap-2"
+                    >
+                        <ArrowLeft className="size-4 text-primary" />
+                        <span className="text-primary">Back</span>
                     </Link>
                 </Button>
 

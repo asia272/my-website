@@ -16,6 +16,10 @@
   --background: #020210;
   --foreground: #f7f8ff;
 
+  --blue-gradient: linear-gradient(270deg, #5CB0E9 0%, #3D72FC 100%);
+  --blue: #007aff;
+
+
   --card: #0a0922;
   --card-foreground: #f7f8ff;
 
@@ -503,9 +507,9 @@ img {
    FORM ELEMENTS
    ========================================================= */
 
-button {
+/* button {
   border: 0;
-}
+} */
 
 button:not(:disabled) {
   cursor: pointer;
@@ -891,18 +895,6 @@ button:disabled {
   width: 70%;
 }
 
-/* =========================================================
-   NAV LINK ACTIVE
-   ========================================================= */
-
-/* .nav-link-active {
-  color: var(--primary);
-} */
-
-/* 
-.nav-link-active::after {
-  width: 70%;
-} */
 
 /* =========================================================
    NAV LINK FOCUS
@@ -927,7 +919,7 @@ select {
 
   border: 1px solid var(--border);
 
-  border-radius: var(--radius-md);
+  /* border-radius: var(--radius-md); */
 
   background: var(--surface);
 

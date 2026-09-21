@@ -14,7 +14,7 @@ export default function ProjectsPage() {
     const projects = useQuery(api.projects.getAll);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 mx-auto w-full max-w-7xl">
 
             {/* Header */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
