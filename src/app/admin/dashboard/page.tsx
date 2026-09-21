@@ -16,6 +16,37 @@ import { api } from "../../../../convex/_generated/api";
 import DashboardCard from "@/components/admin/Dashboard";
 import AdminPageHeading from "@/components/admin/AdminPageHeading";
 
+
+
+function getStatusClasses(
+    status: string
+) {
+    switch (status) {
+        case "NEW":
+            return "border-chart-3/20 bg-chart-3/10 text-chart-3";
+
+        case "REVIEWING":
+            return "border-chart-2/20 bg-chart-2/10 text-chart-2";
+
+        case "CONTACTED":
+            return "border-primary/20 bg-primary/10 text-primary";
+
+        case "IN_PROGRESS":
+            return "border-chart-4/20 bg-chart-4/10 text-chart-4";
+
+        case "COMPLETED":
+            return "border-green-500/20 bg-green-500/10 text-green-600 dark:text-green-400";
+
+        case "REJECTED":
+            return "border-destructive/20 bg-destructive/10 text-destructive";
+
+        default:
+            return "border-border bg-muted text-secondary";
+    }
+}
+
+
+
 export default function AdminDashboardPage() {
     const stats = useQuery(
         api.adminDashboard.getStats,
@@ -32,20 +63,7 @@ export default function AdminDashboardPage() {
     return (
         <div className="mx-auto w-full max-w-7xl">
             {/* Heading */}
-            {/* <div className="mb-8">
-                <p className="text-sm font-medium text-primary">
-                    Dashboard
-                </p>
 
-                <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-                    Overview
-                </h1>
-
-                <p className="mt-2 text-sm text-secondary">
-                    Manage your website content and client
-                    requests from one place.
-                </p>
-            </div> */}
             <AdminPageHeading
                 label="Dashboard"
                 labelClassName="text-chart-2"
@@ -128,9 +146,9 @@ export default function AdminDashboardPage() {
                 >
                     <div className="flex items-center justify-between gap-4">
                         <div>
-                            <h2 className="text-lg font-semibold">
+                            <h3 className="text-lg font-semibold">
                                 Recent Client Requests
-                            </h2>
+                            </h3>
 
                             <p className="mt-1 text-sm text-secondary">
                                 Latest inquiries from potential clients.
@@ -244,16 +262,16 @@ export default function AdminDashboardPage() {
                                             </div>
 
                                             <span
-                                                className="
-                          shrink-0
-                          rounded-full
-                          bg-primary/10
-                          px-2.5
-                          py-1
-                          text-[11px]
-                          font-medium
-                          text-primary
-                        "
+                                                className={`
+        shrink-0
+        rounded-xl
+        border
+        px-2.5
+        py-1
+        text-[11px]
+        font-medium
+        ${getStatusClasses(request.status)}
+    `}
                                             >
                                                 {request.status}
                                             </span>
