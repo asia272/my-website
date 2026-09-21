@@ -1,11 +1,12 @@
-
-import type { LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 type DashboardCardProps = {
     title: string;
     value: number;
     description: string;
     icon: LucideIcon;
+    iconColor?: string;
+    iconBg?: string;
 };
 
 export default function DashboardCard({
@@ -13,25 +14,19 @@ export default function DashboardCard({
     value,
     description,
     icon: Icon,
+    iconColor = "text-primary",
+    iconBg = "bg-primary/10",
 }: DashboardCardProps) {
     return (
         <div
             className="
-        group
-        rounded-2xl
-        border
-        border-border
-        bg-card
-        p-5
-        transition
-        duration-300
-        hover:-translate-y-1
-        hover:border-primary/30
-      "
+                p-5
+                card 
+            "
         >
             <div className="flex items-start justify-between gap-4">
-                <div>
-                    <p className="text-sm text-secondary">
+                <div className="min-w-0">
+                    <p className="text-sm font-medium text-secondary">
                         {title}
                     </p>
 
@@ -45,21 +40,22 @@ export default function DashboardCard({
                 </div>
 
                 <div
-                    className="
-            flex
-            size-11
-            shrink-0
-            items-center
-            justify-center
-            rounded-xl
-            bg-primary/10
-            text-primary
-            transition
-            group-hover:bg-primary
-            group-hover:text-primary-foreground
-          "
+                    className={`
+                        flex
+                        size-11
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-xl
+                        ${iconBg}
+                    `}
                 >
-                    <Icon className="size-5" />
+                    <Icon
+                        className={`
+                            size-5
+                            ${iconColor}
+                        `}
+                    />
                 </div>
             </div>
         </div>

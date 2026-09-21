@@ -64,6 +64,8 @@ export default function AdminDashboardPage() {
                     }
                     description="Active projects"
                     icon={FolderKanban}
+                    iconColor="text-chart-3"
+                    iconBg="bg-chart-3/10"
                 />
 
                 <DashboardCard
@@ -75,6 +77,8 @@ export default function AdminDashboardPage() {
                     }
                     description="Active services"
                     icon={BriefcaseBusiness}
+                    iconColor="text-chart-4"
+                    iconBg="bg-chart-4/10"
                 />
 
                 <DashboardCard
@@ -86,6 +90,8 @@ export default function AdminDashboardPage() {
                     }
                     description="Active members"
                     icon={Users}
+                    iconColor="text-chart-1"
+                    iconBg="bg-chart-1/10"
                 />
 
                 <DashboardCard
@@ -97,6 +103,8 @@ export default function AdminDashboardPage() {
                     }
                     description="New requests"
                     icon={ClipboardList}
+                    iconColor="text-chart-5"
+                    iconBg="bg-chart-5/10"
                 />
             </div>
 
@@ -126,14 +134,41 @@ export default function AdminDashboardPage() {
                         <Link
                             href="/admin/dashboard/requests"
                             className="
-                text-sm
-                font-medium
-                text-primary
-                transition
-                hover:opacity-80
-              "
+        group
+        inline-flex
+        shrink-0
+        items-center
+        gap-1.5
+        rounded-lg
+        border
+        border-border
+        bg-muted/30
+        px-3
+        py-2
+        text-xs
+        font-medium
+        text-secondary
+        transition-all
+        duration-[var(--duration-normal)]
+        ease-[var(--ease-standard)]
+        hover:border-primary/40
+        hover:bg-primary/10
+        hover:text-primary
+    "
                         >
                             View all
+
+                            <span
+                                className="
+            text-sm
+            transition-transform
+            duration-[var(--duration-normal)]
+            ease-[var(--ease-standard)]
+            group-hover:translate-x-0.5
+        "
+                            >
+                                →
+                            </span>
                         </Link>
                     </div>
 
@@ -164,7 +199,7 @@ export default function AdminDashboardPage() {
                   text-center
                 "
                             >
-                                <ClipboardList className="mx-auto size-8 text-secondary" />
+                                <ClipboardList className="mx-auto size-8 text-chart-5" />
 
                                 <p className="mt-3 text-sm font-medium">
                                     No client requests yet
