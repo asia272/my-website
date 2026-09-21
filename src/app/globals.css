@@ -480,12 +480,7 @@ a {
   text-decoration: none;
 }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
+
 
 /* =========================================================
    IMAGES / MEDIA
@@ -499,17 +494,12 @@ canvas {
   max-width: 100%;
 }
 
-img {
-  height: auto;
-}
+
 
 /* =========================================================
    FORM ELEMENTS
    ========================================================= */
 
-/* button {
-  border: 0;
-} */
 
 button:not(:disabled) {
   cursor: pointer;

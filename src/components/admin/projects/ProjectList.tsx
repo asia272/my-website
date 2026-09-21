@@ -128,25 +128,26 @@ export default function ProjectList({
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         {/* Project information */}
                         <div className="flex min-w-0 items-start gap-4">
+
                             {/* Image */}
                             <div
                                 className="
-                                    hidden
-                                    size-16
-                                    shrink-0
-                                    overflow-hidden
-                                    rounded-md
-                                    border
-                                    border-border
-                                    bg-muted
-                                    sm:block
-                                "
+        hidden
+        size-16
+        shrink-0
+        overflow-hidden
+        rounded-md
+        border
+        border-border
+        bg-muted
+        sm:block
+    "
                             >
                                 {project.imageUrl ? (
                                     <img
                                         src={project.imageUrl}
                                         alt={project.name}
-                                        className="size-full object-cover "
+                                        className="block size-full object-cover"
                                     />
                                 ) : (
                                     <div className="flex size-full items-center justify-center">
