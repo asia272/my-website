@@ -14,6 +14,7 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 
 import DashboardCard from "@/components/admin/Dashboard";
+import AdminPageHeading from "@/components/admin/AdminPageHeading";
 
 export default function AdminDashboardPage() {
     const stats = useQuery(
@@ -31,7 +32,7 @@ export default function AdminDashboardPage() {
     return (
         <div className="mx-auto w-full max-w-7xl">
             {/* Heading */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <p className="text-sm font-medium text-primary">
                     Dashboard
                 </p>
@@ -44,8 +45,13 @@ export default function AdminDashboardPage() {
                     Manage your website content and client
                     requests from one place.
                 </p>
-            </div>
-
+            </div> */}
+            <AdminPageHeading
+                label="Dashboard"
+                labelClassName="text-chart-2"
+                title="Overview"
+                description="Manage your website content and client requests from one place."
+            />
             {/* Stats */}
             <div
                 className="

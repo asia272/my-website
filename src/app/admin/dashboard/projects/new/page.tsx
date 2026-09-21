@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import ProjectForm from "@/components/admin/projects/ProjectForm";
+import AdminPageHeading from "@/components/admin/AdminPageHeading";
 
 export default function NewProjectPage() {
     return (
@@ -30,7 +31,7 @@ export default function NewProjectPage() {
                     </Link>
                 </Button>
 
-                <div>
+                {/* <div>
                     <h1 className="text-2xl font-semibold tracking-tight">
                         Create New Project
                     </h1>
@@ -38,7 +39,11 @@ export default function NewProjectPage() {
                     <p className="mt-1 text-sm text-muted-foreground">
                         Add a new project to your portfolio.
                     </p>
-                </div>
+                </div> */}
+                <AdminPageHeading
+                    title="Create New Project"
+                    description="Add a new projec to your portfolio."
+                />
             </div>
 
 

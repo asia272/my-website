@@ -469,7 +469,7 @@ h6 {
 p {
   margin: 0;
 
-  color: var(--text-secondary);
+  /* color: var(--text-secondary); */
 
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
