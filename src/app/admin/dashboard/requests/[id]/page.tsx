@@ -252,7 +252,7 @@ export default function ClientRequestDetailsPage() {
                 <section className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center gap-3">
                         <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-chart-3/10">
-                            <User className="size-5 text-chart-3" />
+                            <User className="size-5 text-chart-1" />
                         </div>
 
                         <div>
@@ -448,8 +448,9 @@ export default function ClientRequestDetailsPage() {
                                         href={request.attachmentUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        className="flex items-center whitespace-nowrap"
                                     >
-                                        <ExternalLink className="mr-2 size-4" />
+                                        <ExternalLink className="mr-2 size-4 shrink-0" />
                                         Open PDF
                                     </a>
                                 </Button>
@@ -457,7 +458,7 @@ export default function ClientRequestDetailsPage() {
                                 <Button
                                     asChild
                                     size="sm"
-                                    className="custom-btn "
+                                    className="custom-btn"
                                 >
                                     <a
                                         href={request.attachmentUrl}
@@ -465,8 +466,9 @@ export default function ClientRequestDetailsPage() {
                                             request.attachmentFileName ??
                                             "project-brief.pdf"
                                         }
+                                        className="flex items-center whitespace-nowrap"
                                     >
-                                        <Download className="mr-2 size-4" />
+                                        <Download className="mr-2 size-4 shrink-0" />
                                         Download
                                     </a>
                                 </Button>
