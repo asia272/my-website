@@ -65,20 +65,16 @@ export default defineSchema({
     teamMembers: defineTable({
         name: v.string(),
         role: v.string(),
-        image: v.string(),
         description: v.string(),
 
+        imageStorageId: v.id("_storage"),
 
-        /**
-         * Allows hiding a team member without deleting them.
-         */
         isActive: v.boolean(),
 
         createdAt: v.number(),
         updatedAt: v.number(),
     })
         .index("by_active", ["isActive"]),
-
 
     /**
      * Services displayed on the public website.

@@ -159,9 +159,9 @@ export default function ProjectList({
                             {/* Details */}
                             <div className="min-w-0">
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <h3 className="truncate font-medium">
+                                    <h4 className="truncate font-medium">
                                         {project.name}
-                                    </h3>
+                                    </h4>
 
                                     {project.isFeatured && (
                                         <span

@@ -21,9 +21,9 @@ export default function AdminPageHeading({
                 </p>
             )}
 
-            <h1 className="mt-1 text-3xl font-semibold tracking-tight">
+            <h2 className="mt-1 text-3xl font-semibold tracking-tight">
                 {title}
-            </h1>
+            </h2>
 
             <p className="mt-2 text-sm text-secondary">
                 {description}

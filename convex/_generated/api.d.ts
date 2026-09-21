@@ -12,6 +12,7 @@ import type * as adminDashboard from "../adminDashboard.js";
 import type * as adminOtpChallenges from "../adminOtpChallenges.js";
 import type * as adminSessions from "../adminSessions.js";
 import type * as projects from "../projects.js";
+import type * as teamMembers from "../teamMembers.js";
 
 import type {
   ApiFromModules,
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   adminOtpChallenges: typeof adminOtpChallenges;
   adminSessions: typeof adminSessions;
   projects: typeof projects;
+  teamMembers: typeof teamMembers;
 }>;
 
 /**

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FolderKanban, Plus } from "lucide-react";
+import { FolderKanban, Heading3, Plus } from "lucide-react";
 import { useQuery } from "convex/react";
 
 import { api } from "../../../../../convex/_generated/api";
@@ -44,9 +44,9 @@ export default function ProjectsPage() {
                 <div className="border-b border-border p-5 sm:p-6">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                            <h2 className="text-lg font-semibold">
+                            <h3 className="text-lg font-semibold">
                                 All Projects
-                            </h2>
+                            </h3>
 
                             <p className="mt-1 text-sm text-secondary">
                                 View and manage all your projects.

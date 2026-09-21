@@ -31,15 +31,7 @@ export default function NewProjectPage() {
                     </Link>
                 </Button>
 
-                {/* <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">
-                        Create New Project
-                    </h1>
 
-                    <p className="mt-1 text-sm text-muted-foreground">
-                        Add a new project to your portfolio.
-                    </p>
-                </div> */}
                 <AdminPageHeading
                     title="Create New Project"
                     description="Add a new projec to your portfolio."
