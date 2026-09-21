@@ -38,12 +38,19 @@ export default function ProjectList({
 }: ProjectListProps) {
     if (projects === undefined) {
         return (
-            <div className="space-y-4 ">
+            <div className="space-y-4">
                 {Array.from({ length: 3 }).map(
                     (_, index) => (
                         <div
                             key={index}
-                            className="h-24 animate-pulse rounded-lg bg-muted/40"
+                            className="
+                                h-24
+                                animate-pulse
+                                rounded-xl
+                                border
+                                border-border
+                                bg-card
+                            "
                         />
                     ),
                 )}
@@ -53,23 +60,48 @@ export default function ProjectList({
 
     if (projects.length === 0) {
         return (
-            <div className="flex min-h-60 flex-col items-center justify-center rounded-lg border border-dashed text-center">
-                <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted">
-                    <FolderKanban className="size-5 text-muted-foreground" />
+            <div
+                className="
+                    flex
+                    min-h-60
+                    flex-col
+                    items-center
+                    justify-center
+                    rounded-2xl
+                    border
+                    border-dashed
+                    border-border
+                    bg-card
+                    px-6
+                    text-center
+                "
+            >
+                <div
+                    className="
+                        mb-4
+                        flex
+                        size-12
+                        items-center
+                        justify-center
+                        rounded-xl
+                        bg-chart-3/10
+                    "
+                >
+                    <FolderKanban className="size-5 text-chart-3" />
                 </div>
 
                 <h3 className="font-medium">
                     No projects yet
                 </h3>
 
-                <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+                <p className="mt-1 max-w-sm text-sm text-secondary">
                     Create your first project to start
                     building your portfolio.
                 </p>
 
                 <Button
                     asChild
-                    className="mt-5"
+                    className="custom-btn mt-5"
                 >
                     <Link href="/admin/dashboard/projects/new">
                         Create Project
@@ -85,29 +117,40 @@ export default function ProjectList({
                 <div
                     key={project._id}
                     className="
-            group
-            rounded-xl
-            border
-            bg-background
-            p-4
-            transition-colors
-            hover:bg-muted/30
-          "
+                       group
+                         rounded-md
+                                border
+                                border-border
+                                bg-card
+                        p-4 
+                    "
                 >
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         {/* Project information */}
                         <div className="flex min-w-0 items-start gap-4">
                             {/* Image */}
-                            <div className="hidden size-16 shrink-0 overflow-hidden rounded-lg border bg-muted sm:block">
+                            <div
+                                className="
+                                    hidden
+                                    size-16
+                                    shrink-0
+                                    overflow-hidden
+                                    rounded-md
+                                    border
+                                    border-border
+                                    bg-muted
+                                    sm:block
+                                "
+                            >
                                 {project.imageUrl ? (
                                     <img
                                         src={project.imageUrl}
                                         alt={project.name}
-                                        className="size-full object-cover"
+                                        className="size-full object-cover "
                                     />
                                 ) : (
                                     <div className="flex size-full items-center justify-center">
-                                        <FolderKanban className="size-5 text-muted-foreground" />
+                                        <FolderKanban className="size-5 text-chart-3" />
                                     </div>
                                 )}
                             </div>
@@ -120,7 +163,19 @@ export default function ProjectList({
                                     </h3>
 
                                     {project.isFeatured && (
-                                        <span className="rounded-full border px-2 py-0.5 text-xs">
+                                        <span
+                                            className="
+                                                rounded-full
+                                                border
+                                                border-chart-1/30
+                                                bg-chart-1/10
+                                                px-2
+                                                py-0.5
+                                                text-xs
+                                                font-medium
+                                                text-chart-1
+                                            "
+                                        >
                                             Featured
                                         </span>
                                     )}
@@ -128,8 +183,24 @@ export default function ProjectList({
                                     <span
                                         className={
                                             project.isActive
-                                                ? "rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-600"
-                                                : "rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground"
+                                                ? `
+                                                    rounded-full
+                                                    bg-chart-4/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-xs
+                                                    font-medium
+                                                    text-chart-4
+                                                `
+                                                : `
+                                                    rounded-full
+                                                    bg-muted
+                                                    px-2
+                                                    py-0.5
+                                                    text-xs
+                                                    font-medium
+                                                    text-secondary
+                                                `
                                         }
                                     >
                                         {project.isActive
@@ -138,15 +209,16 @@ export default function ProjectList({
                                     </span>
                                 </div>
 
-                                <p className="mt-1 text-sm text-muted-foreground">
+                                <p className="mt-1 text-sm text-secondary">
                                     {typeLabels[project.type]}
                                 </p>
 
-                                <p className="mt-2 line-clamp-2 max-w-2xl text-sm text-muted-foreground">
+                                <p className="mt-2 line-clamp-2 max-w-2xl text-sm text-secondary">
                                     {project.description}
                                 </p>
                             </div>
                         </div>
+
 
                         {/* Actions */}
                         <div className="flex shrink-0 items-center gap-2">
@@ -154,31 +226,31 @@ export default function ProjectList({
                                 asChild
                                 variant="outline"
                                 size="sm"
+                                className="
+        h-9
+        rounded-md
+        border-border
+        bg-transparent
+        px-3
+        text-sm
+        font-medium
+        text-secondary
+        transition-all
+        duration-[var(--duration-normal)]
+        ease-[var(--ease-standard)]
+        hover:border-chart-2/40
+        hover:bg-chart-2/10
+        hover:text-chart-2
+    "
                             >
                                 <Link
                                     href={`/admin/dashboard/projects/${project._id}/edit`}
+                                    className="inline-flex items-center justify-center"
                                 >
-                                    <Pencil className="mr-2 size-4" />
-                                    Edit
+                                    <Pencil className="mr-2 size-4 shrink-0 text-chart-2" />
+                                    <span>Edit</span>
                                 </Link>
                             </Button>
-
-                            {project.videoUrl && (
-                                <Button
-                                    asChild
-                                    variant="outline"
-                                    size="icon"
-                                >
-                                    <a
-                                        href={project.videoUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label={`Open ${project.name} video`}
-                                    >
-                                        <ExternalLink className="size-4" />
-                                    </a>
-                                </Button>
-                            )}
 
                             <DeleteProjectButton
                                 projectId={project._id}
