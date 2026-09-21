@@ -38,7 +38,7 @@ const Navbar = () => {
                         onClick={closeMenu}
                         className="text-primary text-xl font-bold tracking-tight transition-colors duration-300 hover:text-accent"
                     >
-                        MyLogo
+                        Kamal Group of Developer
                     </Link>
 
                     {/* =================================================

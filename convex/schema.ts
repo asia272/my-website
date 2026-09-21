@@ -145,6 +145,9 @@ export default defineSchema({
 
         projectDescription: v.string(),
 
+        // Optional PDF uploaded by the client
+        attachmentStorageId: v.optional(v.id("_storage")),
+
         status: v.union(
             v.literal("NEW"),
             v.literal("REVIEWING"),
