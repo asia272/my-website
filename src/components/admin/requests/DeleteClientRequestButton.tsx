@@ -83,7 +83,7 @@ export default function DeleteClientRequestButton({
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="h-9 rounded-md hover:border-destructive hover:bg-destructive/10 hover:text-destructive"
+                    className="h-9 rounded-md bg-transparent hover:border-destructive hover:bg-destructive/10 hover:text-destructive"
                 >
                     <Trash2 className="size-4 sm:mr-2" />
 

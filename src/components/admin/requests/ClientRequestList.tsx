@@ -12,6 +12,10 @@ import {
     Search,
 } from "lucide-react";
 
+import { useMutation } from "convex/react";
+import { toast } from "react-hot-toast";
+
+import { api } from "../../../../convex/_generated/api";
 import type { Doc } from "../../../../convex/_generated/dataModel";
 
 import { Button } from "@/components/ui/button";
@@ -138,6 +142,13 @@ export default function ClientRequestList({
     const [searchQuery, setSearchQuery] =
         useState("");
 
+    const [updatingRequestId, setUpdatingRequestId] =
+        useState<string | null>(null);
+
+    const updateStatus = useMutation(
+        api.clientRequests.updateStatus
+    );
+
     const serviceOptions = useMemo(() => {
         if (!requests) return [];
 
@@ -199,6 +210,47 @@ export default function ClientRequestList({
         serviceFilter,
         searchQuery,
     ]);
+
+    const handleStatusChange = async (
+        requestId: ClientRequest["_id"],
+        value: string
+    ) => {
+        if (updatingRequestId) {
+            return;
+        }
+
+        try {
+            setUpdatingRequestId(requestId);
+
+            await updateStatus({
+                id: requestId,
+                status: value as
+                    | "NEW"
+                    | "REVIEWING"
+                    | "CONTACTED"
+                    | "IN_PROGRESS"
+                    | "COMPLETED"
+                    | "REJECTED",
+            });
+
+            toast.success(
+                "Request status updated successfully."
+            );
+        } catch (error) {
+            console.error(
+                "Failed to update request status:",
+                error
+            );
+
+            toast.error(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to update request status."
+            );
+        } finally {
+            setUpdatingRequestId(null);
+        }
+    };
 
     if (requests === undefined) {
         return (
@@ -316,6 +368,7 @@ export default function ClientRequestList({
                     <Select
                         value={statusFilter}
                         onValueChange={setStatusFilter}
+
                     >
                         <SelectTrigger className="w-full sm:w-[180px]">
                             <SelectValue placeholder="All Statuses" />
@@ -452,19 +505,18 @@ export default function ClientRequestList({
 
                                             <span
                                                 className={`
-inline - flex
-items - center
-rounded - md
-border
-px - 2
-py - 0.5
-text - [11px]
-font - medium
+                                                    inline-flex
+                                                    items-center
+                                                    rounded-md
+                                                    border
+                                                    px-2
+                                                    py-0.5
+                                                    text-[11px]
+                                                    font-medium
                                                     ${getStatusClasses(
                                                     request.status
-                                                )
-                                                    }
-`}
+                                                )}
+                                                `}
                                             >
                                                 {getStatusLabel(
                                                     request.status
@@ -545,7 +597,8 @@ font - medium
                                     </div>
 
                                     {/* Actions */}
-                                    <div className="flex shrink-0 items-center gap-2">
+                                    <div className="flex shrink-0 flex-wrap items-center gap-2">
+                                        {/* View */}
                                         <Button
                                             asChild
                                             variant="outline"
@@ -578,6 +631,71 @@ font - medium
                                             </Link>
                                         </Button>
 
+                                        {/* Change Status */}
+                                        <Select
+                                            value={
+                                                request.status
+                                            }
+                                            onValueChange={(
+                                                value
+                                            ) =>
+                                                handleStatusChange(
+                                                    request._id,
+                                                    value
+                                                )
+                                            }
+                                            disabled={
+                                                updatingRequestId ===
+                                                request._id
+                                            }
+                                        >
+                                            <SelectTrigger
+                                                className="
+                                                    h-9
+                                                    w-auto
+                                                    min-w-[130px]
+                                                    rounded-md
+                                                    border-border
+                                                    bg-transparent
+                                                    px-3
+                                                    text-sm
+                                                    font-medium
+                                                "
+                                            >
+                                                <SelectValue />
+                                            </SelectTrigger>
+
+                                            <SelectContent>
+                                                {statusOptions
+                                                    .filter(
+                                                        (
+                                                            option
+                                                        ) =>
+                                                            option.value !==
+                                                            "ALL"
+                                                    )
+                                                    .map(
+                                                        (
+                                                            option
+                                                        ) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    option.value
+                                                                }
+                                                                value={
+                                                                    option.value
+                                                                }
+                                                            >
+                                                                {
+                                                                    option.label
+                                                                }
+                                                            </SelectItem>
+                                                        )
+                                                    )}
+                                            </SelectContent>
+                                        </Select>
+
+                                        {/* Delete */}
                                         <DeleteClientRequestButton
                                             clientRequestId={
                                                 request._id
