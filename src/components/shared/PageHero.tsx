@@ -1,4 +1,4 @@
-import { PageDecorations } from "./PageDecorations";
+import PageDecorations from "./PageDecorations";
 import PageHeading from "./PageHeading";
 
 type PageHeroProps = {

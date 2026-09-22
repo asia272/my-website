@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type PageHeadingProps = {
     breadcrumb?: string;
     label: string;
@@ -6,14 +8,20 @@ type PageHeadingProps = {
     description?: string;
 
     /**
-     * Tailwind max-width class.
+     * Tailwind max-width class for the heading wrapper.
      * Default: max-w-4xl
      */
     maxWidth?: string;
 
     /**
+     * Tailwind max-width class for the title.
+     * Default: max-w-2xl
+     */
+    titleMaxWidth?: string;
+
+    /**
      * CSS font-size value.
-     * Default: clamp(2.8rem, 7vw, 5.8rem)
+     * Default: clamp(1rem, 5vw, 3.8rem)
      */
     fontSize?: string;
 
@@ -27,6 +35,7 @@ export default function PageHeading({
     highlightedText,
     description,
     maxWidth = "max-w-4xl",
+    titleMaxWidth = "max-w-2xl",
     fontSize = "clamp(1rem,5vw,3.8rem)",
     className = "",
 }: PageHeadingProps) {
@@ -47,9 +56,15 @@ export default function PageHeading({
                         text-muted-foreground
                     "
                 >
-                    <span>
+                    <Link
+                        href="/"
+                        className="
+                            transition-colors
+                            hover:text-chart-1
+                        "
+                    >
                         Home
-                    </span>
+                    </Link>
 
                     <span
                         aria-hidden="true"
@@ -71,26 +86,25 @@ export default function PageHeading({
 
             {/* Page Title */}
             <h2
-                className="
-                    mt-7
+                className={`
+                    mt-6
+                    mb-6
+                    ${titleMaxWidth}
                     font-bold
                     leading-[0.98]
                     tracking-[-0.055em]
-                "
+                    
+                `}
                 style={{
                     fontSize,
                 }}
             >
-                {title}
+                {title}{" "}
 
                 {highlightedText && (
-                    <>
-                        <br />
-
-                        <span className="text-gradient">
-                            {highlightedText}
-                        </span>
-                    </>
+                    <span className="text-gradient font-medium">
+                        {highlightedText}
+                    </span>
                 )}
             </h2>
 
@@ -98,13 +112,12 @@ export default function PageHeading({
             {description && (
                 <p
                     className="
-                        mt-7
                         max-w-2xl
-                        text-base
-                        leading-7
-                        text-secondary
-                        sm:text-lg
-                        sm:leading-8
+        text-lg
+        leading-7
+        text-secondary
+        sm:text-xl
+        sm:leading-8
                     "
                 >
                     {description}

@@ -34,6 +34,7 @@ export const create = mutation({
             lastSentAt: args.lastSentAt,
             createdAt: args.createdAt,
         });
+
     },
 });
 

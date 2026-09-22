@@ -136,13 +136,10 @@ const HeroSection = () => {
                         {/* Eyebrow */}
                         <div
                             data-aos="fade-down"
-                            className="mb-7"
+                            className="mt-5"
                         >
                             <span className="section-label">
-                                <Sparkles
-                                    aria-hidden="true"
-                                    className="size-4"
-                                />
+
 
                                 Building Digital Experiences
                             </span>
@@ -163,7 +160,7 @@ const HeroSection = () => {
                             "
                         >
                             We build{" "}
-                            <span className="text-gradient">
+                            <span className="text-gradient font-medium">
                                 modern digital solutions
                             </span>{" "}
                             for ambitious businesses.

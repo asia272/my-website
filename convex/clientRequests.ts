@@ -95,9 +95,16 @@ export const create = mutation({
                 createdAt: now,
                 updatedAt: now,
             }
-        );
 
-        return requestId;
+        );
+        const attachmentUrl =
+            args.attachmentStorageId
+                ? await ctx.storage.getUrl(
+                    args.attachmentStorageId,
+                )
+                : null;
+
+        return { requestId, attachmentUrl };
     },
 });
 
