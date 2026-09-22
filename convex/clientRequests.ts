@@ -24,6 +24,8 @@ export const create = mutation({
     args: {
         clientName: v.string(),
         email: v.string(),
+        country: v.string(),
+        countryCode: v.string(),
         phone: v.string(),
         serviceType: v.string(),
         projectDescription: v.string(),
@@ -37,10 +39,13 @@ export const create = mutation({
 
         const clientName = args.clientName.trim();
         const email = args.email.trim().toLowerCase();
+        const country = args.country.trim();
+        const countryCode = args.countryCode.trim();
         const phone = args.phone.trim();
         const serviceType = args.serviceType.trim();
         const projectDescription =
             args.projectDescription.trim();
+
 
         if (!clientName) {
             throw new Error("Client name is required.");
@@ -49,7 +54,13 @@ export const create = mutation({
         if (!email) {
             throw new Error("Email is required.");
         }
+        if (!country) {
+            throw new Error("Country is required.");
+        }
 
+        if (!countryCode) {
+            throw new Error("Country code is required.");
+        }
         if (!phone) {
             throw new Error("Phone number is required.");
         }
@@ -69,6 +80,8 @@ export const create = mutation({
             {
                 clientName,
                 email,
+                country,
+                countryCode,
                 phone,
                 serviceType,
                 projectDescription,

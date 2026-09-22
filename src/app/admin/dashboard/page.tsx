@@ -293,9 +293,9 @@ export default function AdminDashboardPage() {
             p-6
           "
                 >
-                    <h2 className="text-lg font-semibold">
+                    <h3 className="text-lg font-semibold">
                         Quick Actions
-                    </h2>
+                    </h3>
 
                     <p className="mt-1 text-sm text-secondary">
                         Quickly add new content to your website.
@@ -325,21 +325,7 @@ export default function AdminDashboardPage() {
 
                         <Link
                             href="/admin/dashboard/requests"
-                            className="
-                flex
-                items-center
-                justify-center
-                rounded-xl
-                border
-                border-border
-                px-4
-                py-3
-                text-sm
-                font-medium
-                transition
-                hover:bg-muted
-              "
-                        >
+                            className=" custom-btn-outline  "  >
                             View Requests
                         </Link>
                     </div>

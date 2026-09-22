@@ -266,7 +266,7 @@ export default function ClientRequestDetailsPage() {
                         </div>
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-3">
+                    <div className="grid gap-5 sm:grid-cols-4">
                         <div className="min-w-0">
                             <p className="text-xs font-medium text-secondary">
                                 Name
@@ -280,7 +280,17 @@ export default function ClientRequestDetailsPage() {
                                 </p>
                             </div>
                         </div>
+                        <div className="min-w-0">
+                            <p className="text-xs font-medium text-secondary">
+                                Country
+                            </p>
 
+                            <div className="mt-1 flex items-center gap-2">
+                                <p className="truncate text-sm font-medium">
+                                    {request.country}
+                                </p>
+                            </div>
+                        </div>
                         <div className="min-w-0">
                             <p className="text-xs font-medium text-secondary">
                                 Email

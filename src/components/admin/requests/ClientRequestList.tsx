@@ -497,11 +497,11 @@ export default function ClientRequestList({
                                     {/* Details */}
                                     <div className="min-w-0 flex-1">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <h3 className="truncate text-sm font-semibold">
+                                            <h4 className="truncate text-sm font-semibold">
                                                 {
                                                     request.clientName
                                                 }
-                                            </h3>
+                                            </h4>
 
                                             <span
                                                 className={`

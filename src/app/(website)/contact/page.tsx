@@ -1,68 +1,1027 @@
 
+// "use client";
+
+// import { useRef, useState } from "react";
+
+// import {
+//     FileText,
+//     Loader2,
+//     Send,
+//     Upload,
+//     X,
+// } from "lucide-react";
+
+// import { useMutation } from "convex/react";
+// import { toast } from "react-hot-toast";
+
+// import { api } from "../../../../convex/_generated/api";
+// import type { Id } from "../../../../convex/_generated/dataModel";
+
+// import { countryCodes } from "@/lib/country-codes";
+
+// const MAX_FILE_SIZE = 10 * 1024 * 1024;
+// const MAX_DESCRIPTION_LENGTH = 1000;
+
+// const SERVICES = [
+//     "Web Development",
+//     "Full-Stack Development",
+//     "Frontend Development",
+//     "Backend Development",
+//     "UI/UX Development",
+//     "Website Maintenance",
+//     "Other",
+// ] as const;
+
+// type FormData = {
+//     clientName: string;
+//     email: string;
+//     country: string;
+//     countryCode: string;
+//     phone: string;
+//     serviceType: string;
+//     projectDescription: string;
+// };
+
+// const INITIAL_FORM_DATA: FormData = {
+//     clientName: "",
+//     email: "",
+//     country: "Pakistan",
+//     countryCode: "+92",
+//     phone: "+92",
+//     serviceType: "",
+//     projectDescription: "",
+// };
+
+// const Page = () => {
+//     const fileInputRef = useRef<HTMLInputElement>(null);
+
+//     const createClientRequest = useMutation(
+//         api.clientRequests.create
+//     );
+
+//     const generateUploadUrl = useMutation(
+//         api.clientRequests.generateUploadUrl
+//     );
+
+//     const [formData, setFormData] =
+//         useState<FormData>(INITIAL_FORM_DATA);
+
+//     const [selectedFile, setSelectedFile] =
+//         useState<File | null>(null);
+
+//     const [isSubmitting, setIsSubmitting] =
+//         useState(false);
+
+//     const [isUploadingFile, setIsUploadingFile] =
+//         useState(false);
+
+//     const [error, setError] = useState("");
+
+//     const MIN_PHONE_DIGITS = 7;
+//     const MAX_PHONE_DIGITS = 15;
+
+//     const updateField = <K extends keyof FormData>(
+//         field: K,
+//         value: FormData[K]
+//     ) => {
+//         setFormData((previous) => ({
+//             ...previous,
+//             [field]: value,
+//         }));
+//     };
+
+//     const resetForm = () => {
+//         setFormData(INITIAL_FORM_DATA);
+//         setSelectedFile(null);
+//         setError("");
+
+//         if (fileInputRef.current) {
+//             fileInputRef.current.value = "";
+//         }
+//     };
+
+//     const handleCountryChange = (
+//         event: React.ChangeEvent<HTMLSelectElement>
+//     ) => {
+//         const selectedCountryName = event.target.value;
+
+//         const selectedCountry = countryCodes.find(
+//             (country) =>
+//                 country.name === selectedCountryName
+//         );
+
+//         if (!selectedCountry) {
+//             return;
+//         }
+
+//         updateField(
+//             "country",
+//             selectedCountry.name
+//         );
+
+//         updateField(
+//             "countryCode",
+//             selectedCountry.code
+//         );
+
+//         updateField(
+//             "phone",
+//             selectedCountry.code
+//         );
+//     };
+
+//     const handlePhoneChange = (
+//         event: React.ChangeEvent<HTMLInputElement>
+//     ) => {
+//         const inputValue = event.target.value;
+
+//         const countryCode = formData.countryCode;
+
+//         // Remove everything except numbers.
+//         const digitsOnly = inputValue.replace(/\D/g, "");
+
+//         const countryCodeDigits =
+//             countryCode.replace(/\D/g, "");
+
+//         // Remove country code digits if the user pasted/typed them.
+//         let localPhoneDigits = digitsOnly;
+
+//         if (localPhoneDigits.startsWith(countryCodeDigits)) {
+//             localPhoneDigits = localPhoneDigits.slice(
+//                 countryCodeDigits.length
+//             );
+//         }
+
+//         // Maximum 15 digits INCLUDING country code.
+//         const maxLocalDigits =
+//             MAX_PHONE_DIGITS -
+//             countryCodeDigits.length;
+
+//         // Prevent the local number from exceeding
+//         // the international 15-digit limit.
+//         localPhoneDigits = localPhoneDigits.slice(
+//             0,
+//             Math.max(maxLocalDigits, 0)
+//         );
+
+//         updateField(
+//             "phone",
+//             countryCode + localPhoneDigits
+//         );
+//     };
+
+//     const handleFileChange = (
+//         event: React.ChangeEvent<HTMLInputElement>
+//     ) => {
+//         const file = event.target.files?.[0];
+
+//         if (!file) {
+//             return;
+//         }
+
+//         setError("");
+
+//         if (file.type !== "application/pdf") {
+//             setError("Please upload a PDF file only.");
+//             event.target.value = "";
+//             return;
+//         }
+
+//         if (file.size > MAX_FILE_SIZE) {
+//             setError("PDF file size must be 10MB or less.");
+//             event.target.value = "";
+//             return;
+//         }
+
+//         setSelectedFile(file);
+//     };
+
+//     const removeSelectedFile = () => {
+//         setSelectedFile(null);
+
+//         if (fileInputRef.current) {
+//             fileInputRef.current.value = "";
+//         }
+//     };
+
+//     const uploadFile = async (
+//         file: File
+//     ): Promise<Id<"_storage">> => {
+//         const uploadUrl = await generateUploadUrl();
+
+//         const result = await fetch(uploadUrl, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": file.type,
+//             },
+//             body: file,
+//         });
+
+//         if (!result.ok) {
+//             throw new Error(
+//                 "Failed to upload your PDF. Please try again."
+//             );
+//         }
+
+//         const data = (await result.json()) as {
+//             storageId: string;
+//         };
+
+//         if (!data.storageId) {
+//             throw new Error(
+//                 "PDF upload failed. Please try again."
+//             );
+//         }
+
+//         return data.storageId as Id<"_storage">;
+//     };
+
+//     const validateForm = () => {
+//         const name = formData.clientName.trim();
+//         const email = formData.email.trim();
+//         const phone = formData.phone.trim();
+//         const service = formData.serviceType.trim();
+
+
+//         const description =
+//             formData.projectDescription.trim();
+
+//         if (!name) {
+//             return "Please enter your name.";
+//         }
+
+//         if (name.length < 2) {
+//             return "Please enter a valid name.";
+//         }
+
+//         if (!email) {
+//             return "Please enter your email.";
+//         }
+
+//         const emailRegex =
+//             /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+//         if (!emailRegex.test(email)) {
+//             return "Please enter a valid email address.";
+//         }
+
+//         if (!phone || phone === formData.countryCode) {
+//             return "Please enter your phone number.";
+//         }
+
+//         const phoneDigits = phone.replace(/\D/g, "");
+
+//         const countryCodeDigits =
+//             formData.countryCode.replace(/\D/g, "");
+
+//         if (!phoneDigits.startsWith(countryCodeDigits)) {
+//             return "Please enter a valid phone number.";
+//         }
+
+//         const localPhoneDigits =
+//             phoneDigits.slice(countryCodeDigits.length);
+
+//         // Minimum local phone number length
+//         if (localPhoneDigits.length < MIN_PHONE_DIGITS) {
+//             return `Phone number must contain at least ${MIN_PHONE_DIGITS} digits.`;
+//         }
+
+//         // Maximum international phone number length
+//         if (phoneDigits.length > MAX_PHONE_DIGITS) {
+//             return `Phone number cannot contain more than ${MAX_PHONE_DIGITS} digits.`;
+//         }
+
+//         // Make sure the local number contains digits only.
+//         if (!/^\d+$/.test(localPhoneDigits)) {
+//             return "Phone number can contain numbers only.";
+//         }
+
+//         if (!service) {
+//             return "Please select a service.";
+//         }
+
+//         if (!description) {
+//             return "Please describe your project.";
+//         }
+
+//         if (
+//             description.length >
+//             MAX_DESCRIPTION_LENGTH
+//         ) {
+//             return `Project description must be ${MAX_DESCRIPTION_LENGTH} characters or less.`;
+//         }
+
+//         return null;
+//     };
+
+//     const handleSubmit = async (
+//         event: React.FormEvent<HTMLFormElement>
+//     ) => {
+//         event.preventDefault();
+
+//         if (isSubmitting) {
+//             return;
+//         }
+
+//         setError("");
+
+//         const validationError = validateForm();
+
+//         if (validationError) {
+//             setError(validationError);
+//             toast.error(validationError);
+//             return;
+//         }
+
+//         try {
+//             setIsSubmitting(true);
+
+//             let attachmentStorageId:
+//                 | Id<"_storage">
+//                 | undefined;
+
+//             if (selectedFile) {
+//                 setIsUploadingFile(true);
+
+//                 attachmentStorageId =
+//                     await uploadFile(selectedFile);
+
+//                 setIsUploadingFile(false);
+//             }
+
+//             await createClientRequest({
+//                 clientName:
+//                     formData.clientName.trim(),
+
+//                 email:
+//                     formData.email
+//                         .trim()
+//                         .toLowerCase(),
+
+//                 phone:
+//                     formData.phone.trim(),
+
+//                 country:
+//                     formData.country,
+
+//                 countryCode:
+//                     formData.countryCode,
+
+//                 serviceType:
+//                     formData.serviceType.trim(),
+
+//                 projectDescription:
+//                     formData.projectDescription.trim(),
+
+//                 attachmentStorageId,
+//             });
+
+//             toast.success(
+//                 "Your project request has been sent successfully."
+//             );
+
+//             resetForm();
+//         } catch (error) {
+//             console.error(
+//                 "Failed to submit client request:",
+//                 error
+//             );
+
+//             const message =
+//                 error instanceof Error
+//                     ? error.message
+//                     : "Failed to submit your request. Please try again.";
+
+//             setError(message);
+//             toast.error(message);
+//         } finally {
+//             setIsUploadingFile(false);
+//             setIsSubmitting(false);
+//         }
+//     };
+
+//     return (
+//         <main className="container section">
+//             {/* Header */}
+//             <div className="mx-auto mb-10 max-w-3xl text-center">
+//                 <p className="mb-2 text-sm font-medium text-primary">
+//                     Contact
+//                 </p>
+
+//                 <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+//                     Start a Project
+//                 </h1>
+
+//                 <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-secondary sm:text-base">
+//                     Tell us about your project, requirements,
+//                     and goals. We&apos;ll review your request
+//                     and get back to you soon.
+//                 </p>
+//             </div>
+
+//             {/* Form */}
+//             <form
+//                 onSubmit={handleSubmit}
+//                 className="mx-auto w-full max-w-2xl"
+//                 noValidate
+//             >
+//                 <div className="overflow-hidden rounded-[16px] border border-white/10 bg-card">
+//                     <div className="space-y-6 p-5 sm:p-7">
+//                         {/* Name + Email */}
+//                         <div className="grid gap-5 md:grid-cols-2">
+//                             <div className="space-y-2">
+//                                 <label
+//                                     htmlFor="clientName"
+//                                     className="text-sm font-medium"
+//                                 >
+//                                     Name
+//                                 </label>
+
+//                                 <input
+//                                     id="clientName"
+//                                     name="clientName"
+//                                     type="text"
+//                                     autoComplete="name"
+//                                     value={
+//                                         formData.clientName
+//                                     }
+//                                     onChange={(event) =>
+//                                         updateField(
+//                                             "clientName",
+//                                             event.target.value
+//                                         )
+//                                     }
+//                                     placeholder="Your name"
+//                                     disabled={isSubmitting}
+//                                     className="w-full rounded-[12px] border border-white/10 bg-transparent px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+//                                 />
+//                             </div>
+
+//                             <div className="space-y-2">
+//                                 <label
+//                                     htmlFor="email"
+//                                     className="text-sm font-medium"
+//                                 >
+//                                     Email
+//                                 </label>
+
+//                                 <input
+//                                     id="email"
+//                                     name="email"
+//                                     type="email"
+//                                     autoComplete="email"
+//                                     value={formData.email}
+//                                     onChange={(event) =>
+//                                         updateField(
+//                                             "email",
+//                                             event.target.value
+//                                         )
+//                                     }
+//                                     placeholder="you@example.com"
+//                                     disabled={isSubmitting}
+//                                     className="w-full rounded-[12px] border border-white/10 bg-transparent px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+//                                 />
+//                             </div>
+//                         </div>
+
+
+//                         {/* Phone + Service */}
+//                         <div className="grid gap-5 md:grid-cols-2">
+//                             {/* Phone */}
+//                             <div className="space-y-2">
+//                                 <label
+//                                     htmlFor="phone"
+//                                     className="text-sm font-medium"
+//                                 >
+//                                     Phone Number
+//                                 </label>
+
+//                                 <div className="grid grid-cols-[150px_1fr] overflow-hidden rounded-[12px] border border-white/10 bg-transparent transition-colors focus-within:border-primary">
+//                                     {/* Country */}
+//                                     <select
+//                                         id="country"
+//                                         name="country"
+//                                         aria-label="Country"
+//                                         value={formData.country}
+//                                         onChange={(event) => {
+//                                             const selectedCountry =
+//                                                 countryCodes.find(
+//                                                     (country) =>
+//                                                         country.name ===
+//                                                         event.target.value
+//                                                 );
+
+//                                             if (!selectedCountry) {
+//                                                 return;
+//                                             }
+
+//                                             updateField(
+//                                                 "country",
+//                                                 selectedCountry.name
+//                                             );
+
+//                                             updateField(
+//                                                 "countryCode",
+//                                                 selectedCountry.code
+//                                             );
+
+//                                             // Reset phone to the new country code
+//                                             updateField(
+//                                                 "phone",
+//                                                 selectedCountry.code
+//                                             );
+//                                         }}
+//                                         disabled={isSubmitting}
+//                                         className="min-w-0 border-r border-white/10 bg-transparent px-3 py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50"
+//                                     >
+//                                         {countryCodes.map(
+//                                             ({ name, code, flag }) => (
+//                                                 <option
+//                                                     key={`${name}-${code}`}
+//                                                     value={name}
+//                                                 >
+//                                                     {flag}  {name}
+//                                                 </option>
+//                                             )
+//                                         )}
+//                                     </select>
+
+//                                     {/* Phone Number */}
+//                                     <input
+//                                         id="phone"
+//                                         name="phone"
+//                                         type="tel"
+//                                         inputMode="numeric"
+//                                         autoComplete="tel"
+//                                         value={formData.phone}
+//                                         onChange={handlePhoneChange}
+//                                         maxLength={
+//                                             formData.countryCode.replace(/\D/g, "").length +
+//                                             (
+//                                                 MAX_PHONE_DIGITS -
+//                                                 formData.countryCode.replace(/\D/g, "").length
+//                                             )
+//                                         }
+//                                         pattern="[0-9+]*"
+//                                         placeholder={`${formData.countryCode} 300 1234567`}
+//                                         disabled={isSubmitting}
+//                                         className="min-w-0 w-full bg-transparent px-4 py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+//                                     />
+//                                 </div>
+
+//                                 <p className="text-[11px] text-muted-foreground">
+//                                     Select your country and enter your phone
+//                                     number.
+//                                 </p>
+//                             </div>
+
+//                             {/* Service */}
+//                             <div className="space-y-2">
+//                                 <label
+//                                     htmlFor="serviceType"
+//                                     className="text-sm font-medium"
+//                                 >
+//                                     Service
+//                                 </label>
+
+//                                 <select
+//                                     id="serviceType"
+//                                     name="serviceType"
+//                                     value={formData.serviceType}
+//                                     onChange={(event) =>
+//                                         updateField(
+//                                             "serviceType",
+//                                             event.target.value
+//                                         )
+//                                     }
+//                                     disabled={isSubmitting}
+//                                     className="w-full rounded-[12px] border border-white/10 bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+//                                 >
+//                                     <option value="">
+//                                         Select a service
+//                                     </option>
+
+//                                     {SERVICES.map((service) => (
+//                                         <option
+//                                             key={service}
+//                                             value={service}
+//                                         >
+//                                             {service}
+//                                         </option>
+//                                     ))}
+//                                 </select>
+//                             </div>
+//                         </div>
+
+
+
+//                         {/* Project Description */}
+//                         <div className="space-y-2">
+//                             <div className="flex items-center justify-between gap-3">
+//                                 <label
+//                                     htmlFor="projectDescription"
+//                                     className="text-sm font-medium"
+//                                 >
+//                                     Project Description
+//                                 </label>
+
+//                                 <span className="text-[11px] text-muted-foreground">
+//                                     {
+//                                         formData
+//                                             .projectDescription
+//                                             .length
+//                                     }
+//                                     /
+//                                     {
+//                                         MAX_DESCRIPTION_LENGTH
+//                                     }
+//                                 </span>
+//                             </div>
+
+//                             <textarea
+//                                 id="projectDescription"
+//                                 name="projectDescription"
+//                                 value={
+//                                     formData.projectDescription
+//                                 }
+//                                 onChange={(event) =>
+//                                     updateField(
+//                                         "projectDescription",
+//                                         event.target.value
+//                                     )
+//                                 }
+//                                 placeholder="Tell us about your project, requirements, goals, features, and timeline..."
+//                                 rows={7}
+//                                 maxLength={
+//                                     MAX_DESCRIPTION_LENGTH
+//                                 }
+//                                 disabled={isSubmitting}
+//                                 className="w-full resize-y rounded-[12px] border border-white/10 bg-transparent px-4 py-3 text-sm leading-6 outline-none transition-colors placeholder:text-muted-foreground focus:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+//                             />
+//                         </div>
+
+//                         {/* PDF Upload */}
+//                         <div className="space-y-2">
+//                             <div>
+//                                 <label className="text-sm font-medium">
+//                                     Project Brief / PDF
+//                                 </label>
+
+//                                 <p className="mt-1 text-xs text-secondary">
+//                                     Optional. Upload your
+//                                     requirements, project
+//                                     brief, or reference
+//                                     document.
+//                                 </p>
+//                             </div>
+
+//                             <input
+//                                 ref={fileInputRef}
+//                                 type="file"
+//                                 accept="application/pdf,.pdf"
+//                                 onChange={
+//                                     handleFileChange
+//                                 }
+//                                 disabled={isSubmitting}
+//                                 className="hidden"
+//                             />
+
+//                             <div className="flex min-h-[52px] items-center gap-3 rounded-[12px] border border-white/10 px-4">
+//                                 <FileText className="size-4 shrink-0 text-muted-foreground" />
+
+//                                 <button
+//                                     type="button"
+//                                     onClick={() =>
+//                                         fileInputRef.current?.click()
+//                                     }
+//                                     disabled={isSubmitting}
+//                                     className="min-w-0 flex-1 truncate text-left text-sm text-secondary transition-colors hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
+//                                 >
+//                                     {selectedFile?.name ??
+//                                         "Choose project PDF"}
+//                                 </button>
+
+//                                 {selectedFile ? (
+//                                     <button
+//                                         type="button"
+//                                         onClick={
+//                                             removeSelectedFile
+//                                         }
+//                                         disabled={isSubmitting}
+//                                         aria-label="Remove PDF"
+//                                         className="inline-flex shrink-0 items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:text-destructive disabled:pointer-events-none disabled:opacity-50"
+//                                     >
+//                                         <X className="size-4" />
+//                                     </button>
+//                                 ) : (
+//                                     <button
+//                                         type="button"
+//                                         onClick={() =>
+//                                             fileInputRef.current?.click()
+//                                         }
+//                                         disabled={isSubmitting}
+//                                         className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-secondary transition-colors hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
+//                                     >
+//                                         <Upload className="size-4" />
+//                                         Browse
+//                                     </button>
+//                                 )}
+//                             </div>
+
+//                             <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
+//                                 <span>
+//                                     PDF only · Max 10MB
+//                                 </span>
+
+//                                 {selectedFile && (
+//                                     <span>
+//                                         {(
+//                                             selectedFile.size /
+//                                             (1024 * 1024)
+//                                         ).toFixed(2)}{" "}
+//                                         MB
+//                                     </span>
+//                                 )}
+//                             </div>
+//                         </div>
+
+//                         {/* Error */}
+//                         {error && (
+//                             <div
+//                                 role="alert"
+//                                 className="flex items-start gap-3 rounded-[12px] border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+//                             >
+//                                 <X className="mt-0.5 size-4 shrink-0" />
+
+//                                 <p>{error}</p>
+//                             </div>
+//                         )}
+//                     </div>
+
+//                     {/* Footer */}
+//                     <div className="flex flex-col-reverse gap-3 border-t border-white/10 px-5 py-5 sm:flex-row sm:items-center sm:justify-end sm:px-7">
+//                         <button
+//                             type="button"
+//                             disabled={isSubmitting}
+//                             onClick={resetForm}
+//                             className="h-11 rounded-[12px] border border-white/10 px-5 text-sm font-medium transition-colors hover:bg-white/5 disabled:pointer-events-none disabled:opacity-50"
+//                         >
+//                             Clear
+//                         </button>
+
+//                         <button
+//                             type="submit"
+//                             disabled={
+//                                 isSubmitting ||
+//                                 isUploadingFile
+//                             }
+//                             className="custom-btn inline-flex h-11 min-w-[170px] items-center justify-center disabled:pointer-events-none disabled:opacity-50"
+//                         >
+//                             {isSubmitting ? (
+//                                 <>
+//                                     <Loader2 className="mr-2 size-4 animate-spin" />
+
+//                                     {isUploadingFile
+//                                         ? "Uploading..."
+//                                         : "Sending..."}
+//                                 </>
+//                             ) : (
+//                                 <>
+//                                     <Send className="mr-2 size-4" />
+//                                     Send Request
+//                                 </>
+//                             )}
+//                         </button>
+//                     </div>
+//                 </div>
+//             </form>
+//         </main>
+//     );
+// };
+
+// export default Page;
+
+
 "use client";
 
-import { useRef, useState } from "react";
+import {
+    useRef,
+    useState,
+    type ChangeEvent,
+    type FormEvent,
+} from "react";
 
-import { FileText, Loader2, Send, Upload, X } from "lucide-react";
+import {
+    ArrowUpRight,
+    Clock3,
+    FileText,
+    Globe2,
+    Loader2,
+    Mail,
+    MapPin,
+    Phone,
+    Send,
+    Upload,
+    X,
+} from "lucide-react";
 
 import { useMutation } from "convex/react";
-
 import { toast } from "react-hot-toast";
 
-api
-
-import { Button } from "@/components/ui/button";
 import { api } from "../../../../convex/_generated/api";
+import type { Id } from "../../../../convex/_generated/dataModel";
+
+import { countryCodes } from "@/lib/country-codes";
+import PageHeading from "@/components/shared/PageHeading";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const MAX_DESCRIPTION_LENGTH = 1000;
 
-const page = () => {
-    const fileInputRef = useRef<HTMLInputElement>(null);
+const SERVICES = [
+    "Web Development",
+    "Full-Stack Development",
+    "Frontend Development",
+    "Backend Development",
+    "UI/UX Development",
+    "Website Maintenance",
+    "Other",
+] as const;
+
+type FormData = {
+    clientName: string;
+    email: string;
+    country: string;
+    countryCode: string;
+    phone: string;
+    serviceType: string;
+    projectDescription: string;
+};
+
+const INITIAL_FORM_DATA: FormData = {
+    clientName: "",
+    email: "",
+    country: "Pakistan",
+    countryCode: "+92",
+    phone: "+92",
+    serviceType: "",
+    projectDescription: "",
+};
+
+const Page = () => {
+    const fileInputRef =
+        useRef<HTMLInputElement>(null);
 
     const createClientRequest = useMutation(
-        api.clientRequests.create
+        api.clientRequests.create,
     );
 
     const generateUploadUrl = useMutation(
-        api.clientRequests.generateUploadUrl
+        api.clientRequests.generateUploadUrl,
     );
 
-    const [clientName, setClientName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [serviceType, setServiceType] = useState("");
-    const [projectDescription, setProjectDescription] =
-        useState("");
+    const [formData, setFormData] =
+        useState<FormData>(INITIAL_FORM_DATA);
 
     const [selectedFile, setSelectedFile] =
         useState<File | null>(null);
 
-    const [isUploadingFile, setIsUploadingFile] =
+    const [isSubmitting, setIsSubmitting] =
         useState(false);
 
-    const [isSubmitting, setIsSubmitting] =
+    const [isUploadingFile, setIsUploadingFile] =
         useState(false);
 
     const [error, setError] = useState("");
 
-    const handleFileChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const file = event.target.files?.[0];
+    const MIN_PHONE_DIGITS = 7;
+    const MAX_PHONE_DIGITS = 15;
 
-        if (!file) return;
+    const updateField = <K extends keyof FormData>(
+        field: K,
+        value: FormData[K],
+    ) => {
+        setFormData((previous) => ({
+            ...previous,
+            [field]: value,
+        }));
+    };
+
+    const resetForm = () => {
+        setFormData(INITIAL_FORM_DATA);
+        setSelectedFile(null);
+        setError("");
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
+    const handleCountryChange = (
+        event: ChangeEvent<HTMLSelectElement>,
+    ) => {
+        const selectedCountryName =
+            event.target.value;
+
+        const selectedCountry =
+            countryCodes.find(
+                (country) =>
+                    country.name === selectedCountryName,
+            );
+
+        if (!selectedCountry) {
+            return;
+        }
+
+        updateField(
+            "country",
+            selectedCountry.name,
+        );
+
+        updateField(
+            "countryCode",
+            selectedCountry.code,
+        );
+
+        updateField(
+            "phone",
+            selectedCountry.code,
+        );
+    };
+
+    const handlePhoneChange = (
+        event: ChangeEvent<HTMLInputElement>,
+    ) => {
+        const inputValue = event.target.value;
+
+        const countryCode =
+            formData.countryCode;
+
+        // Remove everything except numbers.
+        const digitsOnly =
+            inputValue.replace(/\D/g, "");
+
+        const countryCodeDigits =
+            countryCode.replace(/\D/g, "");
+
+        // Remove country code digits if
+        // the user pasted/typed them.
+        let localPhoneDigits = digitsOnly;
+
+        if (
+            localPhoneDigits.startsWith(
+                countryCodeDigits,
+            )
+        ) {
+            localPhoneDigits =
+                localPhoneDigits.slice(
+                    countryCodeDigits.length,
+                );
+        }
+
+        // Maximum 15 digits INCLUDING country code.
+        const maxLocalDigits =
+            MAX_PHONE_DIGITS -
+            countryCodeDigits.length;
+
+        // Prevent the local number from exceeding
+        // the international 15-digit limit.
+        localPhoneDigits =
+            localPhoneDigits.slice(
+                0,
+                Math.max(maxLocalDigits, 0),
+            );
+
+        updateField(
+            "phone",
+            countryCode + localPhoneDigits,
+        );
+    };
+
+    const handleFileChange = (
+        event: ChangeEvent<HTMLInputElement>,
+    ) => {
+        const file =
+            event.target.files?.[0];
+
+        if (!file) {
+            return;
+        }
 
         setError("");
 
         if (file.type !== "application/pdf") {
-            setError("Please upload a PDF file only.");
+            setError(
+                "Please upload a PDF file only.",
+            );
 
             event.target.value = "";
             return;
         }
 
         if (file.size > MAX_FILE_SIZE) {
-            setError("PDF file size must be 10MB or less.");
+            setError(
+                "PDF file size must be 10MB or less.",
+            );
 
             event.target.value = "";
             return;
@@ -80,8 +1039,8 @@ const page = () => {
     };
 
     const uploadFile = async (
-        file: File
-    ) => {
+        file: File,
+    ): Promise<Id<"_storage">> => {
         const uploadUrl =
             await generateUploadUrl();
 
@@ -95,55 +1054,143 @@ const page = () => {
 
         if (!result.ok) {
             throw new Error(
-                "Failed to upload your PDF."
+                "Failed to upload your PDF. Please try again.",
             );
         }
 
-        const { storageId } = await result.json();
+        const data =
+            (await result.json()) as {
+                storageId: string;
+            };
 
-        return storageId;
+        if (!data.storageId) {
+            throw new Error(
+                "PDF upload failed. Please try again.",
+            );
+        }
+
+        return data.storageId as Id<"_storage">;
+    };
+
+    const validateForm = () => {
+        const name =
+            formData.clientName.trim();
+
+        const email =
+            formData.email.trim();
+
+        const phone =
+            formData.phone.trim();
+
+        const service =
+            formData.serviceType.trim();
+
+        const description =
+            formData.projectDescription.trim();
+
+        if (!name) {
+            return "Please enter your name.";
+        }
+
+        if (name.length < 2) {
+            return "Please enter a valid name.";
+        }
+
+        if (!email) {
+            return "Please enter your email.";
+        }
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            return "Please enter a valid email address.";
+        }
+
+        if (
+            !phone ||
+            phone === formData.countryCode
+        ) {
+            return "Please enter your phone number.";
+        }
+
+        const phoneDigits =
+            phone.replace(/\D/g, "");
+
+        const countryCodeDigits =
+            formData.countryCode.replace(
+                /\D/g,
+                "",
+            );
+
+        if (
+            !phoneDigits.startsWith(
+                countryCodeDigits,
+            )
+        ) {
+            return "Please enter a valid phone number.";
+        }
+
+        const localPhoneDigits =
+            phoneDigits.slice(
+                countryCodeDigits.length,
+            );
+
+        if (
+            localPhoneDigits.length <
+            MIN_PHONE_DIGITS
+        ) {
+            return `Phone number must contain at least ${MIN_PHONE_DIGITS} digits.`;
+        }
+
+        if (
+            phoneDigits.length >
+            MAX_PHONE_DIGITS
+        ) {
+            return `Phone number cannot contain more than ${MAX_PHONE_DIGITS} digits.`;
+        }
+
+        if (!/^\d+$/.test(localPhoneDigits)) {
+            return "Phone number can contain numbers only.";
+        }
+
+        if (!service) {
+            return "Please select a service.";
+        }
+
+        if (!description) {
+            return "Please describe your project.";
+        }
+
+        if (
+            description.length >
+            MAX_DESCRIPTION_LENGTH
+        ) {
+            return `Project description must be ${MAX_DESCRIPTION_LENGTH} characters or less.`;
+        }
+
+        return null;
     };
 
     const handleSubmit = async (
-        event: React.FormEvent<HTMLFormElement>
+        event: FormEvent<HTMLFormElement>,
     ) => {
         event.preventDefault();
 
-        if (isSubmitting) return;
+        if (isSubmitting) {
+            return;
+        }
 
         setError("");
 
-        const trimmedName = clientName.trim();
-        const trimmedEmail = email.trim();
-        const trimmedPhone = phone.trim();
-        const trimmedService = serviceType.trim();
-        const trimmedDescription =
-            projectDescription.trim();
+        const validationError =
+            validateForm();
 
-        if (!trimmedName) {
-            setError("Please enter your name.");
-            return;
-        }
+        if (validationError) {
+            setError(validationError);
 
-        if (!trimmedEmail) {
-            setError("Please enter your email.");
-            return;
-        }
+            toast.error(validationError);
 
-        if (!trimmedPhone) {
-            setError("Please enter your phone number.");
-            return;
-        }
-
-        if (!trimmedService) {
-            setError("Please select a service.");
-            return;
-        }
-
-        if (!trimmedDescription) {
-            setError(
-                "Please describe your project."
-            );
             return;
         }
 
@@ -151,61 +1198,66 @@ const page = () => {
             setIsSubmitting(true);
 
             let attachmentStorageId:
-                | string
+                | Id<"_storage">
                 | undefined;
 
             if (selectedFile) {
                 setIsUploadingFile(true);
 
                 attachmentStorageId =
-                    await uploadFile(selectedFile);
+                    await uploadFile(
+                        selectedFile,
+                    );
 
                 setIsUploadingFile(false);
             }
 
             await createClientRequest({
-                clientName: trimmedName,
-                email: trimmedEmail,
-                phone: trimmedPhone,
-                serviceType: trimmedService,
+                clientName:
+                    formData.clientName.trim(),
+
+                email:
+                    formData.email
+                        .trim()
+                        .toLowerCase(),
+
+                phone:
+                    formData.phone.trim(),
+
+                country:
+                    formData.country,
+
+                countryCode:
+                    formData.countryCode,
+
+                serviceType:
+                    formData.serviceType.trim(),
+
                 projectDescription:
-                    trimmedDescription,
-                attachmentStorageId:
-                    attachmentStorageId as
-                    | undefined,
+                    formData.projectDescription.trim(),
+
+                attachmentStorageId,
             });
 
             toast.success(
-                "Your request has been sent successfully."
+                "Your project request has been sent successfully.",
             );
 
-            setClientName("");
-            setEmail("");
-            setPhone("");
-            setServiceType("");
-            setProjectDescription("");
-            setSelectedFile(null);
-
-            if (fileInputRef.current) {
-                fileInputRef.current.value = "";
-            }
+            resetForm();
         } catch (error) {
             console.error(
                 "Failed to submit client request:",
-                error
+                error,
             );
 
-            setError(
+            const message =
                 error instanceof Error
                     ? error.message
-                    : "Failed to submit your request."
-            );
+                    : "Failed to submit your request. Please try again.";
 
-            toast.error(
-                error instanceof Error
-                    ? error.message
-                    : "Failed to submit your request."
-            );
+            setError(message);
+
+            toast.error(message);
         } finally {
             setIsUploadingFile(false);
             setIsSubmitting(false);
@@ -213,341 +1265,961 @@ const page = () => {
     };
 
     return (
-        <main className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-6 lg:py-16">
-            {/* Heading */}
-            <div className="mx-auto mb-8 max-w-4xl">
-                <p className="text-sm font-medium text-primary">
-                    Contact
-                </p>
+        <main className="relative overflow-hidden">
+            {/* =====================================================
+                HERO
+            ====================================================== */}
 
-                <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-                    Start a Project
-                </h1>
+            <section className="relative">
+                {/* Decorative glow */}
 
-                <p className="mt-2 text-sm text-secondary">
-                    Tell us about your project and we&apos;ll
-                    get back to you soon.
-                </p>
-            </div>
+                <div
+                    aria-hidden="true"
+                    className="
+                        pointer-events-none
+                        absolute
+                        -right-40
+                        -top-48
+                        h-[600px]
+                        w-[600px]
+                        rounded-full
+                        bg-[radial-gradient(circle,rgba(245,185,66,0.13)_0%,rgba(245,185,66,0.05)_30%,transparent_70%)]
+                        blur-2xl
+                    "
+                />
 
-            {/* Form */}
-            <form
-                onSubmit={handleSubmit}
-                className="mx-auto w-full max-w-4xl"
-            >
-                <div className="rounded-lg border bg-card">
-                    <div className="space-y-6 p-5 sm:p-6">
-                        {/* Name + Email */}
-                        <div className="grid gap-5 md:grid-cols-2">
-                            <div className="space-y-2">
-                                <label
-                                    htmlFor="clientName"
-                                    className="text-sm font-medium"
-                                >
-                                    Name
-                                </label>
+                <div
+                    aria-hidden="true"
+                    className="
+                        pointer-events-none
+                        absolute
+                        left-1/2
+                        top-0
+                        h-[420px]
+                        w-[700px]
+                        -translate-x-1/2
+                        bg-[radial-gradient(ellipse,rgba(245,185,66,0.06)_0%,transparent_70%)]
+                    "
+                />
 
-                                <input
-                                    id="clientName"
-                                    type="text"
-                                    value={clientName}
-                                    onChange={(event) =>
-                                        setClientName(
-                                            event.target.value
-                                        )
-                                    }
-                                    placeholder="Your name"
-                                    disabled={isSubmitting}
-                                    className="w-full rounded border bg-transparent px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                />
+                <div
+                    className="
+                        container
+                        relative
+                        pt-[calc(var(--nav-height)+48px)]
+                        pb-16
+                        lg:pt-[calc(var(--nav-height)+58px)]
+                        lg:pb-20
+                    "
+                >
+                    {/* Breadcrumb */}
+
+                    <div
+                        className="
+                            mb-9
+                            flex
+                            items-center
+                            gap-3
+                            text-[11px]
+                            font-medium
+                            uppercase
+                            tracking-[0.22em]
+                            text-muted-foreground
+                        "
+                    >
+                        <span>
+                            Home
+                        </span>
+
+                        <span
+                            aria-hidden="true"
+                            className="text-primary/50"
+                        >
+                            /
+                        </span>
+
+                        <span className="text-primary">
+                            Contact
+                        </span>
+                    </div>
+
+                    {/* Hero content */}
+
+
+
+                    <PageHeading
+                        label="Get in touch"
+                        title="Let's build your"
+                        highlightedText="next project."
+                        description="Tell me about your idea, requirements, and goals. I'll review your project and get back to you with the next steps."
+                    />
+                </div>
+            </section>
+
+            {/* =====================================================
+                DIVIDER
+            ====================================================== */}
+
+            <div className="divider" />
+
+            {/* =====================================================
+                CONTACT CONTENT
+            ====================================================== */}
+
+            <section className="section">
+                <div
+                    className="
+                        container
+                        grid
+                        gap-14
+                        lg:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.88fr)]
+                        lg:gap-20
+                        xl:gap-28
+                    "
+                >
+                    {/* =================================================
+                        LEFT — FORM
+                    ================================================== */}
+
+                    <div>
+
+
+                        <form
+                            onSubmit={handleSubmit}
+                            noValidate
+                            className="w-full"
+                        >
+                            <div className="space-y-7">
+                                {/* Name + Email */}
+
+                                <div className="grid gap-6 sm:grid-cols-2">
+                                    <div className="space-y-2.5">
+                                        <label
+                                            htmlFor="clientName"
+                                            className="
+                                                text-[11px]
+                                                font-semibold
+                                                uppercase
+                                                tracking-[0.16em]
+                                                text-muted-foreground
+                                            "
+                                        >
+                                            Name
+                                        </label>
+
+                                        <input
+                                            id="clientName"
+                                            name="clientName"
+                                            type="text"
+                                            autoComplete="name"
+                                            value={
+                                                formData.clientName
+                                            }
+                                            onChange={(event) =>
+                                                updateField(
+                                                    "clientName",
+                                                    event.target.value,
+                                                )
+                                            }
+                                            placeholder="Your name"
+                                            disabled={
+                                                isSubmitting
+                                            }
+                                            className="
+                                                px-4
+                                                py-3.5
+                                                text-sm
+                                                disabled:cursor-not-allowed
+                                                disabled:opacity-50
+                                            "
+                                        />
+                                    </div>
+
+                                    <div className="space-y-2.5">
+                                        <label
+                                            htmlFor="email"
+                                            className="
+                                                text-[11px]
+                                                font-semibold
+                                                uppercase
+                                                tracking-[0.16em]
+                                                text-muted-foreground
+                                            "
+                                        >
+                                            Email
+                                        </label>
+
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            autoComplete="email"
+                                            value={
+                                                formData.email
+                                            }
+                                            onChange={(event) =>
+                                                updateField(
+                                                    "email",
+                                                    event.target.value,
+                                                )
+                                            }
+                                            placeholder="you@example.com"
+                                            disabled={
+                                                isSubmitting
+                                            }
+                                            className="
+                                                px-4
+                                                py-3.5
+                                                text-sm
+                                                disabled:cursor-not-allowed
+                                                disabled:opacity-50
+                                            "
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Phone */}
+                                <div className="grid gap-5 md:grid-cols-2">
+                                    <div className="space-y-2.5">
+                                        <label
+                                            htmlFor="phone"
+                                            className="
+                                            text-[11px]
+                                            font-semibold
+                                            uppercase
+                                            tracking-[0.16em]
+                                            text-muted-foreground
+                                        "
+                                        >
+                                            Phone Number
+                                        </label>
+
+                                        <div
+                                            className="
+                                            grid
+                                            grid-cols-[minmax(0,155px)_1fr]
+                                            overflow-hidden
+                                            rounded-[var(--radius-md)]
+                                            border
+                                            border-[var(--border)]
+                                            bg-[var(--surface)]
+                                            transition-colors
+                                            focus-within:border-[var(--primary)]
+                                            focus-within:shadow-[0_0_0_3px_rgba(245,185,66,0.1)]
+                                        "
+                                        >
+                                            <select
+                                                id="country"
+                                                name="country"
+                                                aria-label="Country"
+                                                value={
+                                                    formData.country
+                                                }
+                                                onChange={
+                                                    handleCountryChange
+                                                }
+                                                disabled={
+                                                    isSubmitting
+                                                }
+                                                className="
+                                                min-w-0
+                                                rounded-none
+                                                border-0
+                                                border-r
+                                                border-[var(--border)]
+                                                bg-transparent
+                                                px-3
+                                                py-3.5
+                                                text-sm
+                                                outline-none
+                                                focus:border-0
+                                                focus:shadow-none
+                                                disabled:cursor-not-allowed
+                                                disabled:opacity-50
+                                            "
+                                            >
+                                                {countryCodes.map(
+                                                    ({
+                                                        name,
+                                                        code,
+                                                        flag,
+                                                    }) => (
+                                                        <option
+                                                            key={`${name}-${code}`}
+                                                            value={name}
+                                                        >
+                                                            {flag}{" "}
+                                                            {name}
+                                                        </option>
+                                                    ),
+                                                )}
+                                            </select>
+
+                                            <input
+                                                id="phone"
+                                                name="phone"
+                                                type="tel"
+                                                inputMode="numeric"
+                                                autoComplete="tel"
+                                                value={
+                                                    formData.phone
+                                                }
+                                                onChange={
+                                                    handlePhoneChange
+                                                }
+                                                maxLength={
+                                                    formData.countryCode.replace(
+                                                        /\D/g,
+                                                        "",
+                                                    ).length +
+                                                    (
+                                                        MAX_PHONE_DIGITS -
+                                                        formData.countryCode.replace(
+                                                            /\D/g,
+                                                            "",
+                                                        ).length
+                                                    )
+                                                }
+                                                pattern="[0-9+]*"
+                                                placeholder={`${formData.countryCode} 300 1234567`}
+                                                disabled={
+                                                    isSubmitting
+                                                }
+                                                className="
+                                                min-w-0
+                                                rounded-none
+                                                border-0
+                                                bg-transparent
+                                                px-4
+                                                py-3.5
+                                                text-sm
+                                                outline-none
+                                                focus:border-0
+                                                focus:shadow-none
+                                                disabled:cursor-not-allowed
+                                                disabled:opacity-50
+                                            "
+                                            />
+                                        </div>
+
+                                        <p className="text-[11px] text-muted-foreground">
+                                            Select your country
+                                            and enter your phone
+                                            number.
+                                        </p>
+                                    </div>
+
+                                    {/* Service */}
+
+                                    <div className="space-y-2">
+                                        <label
+                                            htmlFor="serviceType"
+                                            className="
+                                            text-[11px]
+                                            font-semibold
+                                            uppercase
+                                            tracking-[0.16em]
+                                            text-muted-foreground
+                                        "
+                                        >
+                                            Service
+                                        </label>
+
+                                        <select
+                                            id="serviceType"
+                                            name="serviceType"
+                                            value={
+                                                formData.serviceType
+                                            }
+                                            onChange={(event) =>
+                                                updateField(
+                                                    "serviceType",
+                                                    event.target.value,
+                                                )
+                                            }
+                                            disabled={
+                                                isSubmitting
+                                            }
+                                            className="
+                                            px-4
+                                            py-3.5
+                                            text-sm
+                                            disabled:cursor-not-allowed
+                                            disabled:opacity-50
+                                        "
+                                        >
+                                            <option value="">
+                                                Select a service
+                                            </option>
+
+                                            {SERVICES.map(
+                                                (service) => (
+                                                    <option
+                                                        key={service}
+                                                        value={service}
+                                                    >
+                                                        {service}
+                                                    </option>
+                                                ),
+                                            )}
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                {/* Project Description */}
+
+                                <div className="space-y-2.5">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <label
+                                            htmlFor="projectDescription"
+                                            className="
+                                                text-[11px]
+                                                font-semibold
+                                                uppercase
+                                                tracking-[0.16em]
+                                                text-muted-foreground
+                                            "
+                                        >
+                                            Project Description
+                                        </label>
+
+                                        <span className="text-[11px] text-muted-foreground">
+                                            {
+                                                formData
+                                                    .projectDescription
+                                                    .length
+                                            }
+                                            /
+                                            {
+                                                MAX_DESCRIPTION_LENGTH
+                                            }
+                                        </span>
+                                    </div>
+
+                                    <textarea
+                                        id="projectDescription"
+                                        name="projectDescription"
+                                        value={
+                                            formData.projectDescription
+                                        }
+                                        onChange={(event) =>
+                                            updateField(
+                                                "projectDescription",
+                                                event.target.value,
+                                            )
+                                        }
+                                        placeholder="Tell me about your project, requirements, goals, features, and timeline..."
+                                        rows={7}
+                                        maxLength={
+                                            MAX_DESCRIPTION_LENGTH
+                                        }
+                                        disabled={
+                                            isSubmitting
+                                        }
+                                        className="
+                                            min-h-[180px]
+                                            resize-y
+                                            px-4
+                                            py-3.5
+                                            text-sm
+                                            leading-6
+                                            disabled:cursor-not-allowed
+                                            disabled:opacity-50
+                                        "
+                                    />
+                                </div>
+
+                                {/* PDF Upload */}
+
+                                <div className="space-y-2.5">
+                                    <div className="flex items-end justify-between gap-4">
+                                        <div>
+                                            <label
+                                                className="
+                                                    text-[11px]
+                                                    font-semibold
+                                                    uppercase
+                                                    tracking-[0.16em]
+                                                    text-muted-foreground
+                                                "
+                                            >
+                                                Project Brief / PDF
+                                            </label>
+
+                                            <p className="mt-1.5 text-xs text-secondary">
+                                                Optional. Upload
+                                                your requirements,
+                                                brief, or reference
+                                                document.
+                                            </p>
+                                        </div>
+
+                                        <span className="hidden shrink-0 text-[11px] text-muted-foreground sm:block">
+                                            PDF · Max 10MB
+                                        </span>
+                                    </div>
+
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="application/pdf,.pdf"
+                                        onChange={
+                                            handleFileChange
+                                        }
+                                        disabled={
+                                            isSubmitting
+                                        }
+                                        className="hidden"
+                                    />
+
+                                    <div
+                                        className="
+                                            flex
+                                            min-h-[58px]
+                                            items-center
+                                            gap-3
+                                            rounded-[var(--radius-md)]
+                                            border
+                                            border-[var(--border)]
+                                            bg-[var(--surface)]
+                                            px-4
+                                            transition-colors
+                                            hover:border-[var(--border-hover)]
+                                        "
+                                    >
+                                        <FileText className="size-4 shrink-0 text-primary" />
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                fileInputRef.current?.click()
+                                            }
+                                            disabled={
+                                                isSubmitting
+                                            }
+                                            className="
+                                                min-w-0
+                                                flex-1
+                                                truncate
+                                                text-left
+                                                text-sm
+                                                text-secondary
+                                                transition-colors
+                                                hover:text-foreground
+                                                disabled:pointer-events-none
+                                                disabled:opacity-50
+                                            "
+                                        >
+                                            {selectedFile?.name ??
+                                                "Choose project PDF"}
+                                        </button>
+
+                                        {selectedFile ? (
+                                            <button
+                                                type="button"
+                                                onClick={
+                                                    removeSelectedFile
+                                                }
+                                                disabled={
+                                                    isSubmitting
+                                                }
+                                                aria-label="Remove PDF"
+                                                className="
+                                                    inline-flex
+                                                    shrink-0
+                                                    items-center
+                                                    justify-center
+                                                    rounded-md
+                                                    p-1.5
+                                                    text-muted-foreground
+                                                    transition-colors
+                                                    hover:text-destructive
+                                                    disabled:pointer-events-none
+                                                    disabled:opacity-50
+                                                "
+                                            >
+                                                <X className="size-4" />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    fileInputRef.current?.click()
+                                                }
+                                                disabled={
+                                                    isSubmitting
+                                                }
+                                                className="
+                                                    inline-flex
+                                                    shrink-0
+                                                    items-center
+                                                    gap-1.5
+                                                    text-sm
+                                                    font-medium
+                                                    text-secondary
+                                                    transition-colors
+                                                    hover:text-foreground
+                                                    disabled:pointer-events-none
+                                                    disabled:opacity-50
+                                                "
+                                            >
+                                                <Upload className="size-4" />
+
+                                                Browse
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground sm:hidden">
+                                        <span>
+                                            PDF only
+                                        </span>
+
+                                        <span>
+                                            Max 10MB
+                                        </span>
+                                    </div>
+
+                                    {selectedFile && (
+                                        <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
+                                            <span>
+                                                Ready to upload
+                                            </span>
+
+                                            <span>
+                                                {(
+                                                    selectedFile.size /
+                                                    (1024 * 1024)
+                                                ).toFixed(
+                                                    2,
+                                                )}{" "}
+                                                MB
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Error */}
+
+                                {error && (
+                                    <div
+                                        role="alert"
+                                        className="
+                                            flex
+                                            items-start
+                                            gap-3
+                                            rounded-[var(--radius-md)]
+                                            border
+                                            border-destructive/20
+                                            bg-destructive/5
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            text-destructive
+                                        "
+                                    >
+                                        <X className="mt-0.5 size-4 shrink-0" />
+
+                                        <p className="text-destructive">
+                                            {error}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Actions */}
+
+                                <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center">
+                                    <button
+                                        type="button"
+                                        disabled={
+                                            isSubmitting
+                                        }
+                                        onClick={resetForm}
+                                        className="
+                                            custom-btn-outline
+                                            w-full
+                                            sm:w-auto
+                                        "
+                                    >
+                                        Clear
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        disabled={
+                                            isSubmitting ||
+                                            isUploadingFile
+                                        }
+                                        className="
+                                            custom-btn
+                                            w-full
+                                            sm:min-w-[190px]
+                                            sm:w-auto
+                                        "
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <Loader2 className="mr-2 size-4 animate-spin" />
+
+                                                {isUploadingFile
+                                                    ? "Uploading..."
+                                                    : "Sending..."}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Send className="mr-2 size-4" />
+
+                                                Send Request
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
+                        </form>
+                    </div>
 
-                            <div className="space-y-2">
-                                <label
-                                    htmlFor="email"
-                                    className="text-sm font-medium"
-                                >
-                                    Email
-                                </label>
+                    {/* =================================================
+                        RIGHT — CONTACT INFORMATION
+                    ================================================== */}
 
-                                <input
-                                    id="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(event) =>
-                                        setEmail(
-                                            event.target.value
-                                        )
-                                    }
-                                    placeholder="you@example.com"
-                                    disabled={isSubmitting}
-                                    className="w-full rounded border bg-transparent px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                />
-                            </div>
-                        </div>
+                    <aside className="lg:pt-[104px]">
+                        <div className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]">
+                            <div className="mb-8">
+                                <p className="section-label">
+                                    Let&apos;s connect
+                                </p>
 
-                        {/* Phone + Service */}
-                        <div className="grid gap-5 md:grid-cols-2">
-                            <div className="space-y-2">
-                                <label
-                                    htmlFor="phone"
-                                    className="text-sm font-medium"
-                                >
-                                    Phone
-                                </label>
+                                <h2 className="mt-5 text-2xl sm:text-3xl">
+                                    Have an idea?
+                                </h2>
 
-                                <input
-                                    id="phone"
-                                    type="tel"
-                                    value={phone}
-                                    onChange={(event) =>
-                                        setPhone(
-                                            event.target.value
-                                        )
-                                    }
-                                    placeholder="+92 300 1234567"
-                                    disabled={isSubmitting}
-                                    className="w-full rounded border bg-transparent px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label
-                                    htmlFor="serviceType"
-                                    className="text-sm font-medium"
-                                >
-                                    Service
-                                </label>
-
-                                <select
-                                    id="serviceType"
-                                    value={serviceType}
-                                    onChange={(event) =>
-                                        setServiceType(
-                                            event.target.value
-                                        )
-                                    }
-                                    disabled={isSubmitting}
-                                    className="w-full rounded border bg-transparent px-3 py-2.5 text-sm outline-none transition-colors focus:border-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                >
-                                    <option value="">
-                                        Select a service
-                                    </option>
-                                    <option value="Web Development">
-                                        Web Development
-                                    </option>
-                                    <option value="Full-Stack Development">
-                                        Full-Stack Development
-                                    </option>
-                                    <option value="Frontend Development">
-                                        Frontend Development
-                                    </option>
-                                    <option value="Backend Development">
-                                        Backend Development
-                                    </option>
-                                    <option value="UI/UX Development">
-                                        UI/UX Development
-                                    </option>
-                                    <option value="Website Maintenance">
-                                        Website Maintenance
-                                    </option>
-                                    <option value="Other">
-                                        Other
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        {/* Description */}
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between gap-3">
-                                <label
-                                    htmlFor="projectDescription"
-                                    className="text-sm font-medium"
-                                >
-                                    Project Description
-                                </label>
-
-                                <span className="text-[11px] text-muted-foreground">
-                                    {
-                                        projectDescription.length
-                                    }
-                                    /1000
-                                </span>
-                            </div>
-
-                            <textarea
-                                id="projectDescription"
-                                value={projectDescription}
-                                onChange={(event) =>
-                                    setProjectDescription(
-                                        event.target.value
-                                    )
-                                }
-                                placeholder="Tell us about your project, requirements, goals, and timeline..."
-                                rows={6}
-                                maxLength={1000}
-                                disabled={isSubmitting}
-                                className="w-full resize-y rounded border bg-transparent px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring disabled:cursor-not-allowed disabled:opacity-50"
-                            />
-                        </div>
-
-                        {/* PDF Upload */}
-                        <div className="space-y-2">
-                            <div>
-                                <label className="text-sm font-medium">
-                                    Project Brief / PDF
-                                </label>
-
-                                <p className="mt-1 text-xs text-secondary">
-                                    Optional. Upload your project
-                                    requirements or brief.
+                                <p className="mt-4 text-sm leading-6 text-secondary">
+                                    Whether you&apos;re starting
+                                    something new or improving
+                                    an existing product, share
+                                    the details and let&apos;s
+                                    discuss how I can help.
                                 </p>
                             </div>
 
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="application/pdf"
-                                onChange={handleFileChange}
-                                disabled={isSubmitting}
-                                className="hidden"
-                            />
+                            <div className="divider" />
 
-                            <div className="flex min-h-10 items-center gap-3 rounded border bg-transparent px-3">
-                                <FileText className="size-4 shrink-0 text-muted-foreground" />
+                            {/* Availability */}
 
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        fileInputRef.current?.click()
-                                    }
-                                    disabled={isSubmitting}
-                                    className="min-w-0 flex-1 truncate text-left text-sm text-secondary transition-colors hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
+                            <div className="flex gap-4 py-6">
+                                <div
+                                    className="
+                                        flex
+                                        size-11
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-[var(--radius-md)]
+                                        border
+                                        border-[var(--border)]
+                                        bg-[var(--surface)]
+                                        text-primary
+                                    "
                                 >
-                                    {selectedFile?.name ??
-                                        "Choose project PDF"}
-                                </button>
+                                    <Clock3 className="size-[18px]" />
+                                </div>
 
-                                {selectedFile ? (
-                                    <button
-                                        type="button"
-                                        onClick={removeSelectedFile}
-                                        disabled={isSubmitting}
-                                        aria-label="Remove PDF"
-                                        className="inline-flex shrink-0 items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:text-destructive disabled:pointer-events-none disabled:opacity-50"
-                                    >
-                                        <X className="size-4" />
-                                    </button>
-                                ) : (
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            fileInputRef.current?.click()
-                                        }
-                                        disabled={isSubmitting}
-                                        className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-secondary transition-colors hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
-                                    >
-                                        <Upload className="size-4" />
-                                        Browse
-                                    </button>
-                                )}
+                                <div className="min-w-0">
+                                    <h3 className="text-base font-semibold">
+                                        Response time
+                                    </h3>
+
+                                    <p className="mt-1 text-sm leading-6 text-secondary">
+                                        I&apos;ll review your
+                                        project request and
+                                        respond as soon as
+                                        possible.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
-                                <span>
-                                    PDF only · Max 10MB
-                                </span>
+                            <div className="divider" />
 
-                                {selectedFile && (
-                                    <span>
-                                        {(
-                                            selectedFile.size /
-                                            (1024 * 1024)
-                                        ).toFixed(2)}{" "}
-                                        MB
-                                    </span>
-                                )}
+                            {/* Location */}
+
+                            <div className="flex gap-4 py-6">
+                                <div
+                                    className="
+                                        flex
+                                        size-11
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-[var(--radius-md)]
+                                        border
+                                        border-[var(--border)]
+                                        bg-[var(--surface)]
+                                        text-primary
+                                    "
+                                >
+                                    <MapPin className="size-[18px]" />
+                                </div>
+
+                                <div className="min-w-0">
+                                    <h3 className="text-base font-semibold">
+                                        Based in Pakistan
+                                    </h3>
+
+                                    <p className="mt-1 text-sm leading-6 text-secondary">
+                                        Working with clients
+                                        remotely across
+                                        different locations
+                                        and time zones.
+                                    </p>
+                                </div>
                             </div>
+
+                            <div className="divider" />
+
+                            {/* Email */}
+
+                            <div className="flex gap-4 py-6">
+                                <div
+                                    className="
+                                        flex
+                                        size-11
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-[var(--radius-md)]
+                                        border
+                                        border-[var(--border)]
+                                        bg-[var(--surface)]
+                                        text-primary
+                                    "
+                                >
+                                    <Mail className="size-[18px]" />
+                                </div>
+
+                                <div className="min-w-0">
+                                    <h3 className="text-base font-semibold">
+                                        Project requests
+                                    </h3>
+
+                                    <p className="mt-1 text-sm leading-6 text-secondary">
+                                        Use the form to send
+                                        your project details
+                                        directly. Your request
+                                        will be securely stored
+                                        for review.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="divider" />
+
+                            {/* Global */}
+
+                            <div className="flex gap-4 py-6">
+                                <div
+                                    className="
+                                        flex
+                                        size-11
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-[var(--radius-md)]
+                                        border
+                                        border-[var(--border)]
+                                        bg-[var(--surface)]
+                                        text-primary
+                                    "
+                                >
+                                    <Globe2 className="size-[18px]" />
+                                </div>
+
+                                <div className="min-w-0">
+                                    <h3 className="text-base font-semibold">
+                                        Global collaboration
+                                    </h3>
+
+                                    <p className="mt-1 text-sm leading-6 text-secondary">
+                                        Web development,
+                                        full-stack applications,
+                                        and digital products
+                                        for clients worldwide.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="divider" />
+
+                            {/* GitHub / portfolio link */}
+
+                            <a
+                                href="https://github.com/asia272"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="
+                                    group
+                                    mt-6
+                                    flex
+                                    items-center
+                                    justify-between
+                                    rounded-[var(--radius-md)]
+                                    border
+                                    border-[var(--border)]
+                                    bg-[var(--surface)]
+                                    px-4
+                                    py-4
+                                    transition-all
+                                    duration-300
+                                    hover:border-[var(--border-hover)]
+                                    hover:bg-[var(--surface-hover)]
+                                "
+                            >
+                                <div className="flex min-w-0 items-center gap-3">
+                                    <div
+                                        className="
+                                            flex
+                                            size-9
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            rounded-lg
+                                            bg-[var(--primary-soft)]
+                                            text-primary
+                                        "
+                                    >
+                                        <Globe2 className="size-4" />
+                                    </div>
+
+                                    <div className="min-w-0">
+                                        <p className="text-sm font-medium text-primary">
+                                            View my work
+                                        </p>
+
+                                        <p className="truncate text-xs text-muted-foreground">
+                                            github.com/asia272
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <ArrowUpRight
+                                    className="
+                                        size-4
+                                        shrink-0
+                                        text-muted-foreground
+                                        transition-transform
+                                        duration-300
+                                        group-hover:-translate-y-0.5
+                                        group-hover:translate-x-0.5
+                                        group-hover:text-primary
+                                    "
+                                />
+                            </a>
                         </div>
-
-                        {/* Error */}
-                        {error && (
-                            <div className="flex items-start gap-3 rounded-md border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
-                                <X className="mt-0.5 size-4 shrink-0" />
-
-                                <p>{error}</p>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="flex flex-col-reverse gap-3 border-t px-5 py-4 sm:flex-row sm:items-center sm:justify-end sm:px-6">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            disabled={isSubmitting}
-                            onClick={() => {
-                                setClientName("");
-                                setEmail("");
-                                setPhone("");
-                                setServiceType("");
-                                setProjectDescription("");
-                                setSelectedFile(null);
-                                setError("");
-
-                                if (fileInputRef.current) {
-                                    fileInputRef.current.value = "";
-                                }
-                            }}
-                            className="
-                                h-11
-                                min-w-[120px]
-                                rounded-[12px]
-                                px-5
-                                text-base
-                                font-medium
-                            "
-                        >
-                            Clear
-                        </Button>
-
-                        <Button
-                            type="submit"
-                            disabled={
-                                isSubmitting ||
-                                isUploadingFile
-                            }
-                            className="
-                                h-11
-                                min-w-[170px]
-                                rounded-[12px]
-                                px-5
-                                text-base
-                                font-medium
-                            "
-                        >
-                            {isSubmitting ? (
-                                <>
-                                    <Loader2 className="mr-2 size-4 animate-spin" />
-
-                                    {isUploadingFile
-                                        ? "Uploading..."
-                                        : "Sending..."}
-                                </>
-                            ) : (
-                                <>
-                                    <Send className="mr-2 size-4" />
-                                    Send Request
-                                </>
-                            )}
-                        </Button>
-                    </div>
+                    </aside>
                 </div>
-            </form>
+            </section>
         </main>
     );
 };
 
-export default page;
-
+export default Page;

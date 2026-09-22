@@ -141,6 +141,8 @@ export default defineSchema({
         email: v.string(),
         phone: v.string(),
 
+        country: v.string(),
+        countryCode: v.string(),
         serviceType: v.string(),
 
         projectDescription: v.string(),
