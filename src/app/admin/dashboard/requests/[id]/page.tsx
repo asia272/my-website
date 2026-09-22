@@ -12,7 +12,10 @@ import {
     Download,
     ExternalLink,
     FileText,
+    Globe2,
+    LocateIcon,
     Mail,
+    MapPin,
     Phone,
     User,
     Wrench,
@@ -266,7 +269,7 @@ export default function ClientRequestDetailsPage() {
                         </div>
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-4">
+                    <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-2 ">
                         <div className="min-w-0">
                             <p className="text-xs font-medium text-secondary">
                                 Name
@@ -286,6 +289,8 @@ export default function ClientRequestDetailsPage() {
                             </p>
 
                             <div className="mt-1 flex items-center gap-2">
+                                <MapPin className="size-4 text-green-500" />
+
                                 <p className="truncate text-sm font-medium">
                                     {request.country}
                                 </p>
