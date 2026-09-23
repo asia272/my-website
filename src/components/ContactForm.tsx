@@ -1697,6 +1697,8 @@ const ContactForm = () => {
                                     uppercase
                                     tracking-[0.16em]
                                     text-muted-foreground
+                                    mb-2
+                                    block
                                 "
                             >
                                 Name
@@ -1739,6 +1741,8 @@ const ContactForm = () => {
                                     font-semibold
                                     uppercase
                                     tracking-[0.16em]
+                                    mb-2
+                                    block
                                     text-muted-foreground
                                 "
                             >
@@ -1788,6 +1792,8 @@ const ContactForm = () => {
                                     uppercase
                                     tracking-[0.16em]
                                     text-muted-foreground
+                                    mb-2
+                                    block
                                 "
                             >
                                 Phone Number
@@ -1990,6 +1996,8 @@ const ContactForm = () => {
                                     uppercase
                                     tracking-[0.16em]
                                     text-muted-foreground
+                                    mb-2
+                                    block
                                 "
                             >
                                 Service
@@ -2075,6 +2083,7 @@ const ContactForm = () => {
                                     uppercase
                                     tracking-[0.16em]
                                     text-muted-foreground
+                                    
                                 "
                             >
                                 Project Description
@@ -2127,136 +2136,107 @@ const ContactForm = () => {
 
                     {/* PDF Upload */}
                     <div className="space-y-2.5">
-                        <div className="flex items-end justify-between gap-4">
-                            <div>
-                                <label
-                                    className="
-                                        text-[11px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.16em]
-                                        text-muted-foreground
-                                    "
-                                >
-                                    Project Brief / PDF
-                                </label>
 
-                                <p className="mt-1.5 text-xs text-secondary">
-                                    Optional. Upload
-                                    your requirements,
-                                    brief, or reference
-                                    document.
-                                </p>
-                            </div>
+                        <label
+                            className="
+                text-[11px]
+                font-semibold
+                uppercase
+                tracking-[0.16em]
+                text-muted-foreground
+                mb-2
+                                    block
+            "
+                        >
+                            Project Brief / PDF
+                        </label>
 
-                            <span className="hidden shrink-0 text-[11px] text-muted-foreground sm:block">
-                                PDF · Max 10MB
-                            </span>
-                        </div>
+
 
                         <input
                             ref={fileInputRef}
                             type="file"
                             accept="application/pdf,.pdf"
-                            onChange={
-                                handleFileChange
-                            }
-                            disabled={
-                                isSubmitting
-                            }
+                            onChange={handleFileChange}
+                            disabled={isSubmitting}
                             className="hidden"
                         />
 
                         <div
                             className="
-                                flex
-                                min-h-[58px]
-                                items-center
-                                gap-3
-                                rounded-[var(--radius-md)]
-                                border
-                                border-[var(--border)]
-                                bg-[var(--surface)]
-                                px-4
-                                transition-colors
-                                hover:border-[var(--border-hover)]
-                            "
+            flex
+        
+            items-center
+            gap-3
+           
+            px-4
+          
+           
+            form-select-trigger
+        "
                         >
                             <FileText className="size-4 shrink-0 text-primary" />
 
                             <button
                                 type="button"
-                                onClick={() =>
-                                    fileInputRef.current?.click()
-                                }
-                                disabled={
-                                    isSubmitting
-                                }
+                                onClick={() => fileInputRef.current?.click()}
+                                disabled={isSubmitting}
                                 className="
-                                    min-w-0
-                                    flex-1
-                                    truncate
-                                    text-left
-                                    text-sm
-                                    text-secondary
-                                    transition-colors
-                                    hover:text-foreground
-                                    disabled:pointer-events-none
-                                    disabled:opacity-50
-                                "
+                min-w-0
+                flex-1
+                truncate
+                text-left
+                text-sm
+                text-secondary
+                transition-colors
+                hover:text-foreground
+                disabled:pointer-events-none
+                disabled:opacity-50
+            "
                             >
-                                {selectedFile?.name ??
-                                    "Choose project PDF"}
+                                {selectedFile?.name ?? "Choose project PDF"}
                             </button>
 
                             {selectedFile ? (
                                 <button
                                     type="button"
-                                    onClick={
-                                        removeSelectedFile
-                                    }
-                                    disabled={
-                                        isSubmitting
-                                    }
+                                    onClick={removeSelectedFile}
+                                    disabled={isSubmitting}
                                     aria-label="Remove PDF"
                                     className="
-                                        inline-flex
-                                        shrink-0
-                                        items-center
-                                        justify-center
-                                        rounded-md
-                                        p-1.5
-                                        text-muted-foreground
-                                        transition-colors
-                                        hover:text-destructive
-                                        disabled:pointer-events-none
-                                        disabled:opacity-50
-                                    "
+                    inline-flex
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-md
+                    p-1.5
+                    text-muted-foreground
+                    transition-colors
+                    hover:text-destructive
+                    disabled:pointer-events-none
+                    disabled:opacity-50
+                "
                                 >
                                     <X className="size-4" />
                                 </button>
                             ) : (
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        fileInputRef.current?.click()
-                                    }
-                                    disabled={
-                                        isSubmitting
-                                    }
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={isSubmitting}
                                     className="
-                                        inline-flex
-                                        shrink-0
-                                        items-center
-                                        gap-1.5
-                                        text-sm
-                                        font-medium
-                                        text-secondary
-                                        transition-colors
-                                        hover:text-foreground
-                                        disabled:pointer-events-none
-                                        disabled:opacity-50
-                                    "
+                    inline-flex
+                    shrink-0
+                    items-center
+                    gap-1.5
+                    text-sm
+                    font-medium
+                    text-secondary
+                    transition-colors
+                    hover:text-foreground
+                    disabled:pointer-events-none
+                    disabled:opacity-50
+                "
                                 >
                                     <Upload className="size-4" />
                                     Browse
@@ -2264,23 +2244,19 @@ const ContactForm = () => {
                             )}
                         </div>
 
-                        <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground sm:hidden">
-                            <span>PDF only</span>
+                        {/* File requirements */}
+                        <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
+                            <span>   Optional. Upload your requirements, brief, or reference
+                                document.</span>
                             <span>Max 10MB</span>
                         </div>
 
                         {selectedFile && (
                             <div className="flex items-center justify-between gap-3 text-[11px] text-muted-foreground">
-                                <span>
-                                    Ready to upload
-                                </span>
+                                <span>Ready to upload</span>
 
                                 <span>
-                                    {(
-                                        selectedFile.size /
-                                        (1024 * 1024)
-                                    ).toFixed(2)}{" "}
-                                    MB
+                                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
                                 </span>
                             </div>
                         )}
