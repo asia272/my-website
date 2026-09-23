@@ -52,6 +52,7 @@ export default function PageHero({
                     fontSize={fontSize}
                 />
             </div>
+            <div className="divider" />
         </section>
     );
 }

@@ -1,3 +1,4 @@
+import ContactSection from "@/components/sections/ContactSection";
 import HeroSection from "@/components/sections/HeroSection";
 
 const HomePage = () => {
@@ -19,12 +20,7 @@ const HomePage = () => {
                 <h2 className="text-3xl font-bold">Services</h2>
             </section>
 
-            <section
-                id="projects"
-                className="flex min-h-[500px] items-center justify-center border-t border-white/10 px-6"
-            >
-                <h2 className="text-3xl font-bold">Projects</h2>
-            </section>
+
 
             <section
                 id="team"
@@ -40,12 +36,9 @@ const HomePage = () => {
                 <h2 className="text-3xl font-bold">Testimonials</h2>
             </section>
 
-            <section
-                id="contact"
-                className="flex min-h-[500px] items-center justify-center border-t border-white/10 px-6"
-            >
-                <h2 className="text-3xl font-bold">Contact</h2>
-            </section>
+
+            <ContactSection />
+
         </>
     );
 };

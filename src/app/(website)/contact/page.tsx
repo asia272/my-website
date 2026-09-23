@@ -14,26 +14,12 @@ const Page = () => {
                 highlightedText="Something Great"
                 description="Have a project in mind? Let's discuss how we can turn your idea into a fast, scalable, and professional digital experience."
             />
-            {/* =====================================================
-                DIVIDER
-            ====================================================== */}
 
-            <div className="divider" />
-
-            {/* =====================================================
-                CONTACT CONTENT
-            ====================================================== */}
 
             <section className="section relative isolate overflow-hidden">
-                {/* =====================================================
-        ORBIT DECORATIONS
-    ====================================================== */}
 
                 <OrbitDecorations />
 
-                {/* =====================================================
-        CONTACT CONTENT
-    ====================================================== */}
 
                 <div
                     className="
