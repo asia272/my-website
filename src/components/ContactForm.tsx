@@ -29,6 +29,7 @@ import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 import { countryCodes } from "@/lib/country-codes";
 import { sendClientRequestEmails } from "@/actions/client-request-email";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -296,6 +297,7 @@ const ContactForm = () => {
         if (!email) {
             return "Please enter your email.";
         }
+
 
         const emailRegex =
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -588,65 +590,145 @@ const ContactForm = () => {
 
                                 <div
                                     className="
-                                            grid
-                                            grid-cols-[minmax(0,155px)_1fr]
-                                            overflow-hidden
-                                            rounded-[var(--radius-md)]
-                                            border
-                                            border-[var(--border)]
-                                            bg-[var(--surface)]
-                                            transition-colors
-                                            focus-within:border-[var(--primary)]
-                                            focus-within:shadow-[0_0_0_3px_rgba(245,185,66,0.1)]
-                                        "
+         grid
+        min-h-[46px]
+        h-[46px]
+        grid-cols-[72px_minmax(0,1fr)]
+        overflow-hidden
+        border-0
+        border-[var(--border)]
+        bg-[var(--surface)]
+        transition-colors
+    "
                                 >
-                                    <select
-                                        id="country"
-                                        name="country"
-                                        aria-label="Country"
-                                        value={
-                                            formData.country
-                                        }
-                                        onChange={
-                                            handleCountryChange
-                                        }
-                                        disabled={
-                                            isSubmitting
-                                        }
-                                        className="
-                                                min-w-0
-                                                rounded-none
-                                                border-0
-                                                border-r
-                                                border-[var(--border)]
-                                                bg-transparent
-                                                px-3
-                                                py-3.5
-                                                text-sm
-                                                outline-none
-                                                focus:border-0
-                                                focus:shadow-none
-                                                disabled:cursor-not-allowed
-                                                disabled:opacity-50
-                                            "
-                                    >
-                                        {countryCodes.map(
-                                            ({
-                                                name,
-                                                code,
-                                                flag,
-                                            }) => (
-                                                <option
-                                                    key={`${name}-${code}`}
-                                                    value={name}
-                                                >
-                                                    {flag}{" "}
-                                                    {name}
-                                                </option>
-                                            ),
-                                        )}
-                                    </select>
 
+                                    <Select
+                                        value={formData.country}
+                                        onValueChange={(value) => {
+                                            const selectedCountry = countryCodes.find(
+                                                (country) => country.name === value,
+                                            );
+
+                                            if (!selectedCountry) {
+                                                return;
+                                            }
+
+                                            updateField(
+                                                "country",
+                                                selectedCountry.name,
+                                            );
+
+                                            updateField(
+                                                "countryCode",
+                                                selectedCountry.code,
+                                            );
+
+                                            updateField(
+                                                "phone",
+                                                selectedCountry.code,
+                                            );
+                                        }}
+                                        disabled={isSubmitting}
+                                    >
+                                        <SelectTrigger
+                                            id="country"
+                                            aria-label="Country"
+                                            className="
+            h-[46px]
+            min-h-[46px]
+            min-w-0
+            h-full
+            w-full
+            shrink-0
+            rounded-none
+            border-0
+            border-r
+            border-[var(--border)]
+            bg-transparent
+            px-3
+            py-3.5
+            text-sm
+            shadow-none
+            outline-none
+            transition-colors
+            hover:bg-[var(--muted)]
+            focus:border-0
+            focus:ring-0
+            focus:ring-offset-0
+            focus:outline-none
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+            [&>svg]:size-4
+            [&>svg]:shrink-0
+        "
+                                        >
+                                            <SelectValue>
+                                                {countryCodes.find(
+                                                    (country) =>
+                                                        country.name === formData.country,
+                                                )?.flag}
+                                            </SelectValue>
+                                        </SelectTrigger>
+
+                                        <SelectContent
+                                            sideOffset={6}
+                                            alignItemWithTrigger={false}
+                                            side="bottom"
+                                            align="start"
+
+                                            className="
+        z-50
+        max-h-[280px]
+        min-w-[280px]
+        overflow-y-auto
+        rounded-[var(--radius-md)]
+        border
+        border-[var(--border)]
+        bg-[var(--surface)]
+        p-1.5
+        text-[var(--text-primary)]
+        shadow-[0_12px_40px_rgba(0,0,0,0.35)]
+    "
+                                        >
+                                            {countryCodes.map(
+                                                ({
+                                                    name,
+                                                    code,
+                                                    flag,
+                                                }) => (
+                                                    <SelectItem
+                                                        key={`${name}-${code}`}
+                                                        value={name}
+                                                        className="
+        cursor-pointer
+        rounded-[calc(var(--radius-md)-2px)]
+        px-3
+        py-2.5
+        pr-10
+        text-sm
+        text-[var(--text-primary)]
+        outline-none
+      
+    "
+                                                    >
+                                                        <div className="flex w-full min-w-0 items-center gap-3">
+                                                            <span className="w-6 shrink-0 text-base">
+                                                                {flag}
+                                                            </span>
+
+                                                            <span className="min-w-0 flex-1 truncate">
+                                                                {name}
+                                                            </span>
+
+                                                            <span className="w-12 shrink-0 text-right text-xs text-[var(--text-muted)]">
+                                                                {code}
+                                                            </span>
+                                                        </div>
+                                                    </SelectItem>
+                                                ),
+                                            )}
+                                        </SelectContent>
+                                    </Select>
                                     <input
                                         id="phone"
                                         name="phone"
@@ -703,58 +785,94 @@ const ContactForm = () => {
 
                             {/* Service */}
 
+                            {/* Service */}
                             <div className="space-y-2">
                                 <label
                                     htmlFor="serviceType"
                                     className="
-                                            text-[11px]
-                                            font-semibold
-                                            uppercase
-                                            tracking-[0.16em]
-                                            text-muted-foreground
-                                        "
+            text-[11px]
+            font-semibold
+            uppercase
+            tracking-[0.16em]
+            text-muted-foreground
+        "
                                 >
                                     Service
                                 </label>
 
-                                <select
-                                    id="serviceType"
-                                    name="serviceType"
-                                    value={
-                                        formData.serviceType
+                                <Select
+                                    value={formData.serviceType}
+                                    onValueChange={(value) =>
+                                        updateField("serviceType", value)
                                     }
-                                    onChange={(event) =>
-                                        updateField(
-                                            "serviceType",
-                                            event.target.value,
-                                        )
-                                    }
-                                    disabled={
-                                        isSubmitting
-                                    }
-                                    className="
-                                            px-4
-                                            py-3.5
-                                            text-sm
-                                            disabled:cursor-not-allowed
-                                            disabled:opacity-50
-                                        "
+                                    disabled={isSubmitting}
                                 >
-                                    <option value="">
-                                        Select a service
-                                    </option>
+                                    <SelectTrigger
+                                        id="serviceType"
+                                        className="
+                h-[46px]
+                min-h-[46px]
+                w-full
+                rounded-none
+                border
+                border-[var(--border)]
+                bg-[var(--surface)]
+                px-4
+                py-0
+                text-sm
+                shadow-none
+                outline-none
+                ring-0
+                transition-colors
+                hover:bg-[var(--muted)]
+                focus:border-[var(--border)]
+                focus:ring-0
+                focus:ring-offset-0
+                disabled:cursor-not-allowed
+                disabled:opacity-50
+            "
+                                    >
+                                        <SelectValue placeholder="Select a service" />
+                                    </SelectTrigger>
 
-                                    {SERVICES.map(
-                                        (service) => (
-                                            <option
+                                    <SelectContent
+                                        side="bottom"
+                                        align="start"
+                                        sideOffset={6}
+                                        alignItemWithTrigger={false}
+                                        className="
+                z-50
+                max-h-[280px]
+                min-w-[280px]
+                overflow-y-auto
+                rounded-[var(--radius-md)]
+                border
+                border-[var(--border)]
+                bg-[var(--surface)]
+                p-1.5
+                text-[var(--text-primary)]
+                shadow-[0_12px_40px_rgba(0,0,0,0.35)]
+            "
+                                    >
+                                        {SERVICES.map((service) => (
+                                            <SelectItem
                                                 key={service}
                                                 value={service}
+                                                className="
+                        cursor-pointer
+                        rounded-[calc(var(--radius-md)-2px)]
+                        px-3
+                        py-2.5
+                        text-sm
+                        text-[var(--text-primary)]
+                      
+                    "
                                             >
                                                 {service}
-                                            </option>
-                                        ),
-                                    )}
-                                </select>
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
 
@@ -802,16 +920,15 @@ const ContactForm = () => {
                                     )
                                 }
                                 placeholder="Tell me about your project, requirements, goals, features, and timeline..."
-                                rows={7}
+
                                 maxLength={
                                     MAX_DESCRIPTION_LENGTH
                                 }
+                                rows={4}
                                 disabled={
                                     isSubmitting
                                 }
-                                className="
-                                            min-h-[180px]
-                                            resize-y
+                                className="                         
                                             px-4
                                             py-3.5
                                             text-sm

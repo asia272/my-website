@@ -954,15 +954,15 @@ button:disabled {
 /* =========================================================
    INPUTS / TEXTAREAS / SELECTS
    ========================================================= */
+/* =========================================================
+   INPUTS / TEXTAREAS / SELECTS
+   ========================================================= */
 
 input,
 textarea,
 select {
   width: 100%;
-
   border: 1px solid var(--border);
-
-  /* border-radius: var(--radius-md); */
 
   background: var(--surface);
 
@@ -972,17 +972,26 @@ select {
 
   transition:
     border-color var(--duration-normal) var(--ease-standard),
-    background-color var(--duration-normal) var(--ease-standard),
-    box-shadow var(--duration-normal) var(--ease-standard);
+    background-color var(--duration-normal) var(--ease-standard);
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: var(--primary);
+  border-color: var(--chart-2);
 
-  box-shadow:
-    0 0 0 3px rgba(245, 185, 66, 0.1);
+  outline: none;
+  box-shadow: none;
+
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: var(--chart-2);
+
+  outline: none;
+  box-shadow: none;
 }
 
 input::placeholder,
