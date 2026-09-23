@@ -1,64 +1,48 @@
+
+
 import {
-    ArrowUpRight,
     Clock3,
     Globe2,
     Mail,
     MapPin,
-    MessageCircle,
-    Sparkles,
+    Phone,
 } from "lucide-react";
-
-import PageHeading from "@/components/shared/PageHeading";
 
 const contactItems = [
     {
-        icon: MessageCircle,
-        title: "Let's talk",
+        icon: Phone,
+        title: "+92 302 2094272",
         description:
-            "Tell me about your idea, goals, and what you want to build. I'll review the details and get back to you.",
+            "Available for project discussions, questions, and quick conversations about your next web project.",
         color: "var(--chart-1)",
     },
     {
-        icon: Clock3,
-        title: "Response time",
+        icon: MapPin,
+        title: "Fort Abbas, Punjab, Pakistan",
         description:
-            "Project requests are reviewed carefully so I can understand your requirements before responding.",
+            "Based in Punjab, Pakistan, and working remotely with clients and teams around the world.",
         color: "var(--chart-2)",
+    },
+    {
+        icon: Mail,
+        title: "asiaashraf7272@gmail.com",
+        description:
+            "Send your project details, requirements, or questions by email and I'll get back to you.",
+        color: "var(--chart-3)",
     },
     {
         icon: Globe2,
         title: "Worldwide",
         description:
-            "I work remotely with clients and teams across different countries, locations, and time zones.",
-        color: "var(--chart-3)",
-    },
-    {
-        icon: MapPin,
-        title: "Based in Pakistan",
-        description:
-            "Working remotely from Pakistan with a focus on modern web applications and digital products.",
+            "Open to working remotely with clients and teams across different countries, locations, and time zones.",
         color: "var(--chart-4)",
     },
 ];
 
 const ContactRightSide = () => {
     return (
-        <aside className="lg:pt-[104px]">
+        <aside>
             <div className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]">
-                {/* Heading */}
-
-                <PageHeading
-                    label="Let's Connect"
-                    title="Let's Start"
-                    highlightedText="Something Great"
-                    description="Have a project in mind? Share your requirements and let's explore how we can turn your idea into a polished digital experience."
-                    align="left"
-                />
-
-                <div className="mt-8 divider" />
-
-                {/* Contact information */}
-
                 <div className="divide-y divide-[var(--border)]">
                     {contactItems.map((item) => {
                         const Icon = item.icon;
@@ -72,10 +56,10 @@ const ContactRightSide = () => {
                                     flex
                                     gap-4
                                     py-6
+                                    first:pt-0
                                 "
                             >
                                 {/* Accent glow */}
-
                                 <div
                                     aria-hidden="true"
                                     className="
@@ -98,7 +82,6 @@ const ContactRightSide = () => {
                                 />
 
                                 {/* Icon */}
-
                                 <div
                                     className="
                                         relative
@@ -122,8 +105,6 @@ const ContactRightSide = () => {
                                 >
                                     <Icon className="size-[18px]" />
 
-                                    {/* Small indicator */}
-
                                     <span
                                         className="
                                             absolute
@@ -141,11 +122,10 @@ const ContactRightSide = () => {
                                 </div>
 
                                 {/* Content */}
-
                                 <div className="relative min-w-0">
-                                    <h3 className="text-base font-semibold">
+                                    <h4 className="text-base font-semibold mb-2">
                                         {item.title}
-                                    </h3>
+                                    </h4>
 
                                     <p className="mt-1 text-sm leading-6 text-secondary">
                                         {item.description}
@@ -155,8 +135,6 @@ const ContactRightSide = () => {
                         );
                     })}
                 </div>
-
-
             </div>
         </aside>
     );
