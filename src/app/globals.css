@@ -955,41 +955,42 @@ button:disabled {
    INPUTS / TEXTAREAS / SELECTS
    ========================================================= */
 /* =========================================================
-   INPUTS / TEXTAREAS / SELECTS
+   FORM CONTROLS
    ========================================================= */
 
 input,
 textarea,
 select {
   width: 100%;
+  min-width: 0;
+
   border: 1px solid var(--border);
+  border-radius: 6px;
 
   background: var(--surface);
-
   color: var(--text-primary);
 
   outline: none;
+  box-shadow: none;
 
   transition:
     border-color var(--duration-normal) var(--ease-standard),
-    background-color var(--duration-normal) var(--ease-standard);
+    background-color var(--duration-normal) var(--ease-standard),
+    box-shadow var(--duration-normal) var(--ease-standard);
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--chart-2);
-
   outline: none;
   box-shadow: none;
-
 }
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   border-color: var(--chart-2);
-
   outline: none;
   box-shadow: none;
 }
@@ -997,6 +998,113 @@ select:focus-visible {
 input::placeholder,
 textarea::placeholder {
   color: var(--text-muted);
+}
+
+/* =========================================================
+   COMPOUND FORM CONTROL
+   Used for controls made from multiple elements,
+   such as country selector + phone input.
+   ========================================================= */
+
+
+
+/* =========================================================
+   PHONE CONTROL
+   ========================================================= */
+
+.phone-control {
+  display: grid;
+
+  grid-template-columns: 72px minmax(0, 1fr);
+
+  height: 46px;
+  min-height: 46px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  background: var(--surface);
+
+  transition:
+    border-color var(--duration-normal) var(--ease-standard),
+    background-color var(--duration-normal) var(--ease-standard);
+}
+
+.phone-control:focus-within {
+  border-color: var(--chart-2);
+}
+
+/* Country selector */
+.phone-control>button {
+  min-width: 0;
+  width: 100%;
+  height: 44px;
+
+  border: 0 !important;
+  border-right: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+
+  background: transparent;
+
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Phone input */
+.phone-control>input {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent;
+
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.phone-control>input:focus,
+.phone-control>input:focus-visible {
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* =========================================================
+   SELECT TRIGGER
+   ========================================================= */
+
+.form-select-trigger {
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+
+  background: var(--surface);
+
+  box-shadow: none !important;
+  outline: none !important;
+
+  transition:
+    border-color var(--duration-normal) var(--ease-standard),
+    background-color var(--duration-normal) var(--ease-standard);
+}
+
+.form-select-trigger:hover {
+  background: var(--muted);
+}
+
+.form-select-trigger:focus,
+.form-select-trigger:focus-visible {
+  border-color: var(--chart-2) !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* =========================================================
