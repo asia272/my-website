@@ -9,6 +9,7 @@ import type { Doc } from "../../../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 
 import DeleteTeamMemberButton from "./DeleteTeamButton";
+import AdminListSkeleton from "@/components/skeleton/AdminListSkeleton";
 
 type TeamMember = Doc<"teamMembers"> & {
     imageUrl: string | null;
@@ -23,14 +24,8 @@ export default function TeamList({
 }: TeamListProps) {
     if (teamMembers === undefined) {
         return (
-            <div className="space-y-4">
-                {Array.from({ length: 3 }).map((_, index) => (
-                    <div
-                        key={index}
-                        className="h-24 animate-pulse rounded-md border border-border bg-muted/40"
-                    />
-                ))}
-            </div>
+            <AdminListSkeleton />
+
         );
     }
 

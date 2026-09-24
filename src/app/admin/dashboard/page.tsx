@@ -15,6 +15,7 @@ import { api } from "../../../../convex/_generated/api";
 
 import DashboardCard from "@/components/admin/Dashboard";
 import AdminPageHeading from "@/components/admin/AdminPageHeading";
+import DashboardCardSkeleton from "@/components/skeleton/DashboardCardSkeleton";
 
 
 
@@ -71,65 +72,61 @@ export default function AdminDashboardPage() {
                 description="Manage your website content and client requests from one place."
             />
             {/* Stats */}
+            {/* Stats */}
             <div
                 className="
-          grid
-          gap-4
-          sm:grid-cols-2
-          xl:grid-cols-4
-        "
+        grid
+        gap-4
+        sm:grid-cols-2
+        xl:grid-cols-4
+    "
             >
-                <DashboardCard
-                    title="Projects"
-                    value={
-                        isLoading
-                            ? 0
-                            : stats.projectsCount
-                    }
-                    description="Active projects"
-                    icon={FolderKanban}
-                    iconColor="text-chart-3"
-                    iconBg="bg-chart-3/10"
-                />
+                {stats === undefined ? (
+                    <>
+                        <DashboardCardSkeleton />
+                        <DashboardCardSkeleton />
+                        <DashboardCardSkeleton />
+                        <DashboardCardSkeleton />
+                    </>
+                ) : (
+                    <>
+                        <DashboardCard
+                            title="Projects"
+                            value={stats.projectsCount}
+                            description="Active projects"
+                            icon={FolderKanban}
+                            iconColor="text-chart-3"
+                            iconBg="bg-chart-3/10"
+                        />
 
-                <DashboardCard
-                    title="Services"
-                    value={
-                        isLoading
-                            ? 0
-                            : stats.servicesCount
-                    }
-                    description="Active services"
-                    icon={BriefcaseBusiness}
-                    iconColor="text-chart-4"
-                    iconBg="bg-chart-4/10"
-                />
+                        <DashboardCard
+                            title="Services"
+                            value={stats.servicesCount}
+                            description="Active services"
+                            icon={BriefcaseBusiness}
+                            iconColor="text-chart-4"
+                            iconBg="bg-chart-4/10"
+                        />
 
-                <DashboardCard
-                    title="Team Members"
-                    value={
-                        isLoading
-                            ? 0
-                            : stats.teamMembersCount
-                    }
-                    description="Active members"
-                    icon={Users}
-                    iconColor="text-chart-1"
-                    iconBg="bg-chart-1/10"
-                />
+                        <DashboardCard
+                            title="Team Members"
+                            value={stats.teamMembersCount}
+                            description="Active members"
+                            icon={Users}
+                            iconColor="text-chart-1"
+                            iconBg="bg-chart-1/10"
+                        />
 
-                <DashboardCard
-                    title="Client Requests"
-                    value={
-                        isLoading
-                            ? 0
-                            : stats.newRequestsCount
-                    }
-                    description="New requests"
-                    icon={ClipboardList}
-                    iconColor="text-chart-5"
-                    iconBg="bg-chart-5/10"
-                />
+                        <DashboardCard
+                            title="Client Requests"
+                            value={stats.newRequestsCount}
+                            description="New requests"
+                            icon={ClipboardList}
+                            iconColor="text-chart-5"
+                            iconBg="bg-chart-5/10"
+                        />
+                    </>
+                )}
             </div>
 
             {/* Bottom section */}

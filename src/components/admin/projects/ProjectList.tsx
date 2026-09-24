@@ -11,6 +11,7 @@ import type { Doc } from "../../../../convex/_generated/dataModel";
 
 import { Button } from "@/components/ui/button";
 import DeleteProjectButton from "./DeleteProjectButton";
+import AdminListSkeleton from "@/components/skeleton/AdminListSkeleton";
 
 type Project = Doc<"projects"> & {
     imageUrl: string | null;
@@ -38,23 +39,7 @@ export default function ProjectList({
 }: ProjectListProps) {
     if (projects === undefined) {
         return (
-            <div className="space-y-4">
-                {Array.from({ length: 3 }).map(
-                    (_, index) => (
-                        <div
-                            key={index}
-                            className="
-                                h-24
-                                animate-pulse
-                                rounded-xl
-                                border
-                                border-border
-                                bg-card
-                            "
-                        />
-                    ),
-                )}
-            </div>
+            <AdminListSkeleton />
         );
     }
 

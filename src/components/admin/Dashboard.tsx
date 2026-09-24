@@ -23,9 +23,10 @@ export default function DashboardCard({
                 p-5
                 card 
             "
+
         >
             <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
+                <div className="min-w-0" >
                     <p className="text-sm font-medium text-secondary">
                         {title}
                     </p>

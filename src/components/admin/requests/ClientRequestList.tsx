@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 
 import DeleteClientRequestButton from "./DeleteClientRequestButton";
+import AdminListSkeleton from "@/components/skeleton/AdminListSkeleton";
 
 type ClientRequest = Doc<"clientRequests"> & {
     attachmentUrl: string | null;
@@ -254,23 +255,7 @@ export default function ClientRequestList({
 
     if (requests === undefined) {
         return (
-            <div className="space-y-4">
-                {Array.from({ length: 3 }).map(
-                    (_, index) => (
-                        <div
-                            key={index}
-                            className="
-                                h-24
-                                animate-pulse
-                                rounded-xl
-                                border
-                                border-border
-                                bg-card
-                            "
-                        />
-                    )
-                )}
-            </div>
+            <AdminListSkeleton />
         );
     }
 
