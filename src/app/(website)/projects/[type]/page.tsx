@@ -194,15 +194,16 @@ export default function ProjectTypePage({
                                 "
                             >
                                 {projects.map(
-                                    (project) => (
-                                        <ProjectCard
-                                            key={
-                                                project._id
-                                            }
-                                            project={
-                                                project
-                                            }
-                                        />
+                                    (project, index) => (
+                                        <div
+                                            key={project._id}
+                                            data-aos="fade-up"
+                                            data-aos-delay={index * 100}
+                                            data-aos-duration="700"
+                                            data-aos-once="true"
+                                        >
+                                            <ProjectCard project={project} />
+                                        </div>
                                     ),
                                 )}
                             </div>
