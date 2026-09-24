@@ -4,7 +4,7 @@ import PageHeading from "./PageHeading";
 type PageHeroProps = {
     breadcrumb: string;
     label: string;
-    title: string;
+    title?: string;
     highlightedText?: string;
     description?: string;
     maxWidth?: string;

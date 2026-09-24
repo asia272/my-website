@@ -58,7 +58,7 @@ export default function ProjectCard({
         >
             {/* Project Image */}
             <Link
-                href={`/projects/${project._id}`}
+                href={`/projects/project/${project._id}`}
                 className="block"
                 aria-label={`View ${project.name}`}
             >

@@ -3,7 +3,7 @@ import Link from "next/link";
 type PageHeadingProps = {
     breadcrumb?: string;
     label: string;
-    title: string;
+    title?: string;
     highlightedText?: string;
     description?: string;
 
