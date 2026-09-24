@@ -203,7 +203,9 @@ export default function ProjectDetailPage({
                 <div className="container relative z-10">
                     <div className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
                         {/* Project image */}
-                        <div className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/70 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
+                        <div className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/70 shadow-[0_20px_80px_rgba(0,0,0,0.25)]"
+                            data-aos="zoom-in"
+                        >
                             <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
                                 {project.imageUrl ? (
                                     <Image
@@ -259,7 +261,7 @@ export default function ProjectDetailPage({
                         </div>
 
                         {/* Project information */}
-                        <aside className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]">
+                        <aside className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]" data-aos="zoom-in">
                             <Card className="border-border/70 bg-card/70 py-0 shadow-none backdrop-blur-sm">
                                 <CardContent className="p-6 sm:p-7">
                                     <div className="mb-6">
