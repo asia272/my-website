@@ -20,6 +20,7 @@ import type { Id } from "../../../../../../convex/_generated/dataModel";
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
+import ProjectDetailSkeleton from "@/components/skeleton/ProjectDetailSkeleton";
 
 type ProjectType =
     | "GEN_AI"
@@ -81,22 +82,7 @@ export default function ProjectDetailPage({
                     highlightedText="project..."
                     description="Loading the project details."
                 />
-
-                <section className="section relative isolate overflow-hidden">
-                    <OrbitDecorations />
-
-                    <div className="container relative z-10">
-                        <div className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
-                            <div className="aspect-[16/10] animate-pulse rounded-2xl bg-secondary/60" />
-
-                            <div className="space-y-4">
-                                <div className="h-5 w-32 animate-pulse rounded-full bg-secondary/60" />
-                                <div className="h-10 w-3/4 animate-pulse rounded-lg bg-secondary/60" />
-                                <div className="h-24 w-full animate-pulse rounded-xl bg-secondary/60" />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <ProjectDetailSkeleton />
             </main>
         );
     }

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
     ArrowUpRight,
@@ -10,6 +9,8 @@ import {
     CardContent,
     CardFooter,
 } from "@/components/ui/card";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { Lens } from "@/components/ui/lens";
 
 type ProjectCardProps = {
     project: {
@@ -36,15 +37,19 @@ export default function ProjectCard({
     project,
 }: ProjectCardProps) {
     const typeLabel =
-        PROJECT_TYPE_LABELS[project.type] ??
-        project.type;
+        PROJECT_TYPE_LABELS[project.type] ?? project.type;
+
+    const imageUrl = project.imageUrl;
 
     return (
         <Card
             className="
+            isolate
                 group
+                relative
                 overflow-hidden
-                border-border/70
+                rounded-2xl
+                border-border/60
                 bg-card/80
                 py-0
                 shadow-none
@@ -52,102 +57,138 @@ export default function ProjectCard({
                 transition-all
                 duration-500
                 hover:-translate-y-1
-                hover:border-primary/40
-                hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)]
+                hover:border-primary/30
+                hover:shadow-[0_24px_70px_rgba(0,0,0,0.32)]
             "
         >
+            {/* Animated border */}
+            <ShineBorder
+                borderWidth={1}
+                duration={10}
+                shineColor={[
+                    "var(--chart-3)",
+                    "var(--chart-2)",
+                    "var(--chart-4)",
+                ]}
+                className="
+        pointer-events-none
+        absolute
+        inset-0
+        z-50
+        rounded-2xl
+        opacity-6
+transition-opacity
+        duration-500
+      
+    "
+            />
+
             {/* Project Image */}
             <Link
                 href={`/projects/project/${project._id}`}
-                className="block"
+                className="
+                    relative
+                    z-0
+                    block
+                    focus-visible:outline-none
+                    focus-visible:ring-2
+                    focus-visible:ring-primary/70
+                    focus-visible:ring-inset
+                "
                 aria-label={`View ${project.name}`}
             >
                 <div
                     className="
                         relative
-                        aspect-[16/10]
+                        h-[220px]
+                        w-full
                         overflow-hidden
+                        rounded-t-2xl
                         bg-secondary
+                        sm:h-[240px]
+                        lg:h-[250px]
                     "
                 >
-                    {project.imageUrl ? (
-                        <Image
-                            src={project.imageUrl}
-                            alt={project.name}
-                            fill
-                            sizes="
-                                (max-width: 640px) 100vw,
-                                (max-width: 1024px) 50vw,
-                                33vw
-                            "
-                            className="
-                                object-cover
-                                transition-transform
-                                duration-700
-                                ease-out
-                                group-hover:scale-[1.045]
-                            "
-                        />
+                    {imageUrl ? (
+                        <Lens
+                            zoomFactor={1.5}
+                            lensSize={140}
+                            isStatic={false}
+                            ariaLabel={`Preview ${project.name}`}
+                        >
+                            <div
+                                className="
+                                    relative
+                                    h-[220px]
+                                    w-full
+                                    rounded-none
+                                    sm:h-[240px]
+                                    lg:h-[250px]
+                                "
+                            >
+                                <img
+                                    src={imageUrl}
+                                    alt={project.name}
+                                    className="
+                                        block
+                                        h-full
+                                        w-full
+                                        rounded-none
+                                        object-cover
+                                        object-center
+                                        transition-transform
+                                        duration-700
+                                        ease-out
+                                        group-hover:scale-[1.03]
+                                    "
+                                />
+                            </div>
+                        </Lens>
                     ) : (
                         <div
                             className="
                                 flex
                                 h-full
+                                w-full
                                 items-center
                                 justify-center
-                                bg-secondary
                             "
                         >
                             <Sparkles
-                                className="
-                                    size-8
-                                    text-primary/40
-                                "
+                                aria-hidden="true"
+                                className="size-8 text-primary/40"
                             />
                         </div>
                     )}
 
                     {/* Image overlay */}
                     <div
+                        aria-hidden="true"
                         className="
+                            pointer-events-none
                             absolute
                             inset-0
+                            z-20
+                            rounded-none
                             bg-gradient-to-t
                             from-background/70
                             via-transparent
                             to-transparent
-                            opacity-70
                         "
                     />
-
-                    {/* Featured badge */}
-                    {project.isFeatured && (
-                        <div
-                            className="
-                                absolute
-                                left-4
-                                top-4
-                                rounded-full
-                                border
-                                border-primary/30
-                                bg-background/80
-                                px-3
-                                py-1.5
-                                text-[10px]
-                                font-semibold
-                                uppercase
-                                tracking-[0.16em]
-                                text-primary
-                                backdrop-blur-md
-                            "
-                        >
-                            Featured
-                        </div>
-                    )}
                 </div>
             </Link>
 
-            <CardContent className="px-5 pb-5 pt-5 sm:px-6">
+            {/* Content */}
+            <CardContent
+                className="
+                    px-5
+                    pb-5
+                    pt-5
+                    sm:px-6
+                    sm:pb-6
+                "
+            >
                 {/* Project Type */}
                 <div
                     className="
@@ -158,10 +199,13 @@ export default function ProjectCard({
                     "
                 >
                     <span
+                        aria-hidden="true"
                         className="
                             size-1.5
+                            shrink-0
                             rounded-full
                             bg-primary
+                            shadow-[0_0_8px_rgba(245,185,66,0.55)]
                         "
                     />
 
@@ -181,6 +225,7 @@ export default function ProjectCard({
                 {/* Project Name */}
                 <h3
                     className="
+                        line-clamp-1
                         text-xl
                         font-semibold
                         tracking-[-0.03em]
@@ -199,6 +244,7 @@ export default function ProjectCard({
                     className="
                         mt-3
                         line-clamp-3
+                        min-h-[72px]
                         text-sm
                         leading-6
                         text-muted-foreground
@@ -209,60 +255,80 @@ export default function ProjectCard({
                 </p>
             </CardContent>
 
+            {/* Footer */}
             <CardFooter
                 className="
-                    flex
-                    items-center
-                    justify-between
                     border-t
-                    border-border/60
+                    border-border/50
                     px-5
                     py-4
                     sm:px-6
                 "
             >
-                <span
-                    className="
-                        text-xs
-                        font-medium
-                        uppercase
-                        tracking-[0.14em]
-                        text-muted-foreground
-                        transition-colors
-                        duration-300
-                        group-hover:text-foreground
-                    "
-                >
-                    View project
-                </span>
-
-                <span
+                <Link
+                    href={`/projects/project/${project._id}`}
                     className="
                         flex
-                        size-9
+                        w-full
                         items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-border
-                        bg-secondary/50
-                        transition-all
+                        justify-between
+                        rounded-lg
+                        py-1
+                        transition-colors
                         duration-300
-                        group-hover:border-primary/50
-                        group-hover:bg-primary
-                        group-hover:text-primary-foreground
+                        focus-visible:outline-none
+                        focus-visible:ring-2
+                        focus-visible:ring-primary/70
                     "
+                    aria-label={`View ${project.name} project`}
                 >
-                    <ArrowUpRight
+                    <span
                         className="
-                            size-4
-                            transition-transform
+                            text-[10px]
+                            font-semibold
+                            uppercase
+                            tracking-[0.16em]
+                            text-muted-foreground
+                            transition-colors
                             duration-300
-                            group-hover:translate-x-0.5
-                            group-hover:-translate-y-0.5
+                            group-hover:text-foreground
                         "
-                    />
-                </span>
+                    >
+                        View project
+                    </span>
+
+                    <span
+                        aria-hidden="true"
+                        className="
+                            flex
+                            size-9
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-border
+                            bg-secondary/40
+                            text-muted-foreground
+                            transition-all
+                            duration-300
+                            group-hover:border-primary/50
+                            group-hover:bg-primary
+                            group-hover:text-primary-foreground
+                            group-hover:shadow-[0_0_20px_rgba(245,185,66,0.2)]
+                        "
+                    >
+                        <ArrowUpRight
+                            className="
+                                size-4
+                                transition-transform
+                                duration-300
+                                group-hover:translate-x-0.5
+                                group-hover:-translate-y-0.5
+                            "
+                        />
+                    </span>
+                </Link>
             </CardFooter>
         </Card>
     );
