@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/select";
 
 import AdminPageHeading from "@/components/admin/AdminPageHeading";
+import ClientRequestDetailsSkeleton from "@/components/skeleton/ClientRequestDeailsSkeleton";
 
 const statusOptions = [
     {
@@ -154,27 +155,7 @@ export default function ClientRequestDetailsPage() {
 
     if (request === undefined) {
         return (
-            <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                    <div className="size-9 animate-pulse rounded-md bg-muted" />
-
-                    <div className="h-9 w-48 animate-pulse rounded-md bg-muted" />
-                </div>
-                {Array.from({ length: 1 }).map(
-                    (_, index) => (
-                        <div
-                            key={index}
-                            className="
-                                h-44
-                                animate-pulse
-                                rounded-xl
-                               
-                                bg-card
-                            "
-                        />
-                    )
-                )}
-            </div>
+            <ClientRequestDetailsSkeleton />
 
         );
     }

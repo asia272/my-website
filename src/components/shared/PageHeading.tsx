@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TextAnimate } from "../ui/text-animate";
 
 type PageHeadingProps = {
     breadcrumb?: string;
@@ -93,7 +94,7 @@ export default function PageHeading({
                     mb-6
                     ${titleMaxWidth}
                     font-bold
-                    leading-[1.5]
+                    // leading-[1.5]
                     
                 `}
                 style={{
@@ -101,18 +102,30 @@ export default function PageHeading({
                     letterSpacing
                 }}
             >
-                {title}{" "}
+                {title && (
+                    <TextAnimate
+                        animation="slideLeft" by="character"
+                        className="leading-[1.5]"
+                    >
+                        {title}
+                    </TextAnimate>
+                )}
+
+
 
                 {highlightedText && (
-                    <span className="text-gradient font-medium">
+
+                    <TextAnimate animation="slideLeft" by="character"
+                        className="text-gradient font-medium ">
                         {highlightedText}
-                    </span>
+                    </TextAnimate>
+
                 )}
             </h2>
 
             {/* Description */}
             {description && (
-                <p
+                <TextAnimate animation="fadeIn" by="line" as="p"
                     className="
                         max-w-2xl
         text-lg
@@ -123,7 +136,7 @@ export default function PageHeading({
                     "
                 >
                     {description}
-                </p>
+                </TextAnimate>
             )}
         </div>
     );
