@@ -166,19 +166,6 @@ export default function ProjectTypePage({
                 <OrbitDecorations />
 
                 <div className="container relative z-10">
-                    {projects !== undefined && (
-                        <p
-                            className="
-                                    text-sm
-                                    text-muted-foreground
-                                "
-                        >
-                            {projects.length}{" "}
-                            {projects.length === 1
-                                ? "project"
-                                : "projects"}
-                        </p>
-                    )}
 
                     {/* Loading */}
                     {projects === undefined && (

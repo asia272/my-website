@@ -120,11 +120,11 @@ export default function ProjectDetailPage({
                             </p>
 
                             <Link
-                                href="/projects"
+                                href="/"
                                 className="custom-btn mt-7 inline-flex"
                             >
                                 <ArrowLeft className="size-4" />
-                                Back to projects
+                                Back to  home
                             </Link>
                         </div>
                     </div>

@@ -68,7 +68,7 @@ export default function ProjectCard({
                 shineColor={[
                     "var(--chart-3)",
                     "var(--chart-2)",
-                    "var(--chart-4)",
+
                 ]}
                 className="
         pointer-events-none
@@ -76,7 +76,7 @@ export default function ProjectCard({
         inset-0
         z-50
         rounded-2xl
-        opacity-6
+        opacity-100
 transition-opacity
         duration-500
       
