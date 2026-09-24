@@ -56,6 +56,44 @@ export const getAll = query({
     },
 });
 
+
+//  * Get all active projects by project type.
+//  *
+//  * Used by the public project category pages:
+//  *
+
+export const getByType = query({
+    args: {
+        type: projectType,
+    },
+
+    handler: async (ctx, args) => {
+        const projects = await ctx.db
+            .query("projects")
+            .filter((q) =>
+                q.and(
+                    q.eq(q.field("type"), args.type),
+                    q.eq(q.field("isActive"), true),
+                ),
+            )
+            .order("desc")
+            .collect();
+
+        return await Promise.all(
+            projects.map(async (project) => {
+                const imageUrl =
+                    await ctx.storage.getUrl(
+                        project.imageStorageId,
+                    );
+
+                return {
+                    ...project,
+                    imageUrl,
+                };
+            }),
+        );
+    },
+});
 /**
  * Get one project.
  *
