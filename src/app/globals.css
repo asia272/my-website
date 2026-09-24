@@ -437,8 +437,6 @@ h6 {
   font-family: var(--font-sans);
   font-weight: var(--weight-bold);
 
-  letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
 }
 
 h1 {

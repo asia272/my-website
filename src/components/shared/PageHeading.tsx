@@ -26,6 +26,7 @@ type PageHeadingProps = {
     fontSize?: string;
 
     className?: string;
+    letterSpacing?: string;
 };
 
 export default function PageHeading({
@@ -37,6 +38,7 @@ export default function PageHeading({
     maxWidth = "max-w-4xl",
     titleMaxWidth = "max-w-2xl",
     fontSize = "clamp(1rem,5vw,3.8rem)",
+    letterSpacing = "-0.055em",
     className = "",
 }: PageHeadingProps) {
     return (
@@ -91,12 +93,12 @@ export default function PageHeading({
                     mb-6
                     ${titleMaxWidth}
                     font-bold
-                    leading-[0.98]
-                    tracking-[-0.055em]
+                    leading-[1.5]
                     
                 `}
                 style={{
                     fontSize,
+                    letterSpacing
                 }}
             >
                 {title}{" "}
