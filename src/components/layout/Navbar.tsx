@@ -166,7 +166,7 @@ const Navbar = () => {
                                         <DropdownMenuItem asChild>
                                             <Link
                                                 href="/projects/generative-ai"
-                                                className="cursor-pointer rounded-md text-sm text-foreground p-1"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
                                             >
                                                 Generative AI
                                             </Link>
@@ -175,9 +175,54 @@ const Navbar = () => {
                                         <DropdownMenuItem asChild>
                                             <Link
                                                 href="/projects/web-development"
-                                                className="cursor-pointer rounded-md  text-sm text-foreground p-1"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
                                             >
                                                 Web Development
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/mobile-app"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
+                                            >
+                                                Mobile Apps
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/full-stack"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
+                                            >
+                                                Full Stack
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/e-commerce"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
+                                            >
+                                                E-Commerce
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/saas"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
+                                            >
+                                                SaaS
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="/projects/other"
+                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
+                                            >
+                                                Other Projects
                                             </Link>
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
@@ -340,7 +385,6 @@ const Navbar = () => {
                                         </span>
 
                                         <div className="ml-4 flex flex-col border-l border-border pl-4">
-
                                             <Link
                                                 href="/projects/generative-ai"
                                                 onClick={closeMenu}
@@ -357,6 +401,45 @@ const Navbar = () => {
                                                 Web Development
                                             </Link>
 
+                                            <Link
+                                                href="/projects/mobile-app"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                Mobile Apps
+                                            </Link>
+
+                                            <Link
+                                                href="/projects/full-stack"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                Full Stack
+                                            </Link>
+
+                                            <Link
+                                                href="/projects/e-commerce"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                E-Commerce
+                                            </Link>
+
+                                            <Link
+                                                href="/projects/saas"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                SaaS
+                                            </Link>
+
+                                            <Link
+                                                href="/projects/other"
+                                                onClick={closeMenu}
+                                                className="nav-link block py-2.5 text-sm"
+                                            >
+                                                Other Projects
+                                            </Link>
                                         </div>
                                     </div>
                                 </li>
