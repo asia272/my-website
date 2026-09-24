@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import PageHeading from "../shared/PageHeading";
+import { Lens } from "../ui/lens";
 
 /* =========================================================
    ABOUT SECTION DATA
@@ -105,24 +106,28 @@ export default function AboutSection() {
                         LEFT — IMAGE
                        ================================================= */}
 
+                    {/* =================================================
+    LEFT — IMAGE
+   ================================================= */}
+
                     <div
                         className="
-                            relative
-                            order-1
-                            w-full
-                        "
+        relative
+        order-1
+        w-full
+    "
                     >
                         {/* Image glow */}
                         <div
                             aria-hidden="true"
                             className="
-                                absolute
-                                -inset-4
-                                -z-10
-                                rounded-[2rem]
-                                opacity-50
-                                blur-3xl
-                            "
+            absolute
+            -inset-4
+            -z-10
+            rounded-[2rem]
+            opacity-50
+            blur-3xl
+        "
                             style={{
                                 background:
                                     "radial-gradient(circle, rgba(245,185,66,0.16), transparent 70%)",
@@ -133,16 +138,16 @@ export default function AboutSection() {
                         <div
                             aria-hidden="true"
                             className="
-                                absolute
-                                -left-3
-                                top-10
-                                z-10
-                                hidden
-                                h-24
-                                w-[3px]
-                                rounded-full
-                                lg:block
-                            "
+            absolute
+            -left-3
+            top-10
+            z-10
+            hidden
+            h-24
+            w-[3px]
+            rounded-full
+            lg:block
+        "
                             style={{
                                 background: "var(--gradient-primary)",
                             }}
@@ -151,93 +156,98 @@ export default function AboutSection() {
                         {/* Image */}
                         <div
                             className="
-                                group
-                                relative
-                                aspect-square
-                                w-full
-                                overflow-hidden
-                                rounded-[1.25rem]
-                                border
-                                border-[var(--border)]
-                                bg-[var(--card)]
-                                shadow-[var(--shadow-lg)]
-                                sm:rounded-[1.5rem]
-                                lg:rounded-[1.75rem]
-                            "
+            group
+            relative
+            aspect-square
+            w-full
+            overflow-hidden
+            rounded-[1.25rem]
+            border
+            border-[var(--border)]
+            bg-[var(--card)]
+            shadow-[var(--shadow-lg)]
+            sm:rounded-[1.5rem]
+            lg:rounded-[1.75rem]
+        "
                         >
-                            <Image
-                                src="/images/general/about.jpg"
-                                alt="IT professional working on digital technology solutions"
-                                fill
-                                priority
-                                sizes="
-                                    (max-width: 1023px) 100vw,
-                                    (max-width: 1279px) 48vw,
-                                    600px
-                                "
-                                className="
-                                    object-cover
-                                    object-center
-                                    transition-transform
-                                    duration-700
-                                    ease-[var(--ease-smooth)]
-                                    group-hover:scale-[1.025]
-                                "
-                            />
+                            <Lens
+                                zoomFactor={1.8}
+                                lensSize={150}
+                                aria-label="Zoom image"
+                            >
+                                <Image
+                                    src="/images/general/about.jpg"
+                                    alt="IT professional working on digital technology solutions"
+                                    fill
+                                    priority
+                                    sizes="
+                    (max-width: 1023px) 100vw,
+                    (max-width: 1279px) 48vw,
+                    600px
+                "
+                                    className="
+                    object-cover
+                    object-center
+                    transition-transform
+                    duration-700
+                    ease-[var(--ease-smooth)]
+                    group-hover:scale-[1.025]
+                "
+                                />
+                            </Lens>
 
                             {/* Image overlay */}
                             <div
                                 aria-hidden="true"
                                 className="
-                                    pointer-events-none
-                                    absolute
-                                    inset-0
-                                    bg-gradient-to-t
-                                    from-[#020210]/30
-                                    via-transparent
-                                    to-transparent
-                                "
+                pointer-events-none
+                absolute
+                inset-0
+                bg-gradient-to-t
+                from-[#020210]/30
+                via-transparent
+                to-transparent
+            "
                             />
-
-
-
                         </div>
+
                         {/* =================================================
-                            FLOATING DIGITAL SOLUTIONS CARD
-                           ================================================= */}
+        FLOATING DIGITAL SOLUTIONS CARD
+       ================================================= */}
+
                         <div
                             className="
-                                absolute
-                                -bottom-5
-                                left-4
-                                z-20
-                                flex
-                                items-center
-                                gap-3
-                                rounded-xl
-                                border
-                                border-[var(--border)]
-                                bg-[rgba(10,9,34,0.88)]
-                                px-4
-                                py-3
-                                shadow-[var(--shadow-md)]
-                                backdrop-blur-xl
-                                sm:bottom-6
-                                sm:left-6
-                                sm:px-5
-                                sm:py-4
-                            "
+            absolute
+            -bottom-5
+            left-4
+            z-20
+            flex
+            items-center
+            gap-3
+            rounded-xl
+            border
+            border-[var(--border)]
+            bg-[rgba(10,9,34,0.88)]
+            px-4
+            py-3
+            shadow-[var(--shadow-md)]
+            backdrop-blur-xl
+            sm:bottom-6
+            sm:left-6
+            sm:px-5
+            sm:py-4
+        "
                         >
                             <div
                                 className="
-                                    flex
-                                    h-9
-                                    w-9
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-lg
-                                "
+                flex
+                h-9
+                w-9
+                shrink-0
+                items-center
+                justify-center
+                rounded-lg
+            "
                                 style={{
                                     background: "var(--gradient-primary)",
                                     color: "var(--primary-foreground)",
@@ -253,23 +263,23 @@ export default function AboutSection() {
                             <div>
                                 <p
                                     className="
-                                        text-[10px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.16em]
-                                        text-[var(--muted-foreground)]
-                                    "
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.16em]
+                    text-[var(--muted-foreground)]
+                "
                                 >
                                     Digital Solutions
                                 </p>
 
                                 <p
                                     className="
-                                        mt-0.5
-                                        text-sm
-                                        font-semibold
-                                        text-[var(--foreground)]
-                                    "
+                    mt-0.5
+                    text-sm
+                    font-semibold
+                    text-[var(--foreground)]
+                "
                                 >
                                     Built for growth
                                 </p>
@@ -302,93 +312,108 @@ export default function AboutSection() {
                         {/* =================================================
                             STATS
                            ================================================= */}
+                        {/* =================================================
+    STATS / PROGRESS
+   ================================================= */}
 
                         <div
                             className="
-                                mt-10
-                                space-y-6
-                                sm:mt-11
-                                sm:space-y-7
-                            "
+        mt-10
+        space-y-6
+        sm:mt-11
+        sm:space-y-7
+    "
                         >
                             {aboutStats.map((stat) => (
                                 <div
                                     key={stat.label}
                                     className="group"
                                 >
-                                    {/* Label + value */}
+                                    {/* Label */}
                                     <div
                                         className="
-                                            mb-3
-                                            flex
-                                            items-center
-                                            justify-between
-                                            gap-4
-                                        "
+                    mb-3
+                    flex
+                    items-center
+                    justify-between
+                    gap-4
+                "
                                     >
                                         <span
                                             className="
-                                                text-sm
-                                                font-medium
-                                                text-[var(--foreground)]
-                                                sm:text-base
-                                            "
+                        text-sm
+                        font-medium
+                        text-[var(--foreground)]
+                        sm:text-base
+                    "
                                         >
                                             {stat.label}
                                         </span>
+                                    </div>
 
-                                        <span
+                                    {/* Progress wrapper */}
+                                    <div
+                                        className="
+                    relative
+                    h-[7px]
+                    w-full
+                    rounded-full
+                    bg-[var(--secondary)]
+                "
+                                    >
+                                        {/* Animated progress */}
+                                        <div
                                             className="
-                                                shrink-0
-                                                rounded-md
-                                                px-2.5
-                                                py-1
-                                                text-xs
-                                                font-bold
-                                                text-[var(--primary-foreground)]
-                                                shadow-[var(--shadow-primary)]
-                                            "
+                        absolute
+                        left-0
+                        top-0
+                        h-full
+                        rounded-full
+                        transition-[width]
+                        duration-[1200ms]
+                        ease-[cubic-bezier(0.22,1,0.36,1)]
+                    "
                                             style={{
-                                                background:
-                                                    "var(--gradient-primary)",
+                                                width: `${stat.value}%`,
+                                                background: "var(--gradient-primary)",
+                                            }}
+                                        />
+
+                                        {/* Percentage indicator */}
+                                        <div
+                                            className="
+                        absolute
+                        -top-1
+                        flex
+                        -translate-y-1/2
+                        items-center
+                        justify-center
+                        rounded-full
+                        border-2
+                        border-[var(--background)]
+                        bg-[var(--primary)]
+                        px-2
+                        py-0.5
+                        text-[10px]
+                        font-bold
+                        leading-none
+                        text-[var(--primary-foreground)]
+                        shadow-[0_0_12px_rgba(245,185,66,0.28)]
+                        transition-[left]
+                        duration-[1200ms]
+                        ease-[cubic-bezier(0.22,1,0.36,1)]
+                    "
+                                            style={{
+                                                left: `${stat.value}%`,
+                                                transform: "translate(-50%, -50%)",
                                             }}
                                         >
                                             {stat.value}%
-                                        </span>
-                                    </div>
-
-                                    {/* Track */}
-                                    <div
-                                        className="
-                                            relative
-                                            h-[6px]
-                                            overflow-hidden
-                                            rounded-full
-                                            bg-[var(--secondary)]
-                                        "
-                                    >
-                                        {/* Progress */}
-                                        <div
-                                            className="
-                                                relative
-                                                h-full
-                                                rounded-full
-                                                transition-all
-                                                duration-700
-                                                ease-[var(--ease-smooth)]
-                                                group-hover:shadow-[0_0_14px_rgba(245,185,66,0.25)]
-                                            "
-                                            style={{
-                                                width: `${stat.value}%`,
-                                                background:
-                                                    "var(--gradient-primary)",
-                                            }}
-                                        />
+                                        </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-
                         {/* =================================================
                             FEATURE LIST
                            ================================================= */}
