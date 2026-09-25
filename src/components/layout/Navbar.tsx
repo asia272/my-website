@@ -99,17 +99,24 @@ const Navbar = () => {
                             </li>
 
                             {/* Team */}
-                            {isHome && (
-                                <li>
+
+                            <li>
+                                {isHome ? (
                                     <a
                                         href="#team"
                                         className="nav-link"
                                     >
                                         Team
                                     </a>
-                                </li>
-                            )}
-
+                                ) : (
+                                    <Link
+                                        href="/team"
+                                        className="nav-link"
+                                    >
+                                        Team
+                                    </Link>
+                                )}
+                            </li>
                             {/* Testimonials */}
                             {isHome && (
                                 <li>
