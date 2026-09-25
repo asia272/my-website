@@ -88,7 +88,7 @@ export default function PageHeading({
             )}
 
             {/* Page Label */}
-            <p className="section-label">
+            <p className="section-label" data-aos="zoom-in">
                 {label}
             </p>
 
