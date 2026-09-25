@@ -385,6 +385,7 @@ const TeamSection = () => {
                                             className="team-carousel__cell"
                                         >
                                             <TeamCard
+                                                id={member._id}
                                                 name={
                                                     member.name
                                                 }

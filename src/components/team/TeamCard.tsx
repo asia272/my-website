@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import {
-    ArrowUpRight,
-    BriefcaseBusiness,
+
     Sparkles,
 } from "lucide-react";
 
@@ -11,8 +10,10 @@ import {
     CardContent,
 } from "@/components/ui/card";
 import { Lens } from "../ui/lens";
+import Link from "next/link";
 
 type TeamCardProps = {
+    id: string;
     name: string;
     role: string;
     description: string;
@@ -21,6 +22,7 @@ type TeamCardProps = {
 
 
 const TeamCard = ({
+    id,
     name,
     role,
     description,
@@ -130,9 +132,36 @@ const TeamCard = ({
                     </h3>
                 </div>
 
-                <p className="line-clamp-3 text-sm leading-6 text-secondary">
+                <p
+                    className="
+            line-clamp-3
+            min-h-[72px]
+            text-sm
+            leading-6
+            text-secondary
+        "
+                >
                     {description}
                 </p>
+
+                <Link
+                    href={`/team/${id}`}
+                    className="
+        mt-auto
+        inline-flex
+        w-fit
+        text-sm
+        font-medium
+        !text-blue-400
+        !underline
+        underline-offset-4
+        transition-colors
+        duration-300
+        hover:text-blue/80
+    "
+                >
+                    View member
+                </Link>
             </CardContent>
         </Card>
     );
