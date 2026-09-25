@@ -1,6 +1,7 @@
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
 import HeroSection from "@/components/sections/HeroSection";
+import TeamSection from "@/components/sections/TeamSection";
 
 const HomePage = () => {
     return (
@@ -20,12 +21,9 @@ const HomePage = () => {
 
 
 
-            <section
-                id="team"
-                className="flex min-h-[500px] items-center justify-center border-t border-white/10 px-6"
-            >
-                <h2 className="text-3xl font-bold">Team</h2>
-            </section>
+
+            <TeamSection />
+
 
             <section
                 id="testimonials"

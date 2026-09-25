@@ -1386,3 +1386,95 @@ textarea::placeholder {
 .animate-contact-float {
   animation: contact-float 6s ease-in-out infinite;
 }
+
+
+
+
+
+
+.team-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.team-carousel-scene {
+  position: relative;
+  width: 100%;
+  height: 510px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  perspective: 1200px;
+
+  /* Important: don't clip the card */
+  overflow: visible;
+}
+
+.team-carousel {
+  position: relative;
+  width: 320px;
+  height: 440px;
+
+  transform-style: preserve-3d;
+}
+
+.team-carousel__cell {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 320px;
+  height: 440px;
+
+  border-radius: 1rem;
+  /* overflow: hidden; */
+  overflow: visible;
+  transform-style: preserve-3d;
+
+  backface-visibility: hidden;
+}
+
+
+.team-carousel-controls {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.95rem;
+}
+
+@media (max-width: 767px) {
+  .team-carousel-scene {
+    height: 510px;
+  }
+
+  .team-carousel {
+    width: 300px;
+    height: 440px;
+  }
+
+  .team-carousel__cell {
+    width: 300px;
+    height: 440px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-carousel-scene {
+    height: 490px;
+  }
+
+  .team-carousel {
+    width: 280px;
+    height: 420px;
+  }
+
+  .team-carousel__cell {
+    width: 280px;
+    height: 420px;
+  }
+}
