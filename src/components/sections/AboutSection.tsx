@@ -305,6 +305,7 @@ export default function AboutSection() {
                             fontSize="clamp(1.7rem,3vw,2.11rem)"
                             className="max-w-none"
                             letterSpacing="0.2px"
+                            lineHeight="1.5"
                         />
 
                         {/* =================================================

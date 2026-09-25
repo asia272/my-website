@@ -49,7 +49,7 @@ export default function PageHero({
                     highlightedText={highlightedText}
                     description={description}
                     maxWidth={maxWidth}
-                    fontSize={fontSize}
+                // fontSize={fontSize}
                 />
             </div>
             <div className="divider" />

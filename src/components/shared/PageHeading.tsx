@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TextAnimate } from "../ui/text-animate";
+import WaveText from "./WaveText";
 
 type PageHeadingProps = {
     breadcrumb?: string;
@@ -28,6 +29,8 @@ type PageHeadingProps = {
 
     className?: string;
     letterSpacing?: string;
+    lineHeight?: string;
+
 };
 
 export default function PageHeading({
@@ -38,9 +41,11 @@ export default function PageHeading({
     description,
     maxWidth = "max-w-4xl",
     titleMaxWidth = "max-w-2xl",
-    fontSize = "clamp(1rem,5vw,3.8rem)",
+    fontSize = "clamp(2rem, 5vw, 3.8rem)",
     letterSpacing = "-0.055em",
+    lineHeight = "1.1",
     className = "",
+
 }: PageHeadingProps) {
     return (
         <div className={`${maxWidth} ${className}`}>
@@ -88,40 +93,60 @@ export default function PageHeading({
             </p>
 
             {/* Page Title */}
-            <h2
-                className={`
-                    mt-6
-                    mb-6
-                    ${titleMaxWidth}
-                    font-bold
-                    // leading-[1.5]
-                    
-                `}
-                style={{
-                    fontSize,
-                    letterSpacing
-                }}
-            >
-                {title && (
-                    <TextAnimate
-                        animation="slideLeft" by="character"
-                        className="leading-[1.5]"
-                    >
-                        {title}
-                    </TextAnimate>
-                )}
+            {(title || highlightedText) && (
+                <h2
+                    className={`
+            mt-6
+            mb-6
+            ${titleMaxWidth}
+            font-bold
+        `}
+                    style={{
+                        fontSize,
+                        letterSpacing,
+                        lineHeight,
+                    }}
+                >
+                    {title && (
+                        <>
+                            <WaveText
+                                as="span"
+                                delay={0.1}
+                                stagger={0.035}
+                                duration={0.65}
+                                amplitude={14}
+                                wavelength={2.5}
+                            >
+                                {title}
+                            </WaveText>
+                            {" "}</>
+
+                    )}
+
+                    {highlightedText && (
+                        <WaveText
+                            as="span"
+                            characterClassName="text-gradient"
+                            delay={
+                                title
+                                    ? 0.1 + title.length * 0.035
+                                    : 0.1
+                            }
+                            stagger={0.035}
+                            duration={0.65}
+                            amplitude={14}
+                            wavelength={2.5}
+                        >
+                            {highlightedText}
+                        </WaveText>
+                    )}
+                </h2>
+            )}
 
 
 
-                {highlightedText && (
 
-                    <TextAnimate animation="slideLeft" by="character"
-                        className="text-gradient font-medium ">
-                        {highlightedText}
-                    </TextAnimate>
 
-                )}
-            </h2>
 
             {/* Description */}
             {description && (
