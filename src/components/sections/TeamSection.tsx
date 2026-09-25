@@ -5,7 +5,7 @@
 import { api } from "../../../convex/_generated/api";
 import PageHeading from "../shared/PageHeading";
 import TeamCard from "../team/TeamCard";
-import TeamCardSkeleton from "../skeleton/TeamCardSkeleton";
+import TeamCardSkeleton from "../skeleton/TeamGridSkeleton";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, UsersRound } from "lucide-react";
