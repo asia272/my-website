@@ -375,7 +375,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  border-color: var(--border);
+  /* border-color: var(--border); */
 }
 
 html {
@@ -1407,7 +1407,7 @@ textarea::placeholder {
   justify-content: center;
 
   perspective: 1200px;
-
+  /* perspective: 1800px; */
   /* Important: don't clip the card */
   overflow: visible;
 }

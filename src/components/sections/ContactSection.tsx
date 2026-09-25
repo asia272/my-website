@@ -17,7 +17,7 @@ export default function ContactSection() {
         w-[520px]
         rounded-full
         bg-[radial-gradient(circle,color-mix(in_srgb,var(--chart-3)_18%,transparent)_0%,color-mix(in_srgb,var(--chart-2)_8%,transparent)_35%,transparent_70%)]
-        blur-[60px]
+        blur-[80px]
     "
             />
             <div

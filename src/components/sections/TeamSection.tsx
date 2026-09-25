@@ -336,7 +336,40 @@ const TeamSection = () => {
        ===================================================== */
 
     return (
-        <section className="section overflow-hidden border-t border-white/10">
+        <section id="team" className="section overflow-hidden">
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    -left-40
+                    bottom-0
+                    h-580
+                    w-80
+                    rounded-full
+                    opacity-10
+                    blur-[150px]
+                "
+                style={{
+                    background: "var(--chart-2)",
+                }}
+            />
+            <div
+                aria-hidden="true"
+                className="
+        pointer-events-none
+        absolute
+        right-[180px]
+        top-[-150px]
+        z-0
+        h-[520px]
+        w-[80vw]
+        max-w-[1220px]
+        rounded-full
+        bg-[radial-gradient(circle,color-mix(in_srgb,var(--chart-3)_16%,transparent)_0%,color-mix(in_srgb,var(--chart-3)_7%,transparent)_35%,transparent_70%)]
+        blur-[85px]
+    "
+            />
             <div className="container">
                 <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
                     {/* =================================================
