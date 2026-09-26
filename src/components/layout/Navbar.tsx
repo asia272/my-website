@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
     DropdownMenu,
@@ -19,18 +19,25 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const isHome = pathname === "/";
-
+    const previousPathname = useRef(pathname);
+    // Menu Toggle
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
+    // Path handling
+
 
     useEffect(() => {
-        if (pathname === "/") {
+        const wasOnAnotherRoute = previousPathname.current !== pathname;
+
+        if (pathname === "/" && wasOnAnotherRoute && !window.location.hash) {
             window.scrollTo({
                 top: 0,
                 behavior: "instant",
             });
         }
+
+        previousPathname.current = pathname;
     }, [pathname]);
 
     return (

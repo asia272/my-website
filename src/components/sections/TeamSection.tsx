@@ -861,6 +861,9 @@ const TeamSection = () => {
                     <div className="mb-8 flex-start">
                         <PageHeading
                             label="Our Team"
+                            fontSize="clamp(1.7rem,3vw,2.11rem)"
+                            letterSpacing="0.2px"
+                            lineHeight="1.5"
                             title="Meet the people"
                             highlightedText="behind the work."
                             description="A dedicated team focused on building thoughtful digital experiences, scalable applications, and solutions that create real value."

@@ -89,6 +89,7 @@ export default function ContactSection() {
                 "
             />
             {/* Section Content */}
+
             <div className="container relative z-10">
                 <div
                     className="
@@ -102,10 +103,12 @@ export default function ContactSection() {
                     "
                 >
                     {/* LEFT */}
+
                     <ContactLeftSide />
 
                     {/* RIGHT */}
                     <div
+                        data-aos="fade-left"
                         id="contact-form"
                         className="
                             glass

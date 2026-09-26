@@ -6,12 +6,15 @@ const ContactLeftSide = () => {
     return (
         <div className="lg:sticky lg:top-28">
             <PageHeading
+                fontSize="clamp(1.7rem,3vw,2.11rem)"
                 label="Get In Touch"
                 title="Let's Build"
                 highlightedText="Something Together"
                 description="Have a project in mind, need help bringing an idea to life, or simply want to connect? I'd love to hear from you."
                 maxWidth="max-w-2xl"
                 titleMaxWidth="max-w-xl"
+                letterSpacing="0.2px"
+                lineHeight="1.5"
 
             />
 
@@ -27,6 +30,7 @@ const ContactLeftSide = () => {
                                     p-5
                                     sm:p-6
                                 "
+                    data-aos="fade-up"
                 >
                     <div
                         className="
@@ -84,6 +88,7 @@ const ContactLeftSide = () => {
                                     p-5
                                     sm:p-6
                                 "
+                    data-aos="fade-up"
                 >
                     <div className="flex items-start gap-4">
                         <div
