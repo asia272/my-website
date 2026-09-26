@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
     DropdownMenu,
@@ -23,6 +23,15 @@ const Navbar = () => {
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
+
+    useEffect(() => {
+        if (pathname === "/") {
+            window.scrollTo({
+                top: 0,
+                behavior: "instant",
+            });
+        }
+    }, [pathname]);
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/90 backdrop-blur-xl border-b border-border shadow-lg shadow-purple-500/5">
