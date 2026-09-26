@@ -897,8 +897,8 @@ const TeamSection = () => {
                                 group
                                 shrink-0
                                 self-start
-                                sm:self-auto
-                            "
+                                sm:self-auto"
+                                data-aos="zoom-in"
                             >
                                 View all
 
@@ -1004,9 +1004,8 @@ const TeamSection = () => {
                                 group
                                 shrink-0
                                 self-start
-                                sm:self-auto
-                            "
-                        >
+                                sm:self-auto"
+                            data-aos="zoom-in-up" >
                             View all
 
                             <ArrowUpRight

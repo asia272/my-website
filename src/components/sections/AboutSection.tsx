@@ -112,8 +112,8 @@ export default function AboutSection() {
                         className="
         relative
         order-1
-        w-full
-    "
+        w-full "
+                        data-aos="zoom-in"
                     >
                         {/* Image glow */}
                         <div
@@ -311,9 +311,6 @@ export default function AboutSection() {
                         {/* =================================================
                             STATS
                            ================================================= */}
-                        {/* =================================================
-    STATS / PROGRESS
-   ================================================= */}
 
                         <div
                             className="
@@ -323,10 +320,12 @@ export default function AboutSection() {
         sm:space-y-7
     "
                         >
-                            {aboutStats.map((stat) => (
+                            {aboutStats.map((stat, index) => (
                                 <div
                                     key={stat.label}
                                     className="group"
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 150}
                                 >
                                     {/* Label */}
                                     <div
@@ -425,9 +424,11 @@ export default function AboutSection() {
                                 sm:space-y-5
                             "
                         >
-                            {aboutFeatures.map((feature) => (
+                            {aboutFeatures.map((feature, index) => (
                                 <div
                                     key={feature.title}
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 150}
                                     className="
                                         group
                                         flex
@@ -491,15 +492,15 @@ export default function AboutSection() {
                                 sm:mt-10
                                 sm:flex-row
                                 sm:items-center
-                                sm:gap-6
-                            "
+                                sm:gap-6"
+
                         >
                             {/* CTA */}
                             <Link
                                 href="/contact"
                                 className="
-                                 custom-btn-outline
-                                "
+                                 custom-btn-outline"
+                                data-aos="fade-up"
                             >
                                 <span>Get In Touch</span>
 
@@ -531,6 +532,7 @@ export default function AboutSection() {
                                     duration-200
                                     hover:opacity-90
                                 "
+                                data-aos="fade-up"
                             >
                                 <span
                                     className="
