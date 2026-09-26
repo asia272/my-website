@@ -19,7 +19,7 @@ import type { Id } from "../../../../../../convex/_generated/dataModel";
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
-import ProjectDetailSkeleton from "@/components/skeleton/ProjectDetailSkeleton";
+import ProjectDetailSkeleton from "@/components/skeleton/DetailPageSkeleton";
 
 type ProjectType =
     | "GEN_AI"

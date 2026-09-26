@@ -18,6 +18,7 @@ import { Id } from "../../../../../convex/_generated/dataModel";
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
+import DetailPageSkeleton from "@/components/skeleton/DetailPageSkeleton";
 
 type TeamMemberDetailPageProps = {
     params: Promise<{
@@ -51,17 +52,7 @@ export default function TeamMemberDetailPage({
                     description="Loading the team member profile."
                 />
 
-                <section className="section relative isolate overflow-hidden">
-                    <OrbitDecorations />
-
-                    <div className="container relative z-10">
-                        <div className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr]">
-                            <div className="aspect-[4/3] animate-pulse rounded-2xl border border-border/70 bg-card/70" />
-
-                            <div className="h-[420px] animate-pulse rounded-2xl border border-border/70 bg-card/70" />
-                        </div>
-                    </div>
-                </section>
+                < DetailPageSkeleton />
             </main>
         );
     }

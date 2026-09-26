@@ -2,7 +2,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function ProjectDetailSkeleton() {
+export default function DetailPageSkeleton() {
     return (
         <section className="section relative isolate overflow-hidden">
             <div className="container relative z-10">
