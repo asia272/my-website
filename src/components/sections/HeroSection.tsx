@@ -133,23 +133,13 @@ const HeroSection = () => {
                     ================================================== */}
 
                     <div className="text-center lg:text-left">
-                        {/* Eyebrow */}
-                        <div
-                            data-aos="fade-down"
-                            className="mt-5"
-                        >
-                            <span className="section-label">
 
-
-                                Building Digital Experiences
-                            </span>
-                        </div>
-
+                        <span className="section-label">
+                            Building Digital Experiences
+                        </span>
                         {/* Main heading */}
                         <h1
                             id="hero-heading"
-                            data-aos="fade-up"
-                            data-aos-delay="100"
                             className="
                                 mx-auto max-w-4xl
                                 text-[clamp(2.75rem,7vw,6.5rem)]
@@ -168,8 +158,6 @@ const HeroSection = () => {
 
                         {/* Description */}
                         <p
-                            data-aos="fade-up"
-                            data-aos-delay="200"
                             className="
                                 mx-auto mt-7 max-w-2xl
                                 text-base leading-relaxed
@@ -185,8 +173,6 @@ const HeroSection = () => {
 
                         {/* CTA Buttons */}
                         <div
-                            data-aos="fade-up"
-                            data-aos-delay="300"
                             className="
                                 mt-9 flex flex-col
                                 items-center justify-center
@@ -222,10 +208,8 @@ const HeroSection = () => {
 
                         {/* Trust / Value Points */}
                         <div
-                            data-aos="fade-up"
-                            data-aos-delay="400"
                             className="
-                                mt-14 flex flex-wrap
+                                mt-8 flex flex-wrap
                                 items-center justify-center
                                 gap-x-6 gap-y-3
                                 lg:justify-start
@@ -268,8 +252,7 @@ const HeroSection = () => {
                     ================================================== */}
 
                     <div
-                        data-aos="fade-left"
-                        data-aos-delay="200"
+
                         className="
         relative mx-auto
         w-full max-w-[500px]

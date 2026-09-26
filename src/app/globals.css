@@ -19,7 +19,6 @@
   --blue-gradient: linear-gradient(270deg, #5CB0E9 0%, #3D72FC 100%);
   --blue: #007aff;
 
-
   --card: #0a0922;
   --card-foreground: #f7f8ff;
 
@@ -286,7 +285,27 @@
       background-position: 0% 0%;
     }
   }
-}
+
+  --animate-marquee: marquee var(--duration) infinite linear;
+
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite
+;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }}
 
 /* =========================================================
    MODERN COLOR SUPPORT
@@ -473,8 +492,6 @@ a {
   text-decoration: none;
 }
 
-
-
 /* =========================================================
    IMAGES / MEDIA
    ========================================================= */
@@ -487,12 +504,9 @@ canvas {
   max-width: 100%;
 }
 
-
-
 /* =========================================================
    FORM ELEMENTS
    ========================================================= */
-
 
 button:not(:disabled) {
   cursor: pointer;
@@ -609,9 +623,6 @@ button:disabled {
   transform-origin: right;
   animation: line-right 2s infinite ease-in-out;
 }
-
-
-
 
 /* line Animation */
 @keyframes line-left {
@@ -936,7 +947,6 @@ button:disabled {
   width: 70%;
 }
 
-
 /* =========================================================
    NAV LINK FOCUS
    ========================================================= */
@@ -1003,8 +1013,6 @@ textarea::placeholder {
    Used for controls made from multiple elements,
    such as country selector + phone input.
    ========================================================= */
-
-
 
 /* =========================================================
    PHONE CONTROL
@@ -1346,14 +1354,11 @@ textarea::placeholder {
   }
 }
 
-
 @keyframes heroShine {
   0% {
     transform: translate(-50%, -100%);
     opacity: 0;
   }
-
-
 
   100% {
     transform: translate(-50%, 2000%);
@@ -1376,11 +1381,6 @@ textarea::placeholder {
 .animate-contact-float {
   animation: contact-float 6s ease-in-out infinite;
 }
-
-
-
-
-
 
 .team-carousel-wrapper {
   position: relative;
@@ -1426,7 +1426,6 @@ textarea::placeholder {
 
   backface-visibility: hidden;
 }
-
 
 .team-carousel-controls {
   position: relative;

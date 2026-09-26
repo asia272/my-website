@@ -144,13 +144,9 @@ export default function PageHeading({
             )}
 
 
-
-
-
-
             {/* Description */}
             {description && (
-                <TextAnimate animation="fadeIn" by="line" as="p"
+                <p data-aos="fade-up"
                     className="
                         max-w-2xl
         text-lg
@@ -161,7 +157,7 @@ export default function PageHeading({
                     "
                 >
                     {description}
-                </TextAnimate>
+                </p>
             )}
         </div>
     );

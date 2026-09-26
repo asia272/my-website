@@ -7,12 +7,7 @@ import "aos/dist/aos.css";
 
 const AOSProvider = () => {
     useEffect(() => {
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 80,
-            easing: "ease-out-cubic",
-        });
+        AOS.init({ duration: 1000 });
     }, []);
 
     return null;
