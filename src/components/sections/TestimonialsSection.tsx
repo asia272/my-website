@@ -5,6 +5,7 @@ import { Quote, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Marquee } from "../ui/marquee";
+import PageHeading from "../shared/PageHeading";
 
 type Testimonial = {
     id: number;
@@ -169,25 +170,16 @@ const TestimonialCard = ({
 
 const TestimonialsSection = () => {
     return (<section className="section overflow-hidden max-w-350 mx-auto" id="testimonials">
-        {/* Heading */} <div className="container"> <div className="mx-auto mb-12 max-w-2xl text-center"> <span className="section-label">
-            Testimonials </span>
 
-
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                What our clients
-                <br />
-                <span className="text-gradient">
-                    say about us.
-                </span>
-            </h2>
-
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-                Hear from clients and collaborators about their
-                experience working with us to build modern,
-                reliable, and impactful digital products.
-            </p>
-        </div>
-        </div>
+        {/* Heading */}
+        <PageHeading
+            label="Testimonials"
+            title="What our clients"
+            highlightedText="say about us."
+            fontSize="clamp(1.7rem,3vw,2.11rem)"
+            description="Hear from clients and collaborators about their experience working with us to build modern, reliable, and impactful digital products."
+            isCenter
+        />
 
         {/* Marquee */}
         <div className='relative flex h-full w-full flex-col items-center justify-center overflow-hidden  py-20 md:shadow-xl'>

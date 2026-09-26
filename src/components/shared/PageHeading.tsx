@@ -30,7 +30,7 @@ type PageHeadingProps = {
     className?: string;
     letterSpacing?: string;
     lineHeight?: string;
-
+    isCenter?: boolean;
 };
 
 export default function PageHeading({
@@ -45,10 +45,13 @@ export default function PageHeading({
     letterSpacing = "-0.055em",
     lineHeight = "1.1",
     className = "",
+    isCenter = false,
 
 }: PageHeadingProps) {
     return (
-        <div className={`${maxWidth} ${className}`}>
+        <div
+            className={`${maxWidth} ${isCenter ? "mx-auto text-center" : ""} ${className}`}
+        >
             {/* Breadcrumb */}
             {breadcrumb && (
                 <div
@@ -96,11 +99,12 @@ export default function PageHeading({
             {(title || highlightedText) && (
                 <h2
                     className={`
-            mt-6
-            mb-6
-            ${titleMaxWidth}
-            font-bold
-        `}
+        mt-6
+        mb-6
+        ${isCenter ? "mx-auto" : ""}
+        ${titleMaxWidth}
+        font-bold
+    `}
                     style={{
                         fontSize,
                         letterSpacing,
@@ -147,15 +151,15 @@ export default function PageHeading({
             {/* Description */}
             {description && (
                 <p data-aos="fade-up"
-                    className="
-                        max-w-2xl
-        text-lg
-        leading-7
-        text-secondary
-        sm:text-xl
-        sm:leading-8
-                    "
-                >
+                    className={`
+    max-w-2xl
+    text-lg
+    leading-7
+    text-secondary
+    sm:text-xl
+    sm:leading-8
+    ${isCenter ? "mx-auto" : ""}
+`}>
                     {description}
                 </p>
             )}
