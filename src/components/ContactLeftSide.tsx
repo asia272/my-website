@@ -7,7 +7,6 @@ const ContactLeftSide = () => {
         <div className="lg:sticky lg:top-28">
             <PageHeading
                 label="Get In Touch"
-                fontSize="clamp(0.44rem,3vw,2.8rem)"
                 title="Let's Build"
                 highlightedText="Something Together"
                 description="Have a project in mind, need help bringing an idea to life, or simply want to connect? I'd love to hear from you."
