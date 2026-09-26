@@ -1,4 +1,3 @@
-
 "use client";
 
 import { use } from "react";
@@ -53,6 +52,7 @@ const PROJECT_TYPE_ROUTES: Record<ProjectType, string> = {
 
 type ProjectDetailPageProps = {
     params: Promise<{
+        type: string;
         id: string;
     }>;
 };
@@ -60,7 +60,7 @@ type ProjectDetailPageProps = {
 export default function ProjectDetailPage({
     params,
 }: ProjectDetailPageProps) {
-    const { id } = use(params);
+    const { type, id } = use(params);
 
     const projectId = id as Id<"projects">;
 
@@ -82,6 +82,7 @@ export default function ProjectDetailPage({
                     highlightedText="project..."
                     description="Loading the project details."
                 />
+
                 <ProjectDetailSkeleton />
             </main>
         );
@@ -94,7 +95,7 @@ export default function ProjectDetailPage({
         return (
             <main>
                 <PageHero
-                    breadcrumb="Projects"
+                    breadcrumb={`Projects / ${type}`}
                     label="Project"
                     title="Project"
                     highlightedText="not found."
@@ -120,11 +121,11 @@ export default function ProjectDetailPage({
                             </p>
 
                             <Link
-                                href="/"
+                                href={`/projects/${type}`}
                                 className="custom-btn mt-7 inline-flex"
                             >
                                 <ArrowLeft className="size-4" />
-                                Back to  home
+                                Back to projects
                             </Link>
                         </div>
                     </div>
@@ -140,7 +141,7 @@ export default function ProjectDetailPage({
         return (
             <main>
                 <PageHero
-                    breadcrumb="Projects"
+                    breadcrumb={`Projects / ${type}`}
                     label="Project"
                     title="Project"
                     highlightedText="unavailable."
@@ -166,7 +167,7 @@ export default function ProjectDetailPage({
                             </p>
 
                             <Link
-                                href="/projects"
+                                href={`/projects/${type}`}
                                 className="custom-btn mt-7 inline-flex"
                             >
                                 <ArrowLeft className="size-4" />
@@ -203,7 +204,8 @@ export default function ProjectDetailPage({
                 <div className="container relative z-10">
                     <div className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
                         {/* Project image */}
-                        <div className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/70 shadow-[0_20px_80px_rgba(0,0,0,0.25)]"
+                        <div
+                            className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/70 shadow-[0_20px_80px_rgba(0,0,0,0.25)]"
                             data-aos="zoom-in"
                         >
                             <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
@@ -261,7 +263,10 @@ export default function ProjectDetailPage({
                         </div>
 
                         {/* Project information */}
-                        <aside className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]" data-aos="zoom-in">
+                        <aside
+                            className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]"
+                            data-aos="zoom-in"
+                        >
                             <Card className="border-border/70 bg-card/70 py-0 shadow-none backdrop-blur-sm">
                                 <CardContent className="p-6 sm:p-7">
                                     <div className="mb-6">
@@ -304,8 +309,6 @@ export default function ProjectDetailPage({
                                                 </span>
                                             </div>
                                         </div>
-
-
                                     </div>
 
                                     <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col">
@@ -321,8 +324,8 @@ export default function ProjectDetailPage({
                                             href={`/projects/${categoryRoute}`}
                                             className="custom-btn-outline inline-flex w-full justify-center"
                                         >
-                                            View category
-                                            <ExternalLink className="size-4" />
+                                            More {typeLabel}
+                                            <ExternalLink className=" ml-2 size-4" />
                                         </Link>
                                     </div>
                                 </CardContent>
@@ -349,9 +352,7 @@ export default function ProjectDetailPage({
                     <div className="mt-12 border-t border-border/60 pt-6">
                         <Link
                             href={`/projects/${categoryRoute}`}
-                            className="
-                             custom-btn-outline
-                            "
+                            className="custom-btn-outline"
                         >
                             <ArrowLeft className="size-4" />
                             Back to {typeLabel}

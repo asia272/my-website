@@ -1,3 +1,5 @@
+
+
 import Link from "next/link";
 import {
     ArrowUpRight,
@@ -33,18 +35,34 @@ const PROJECT_TYPE_LABELS: Record<string, string> = {
     OTHER: "Other",
 };
 
+const PROJECT_TYPE_ROUTES: Record<string, string> = {
+    GEN_AI: "generative-ai",
+    WEB_DEVELOPMENT: "web-development",
+    MOBILE_APP: "mobile-app",
+    FULL_STACK: "full-stack",
+    E_COMMERCE: "e-commerce",
+    SAAS: "saas",
+    OTHER: "other",
+};
+
 export default function ProjectCard({
     project,
 }: ProjectCardProps) {
     const typeLabel =
         PROJECT_TYPE_LABELS[project.type] ?? project.type;
 
+    const categoryRoute =
+        PROJECT_TYPE_ROUTES[project.type] ?? "other";
+
+    const projectRoute =
+        `/projects/${categoryRoute}/${project._id}`;
+
     const imageUrl = project.imageUrl;
 
     return (
         <Card
             className="
-            isolate
+                isolate
                 group
                 relative
                 overflow-hidden
@@ -68,24 +86,22 @@ export default function ProjectCard({
                 shineColor={[
                     "var(--chart-3)",
                     "var(--chart-2)",
-
                 ]}
                 className="
-        pointer-events-none
-        absolute
-        inset-0
-        z-50
-        rounded-2xl
-        opacity-100
-transition-opacity
-        duration-500
-      
-    "
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    z-50
+                    rounded-2xl
+                    opacity-100
+                    transition-opacity
+                    duration-500
+                "
             />
 
             {/* Project Image */}
             <Link
-                href={`/projects/project/${project._id}`}
+                href={projectRoute}
                 className="
                     relative
                     z-0
@@ -266,7 +282,7 @@ transition-opacity
                 "
             >
                 <Link
-                    href={`/projects/project/${project._id}`}
+                    href={projectRoute}
                     className="
                         flex
                         w-full

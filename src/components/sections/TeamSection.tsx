@@ -8,13 +8,14 @@ import TeamCard from "../team/TeamCard";
 import TeamCardSkeleton from "../skeleton/TeamCardSkeleton";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, UsersRound } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, UsersRound } from "lucide-react";
 import { useKeenSlider, type KeenSliderPlugin } from "keen-slider/react";
 import { useQuery } from "convex/react";
 
 
 
 import "keen-slider/keen-slider.min.css";
+import Link from "next/link";
 
 /* =========================================================
    CONFIG
@@ -383,6 +384,28 @@ const TeamSection = () => {
                             highlightedText="behind the work."
                             description="A dedicated team focused on building thoughtful digital experiences, scalable applications, and solutions that create real value."
                         />
+                        <Link
+                            href="/team"
+                            className="
+            custom-btn-outline
+            mt-4
+            group
+            shrink-0
+            self-start
+            sm:self-auto
+        "
+                        >
+                            View all
+                            <ArrowUpRight
+                                className="
+                size-4
+                transition-transform
+                duration-300
+                group-hover:translate-x-0.5
+                group-hover:-translate-y-0.5
+            "
+                            />
+                        </Link>
                     </div>
 
                     {/* =================================================
