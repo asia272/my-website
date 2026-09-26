@@ -343,8 +343,8 @@ const Navbar = () => {
                                 </li>
 
                                 {/* Team */}
-                                {isHome && (
-                                    <li>
+                                <li>
+                                    {isHome ? (
                                         <a
                                             href="#team"
                                             onClick={closeMenu}
@@ -352,9 +352,16 @@ const Navbar = () => {
                                         >
                                             Team
                                         </a>
-                                    </li>
-                                )}
-
+                                    ) : (
+                                        <Link
+                                            href="/team"
+                                            onClick={closeMenu}
+                                            className="nav-link block py-3"
+                                        >
+                                            Team
+                                        </Link>
+                                    )}
+                                </li>
                                 {/* Testimonials */}
                                 {isHome && (
                                     <li>
