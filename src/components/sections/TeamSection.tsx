@@ -807,137 +807,7 @@ const TeamSection = () => {
         };
     }, [instanceRef, isPaused]);
 
-    /* =====================================================
-       LOADING
-       ===================================================== */
 
-    if (teamMembers === undefined) {
-        return (
-            <section className="section">
-                <div className="container">
-                    <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
-                        {/* LEFT */}
-
-                        <div>
-                            <PageHeading
-                                label="Our Team"
-                                title="Meet the people"
-                                highlightedText="behind the work."
-                                description="A dedicated team focused on building thoughtful digital experiences, scalable applications, and solutions that create real value."
-                            />
-                        </div>
-
-                        {/* RIGHT */}
-
-                        <div className="team-carousel-wrapper">
-                            <div className="team-carousel-scene">
-                                <TeamCardSkeleton />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
-
-    /* =====================================================
-       EMPTY
-       ===================================================== */
-
-    if (teamMembers.length === 0) {
-        return (
-            <section className="section">
-                <div className="container">
-                    <div className="mx-auto max-w-2xl text-center">
-                        <div className="mb-4 flex justify-center">
-                            <div className="flex size-14 items-center justify-center rounded-full bg-primary/10">
-                                <UsersRound className="size-6 text-primary" />
-                            </div>
-                        </div>
-
-                        <PageHeading
-                            label="Our Team"
-                            title="Meet the people"
-                            highlightedText="behind the work."
-                            description="Our team information will be available soon."
-                        />
-                    </div>
-                </div>
-            </section>
-        );
-    }
-
-    /* =====================================================
-       SINGLE MEMBER
-       ===================================================== */
-
-    if (teamMembers.length === 1) {
-        const member =
-            teamMembers[0] as TeamMember;
-
-        return (
-            <section className="section">
-                <div className="container">
-                    <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
-                        {/* LEFT */}
-
-                        <div>
-                            <PageHeading
-                                label="Our Team"
-                                title="Meet the people"
-                                highlightedText="behind the work."
-                                description="A dedicated team focused on building thoughtful digital experiences, scalable applications, and solutions that create real value."
-                            />
-
-                            <Link
-                                href="/team"
-                                className="
-                                custom-btn-outline
-                                mt-4
-                                group
-                                shrink-0
-                                self-start
-                                sm:self-auto"
-                                data-aos="zoom-in"
-                            >
-                                View all
-
-                                <ArrowUpRight
-                                    className="
-                                    size-4
-                                    transition-transform
-                                    duration-300
-                                    group-hover:translate-x-0.5
-                                    group-hover:-translate-y-0.5
-                                "
-                                />
-                            </Link>
-                        </div>
-
-                        {/* RIGHT */}
-
-                        <div className="mx-auto w-full max-w-sm">
-                            <TeamCard
-                                id={member._id}
-                                name={
-                                    member.name
-                                }
-                                role={
-                                    member.role
-                                }
-                                description={
-                                    member.description
-                                }
-                                imageUrl={
-                                    member.imageUrl
-                                }
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
 
     /* =====================================================
        CAROUSEL
@@ -1038,16 +908,27 @@ const TeamSection = () => {
                         }
                     >
                         <div className="team-carousel-scene">
-                            <div
-                                ref={sliderRef}
-                                className="team-carousel"
-                            >
-                                {carouselMembers.map((member, index) => (
-                                    <div
-                                        key={member?.carouselKey ?? `empty-${index}`}
-                                        className="team-carousel__cell"
-                                    >
-                                        {member ? (
+                            {teamMembers === undefined ? (
+                                <div className="team-carousel">
+                                    {Array.from({ length: 3 }).map((_, index) => (
+                                        <div
+                                            key={`team-skeleton-${index}`}
+                                            className="team-carousel__cell"
+                                        >
+                                            <TeamCardSkeleton />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div
+                                    ref={sliderRef}
+                                    className="team-carousel"
+                                >
+                                    {carouselMembers.map((member) => (
+                                        <div
+                                            key={member.carouselKey}
+                                            className="team-carousel__cell"
+                                        >
                                             <TeamCard
                                                 id={member._id}
                                                 name={member.name}
@@ -1055,52 +936,48 @@ const TeamSection = () => {
                                                 description={member.description}
                                                 imageUrl={member.imageUrl}
                                             />
-                                        ) : (
-                                            <div
-                                                aria-hidden="true"
-                                                className="h-full w-full"
-                                            />
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* CONTROLS */}
-
-                        <div className="team-carousel-controls">
-                            <button
-                                type="button"
-                                aria-label="Previous team member"
-                                className="flex size-11 items-center justify-center rounded-full border border-border bg-card text-foreground transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground"
-                                onClick={() =>
-                                    instanceRef.current?.prev()
-                                }
-                            >
-                                <ArrowLeft
-                                    className="size-5 shrink-0"
-                                    strokeWidth={
-                                        2
+                        {teamMembers &&
+                            <div className="team-carousel-controls">
+                                <button
+                                    type="button"
+                                    aria-label="Previous team member"
+                                    className="flex size-11 items-center justify-center rounded-full border border-border bg-card text-foreground transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                                    onClick={() =>
+                                        instanceRef.current?.prev()
                                     }
-                                />
-                            </button>
+                                >
+                                    <ArrowLeft
+                                        className="size-5 shrink-0"
+                                        strokeWidth={
+                                            2
+                                        }
+                                    />
+                                </button>
 
-                            <button
-                                type="button"
-                                aria-label="Next team member"
-                                className="flex size-11 items-center justify-center rounded-full border border-primary bg-primary text-primary-foreground transition-all duration-300 hover:bg-accent hover:text-background"
-                                onClick={() =>
-                                    instanceRef.current?.next()
-                                }
-                            >
-                                <ArrowRight
-                                    className="size-5 shrink-0"
-                                    strokeWidth={
-                                        2
+                                <button
+                                    type="button"
+                                    aria-label="Next team member"
+                                    className="flex size-11 items-center justify-center rounded-full border border-primary bg-primary text-primary-foreground transition-all duration-300 hover:bg-accent hover:text-background"
+                                    onClick={() =>
+                                        instanceRef.current?.next()
                                     }
-                                />
-                            </button>
-                        </div>
+                                >
+                                    <ArrowRight
+                                        className="size-5 shrink-0"
+                                        strokeWidth={
+                                            2
+                                        }
+                                    />
+                                </button>
+                            </div>}
+
                     </div>
                 </div>
             </div>
