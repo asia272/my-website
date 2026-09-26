@@ -312,14 +312,14 @@ export default function TeamMemberDetailPage({
                                             className="custom-btn inline-flex w-full justify-center"
                                         >
                                             Work with us
-                                            <ArrowUpRight className="size-4" />
+                                            <ArrowUpRight className="size-4 ml-2" />
                                         </Link>
 
                                         <Link
                                             href="/team"
                                             className="custom-btn-outline inline-flex w-full justify-center"
                                         >
-                                            <Users className="size-4" />
+                                            <Users className="size-4 mr-2" />
                                             View all members
                                         </Link>
                                     </div>
