@@ -306,98 +306,143 @@ export default function ClientRequestList({
     return (
         <div className="space-y-5">
             {/* Search + Filters */}
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div
+                className="
+                    flex
+                    flex-col
+                    gap-4
+                    bg-card
+                    lg:flex-row
+                    lg:items-end
+                    lg:justify-between
+                "
+            >
                 {/* Search */}
-                <div className="relative w-full lg:max-w-sm">
-                    <Search
-                        className="
-                            pointer-events-none
-                            absolute
-                            left-3
-                            top-1/2
-                            size-4
-                            -translate-y-1/2
-                            text-muted-foreground
-                        "
-                    />
+                <div className="w-full lg:max-w-sm">
+                    <label
+                        htmlFor="request-search"
+                        className="mb-2 block text-sm font-medium text-foreground"
+                    >
+                        Search Requests
+                    </label>
 
-                    <input
-                        type="search"
-                        value={searchQuery}
-                        onChange={(event) =>
-                            setSearchQuery(
-                                event.target.value
-                            )
-                        }
-                        placeholder="Search requests..."
-                        className="
-                            h-10
-                            w-full
-                            rounded-md
-                            border
-                            border-border
-                            bg-transparent
-                            pl-9
-                            pr-3
-                            text-sm
-                            outline-none
-                            transition-colors
-                            placeholder:text-muted-foreground
-                            focus:border-ring
-                        "
-                    />
+                    <div className="relative">
+                        <Search
+                            className="
+                                pointer-events-none
+                                absolute
+                                left-3
+                                top-1/2
+                                size-4
+                                -translate-y-1/2
+                                text-muted-foreground
+                            "
+                        />
+
+                        <input
+                            id="request-search"
+                            type="search"
+                            value={searchQuery}
+                            onChange={(event) =>
+                                setSearchQuery(
+                                    event.target.value
+                                )
+                            }
+                            placeholder="Search by name, email, phone..."
+                            className="
+                                h-10
+                                w-full
+                                rounded-md
+                                border
+                                border-border
+                                bg-transparent
+                                pl-9
+                                pr-3
+                                text-sm
+                                outline-none
+                                transition-colors
+                                placeholder:text-muted-foreground
+                                focus:border-ring
+                            "
+                        />
+                    </div>
                 </div>
 
                 {/* Filters */}
                 <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
-                    <Select
-                        value={statusFilter}
-                        onValueChange={setStatusFilter}
+                    {/* Status Filter */}
+                    <div className="w-full sm:w-[180px]">
+                        <label
+                            htmlFor="request-status-filter"
+                            className="mb-2 block text-sm font-medium text-foreground"
+                        >
+                            Filter by Status
+                        </label>
 
-                    >
-                        <SelectTrigger className="w-full sm:w-[180px]">
-                            <SelectValue placeholder="All Statuses" />
-                        </SelectTrigger>
+                        <Select
+                            value={statusFilter}
+                            onValueChange={setStatusFilter}
+                        >
+                            <SelectTrigger
+                                id="request-status-filter"
+                                className="w-full"
+                            >
+                                <SelectValue placeholder="All Statuses" />
+                            </SelectTrigger>
 
-                        <SelectContent>
-                            {statusOptions.map(
-                                (option) => (
-                                    <SelectItem
-                                        key={option.value}
-                                        value={option.value}
-                                    >
-                                        {option.label}
-                                    </SelectItem>
-                                )
-                            )}
-                        </SelectContent>
-                    </Select>
+                            <SelectContent>
+                                {statusOptions.map(
+                                    (option) => (
+                                        <SelectItem
+                                            key={option.value}
+                                            value={option.value}
+                                        >
+                                            {option.label}
+                                        </SelectItem>
+                                    )
+                                )}
+                            </SelectContent>
+                        </Select>
+                    </div>
 
-                    <Select
-                        value={serviceFilter}
-                        onValueChange={setServiceFilter}
-                    >
-                        <SelectTrigger className="w-full sm:w-[210px]">
-                            <SelectValue placeholder="All Services" />
-                        </SelectTrigger>
+                    {/* Service Filter */}
+                    <div className="w-full sm:w-[210px]">
+                        <label
+                            htmlFor="request-service-filter"
+                            className="mb-2 block text-sm font-medium text-foreground"
+                        >
+                            Filter by Service
+                        </label>
 
-                        <SelectContent>
-                            <SelectItem value="ALL">
-                                All Services
-                            </SelectItem>
+                        <Select
+                            value={serviceFilter}
+                            onValueChange={setServiceFilter}
+                        >
+                            <SelectTrigger
+                                id="request-service-filter"
+                                className="w-full"
+                            >
+                                <SelectValue placeholder="All Services" />
+                            </SelectTrigger>
 
-                            {serviceOptions.map(
-                                (service) => (
-                                    <SelectItem
-                                        key={service}
-                                        value={service}
-                                    >
-                                        {service}
-                                    </SelectItem>
-                                )
-                            )}
-                        </SelectContent>
-                    </Select>
+                            <SelectContent>
+                                <SelectItem value="ALL">
+                                    All Services
+                                </SelectItem>
+
+                                {serviceOptions.map(
+                                    (service) => (
+                                        <SelectItem
+                                            key={service}
+                                            value={service}
+                                        >
+                                            {service}
+                                        </SelectItem>
+                                    )
+                                )}
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
             </div>
 
