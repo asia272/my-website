@@ -14,12 +14,15 @@ export default function NewServicePage() {
                     asChild
                     variant="outline"
                     className="
-                        mt-1 shrink-0
-                        h-10 gap-2
+                        mt-1
+                        shrink-0
+                        h-10
+                        gap-2
                         border-border/60
                         bg-background/50
                         px-3.5
-                        text-sm font-medium
+                        text-sm
+                        font-medium
                     "
                 >
                     <Link
@@ -27,7 +30,10 @@ export default function NewServicePage() {
                         className="flex items-center gap-2"
                     >
                         <ArrowLeft className="size-4 text-primary" />
-                        <span className="text-primary">Back</span>
+
+                        <span className="text-primary">
+                            Back
+                        </span>
                     </Link>
                 </Button>
 
@@ -37,7 +43,9 @@ export default function NewServicePage() {
                 />
             </div>
 
-            <ServiceForm mode="create" />
+            <div className="rounded-xl border bg-card p-6 sm:p-8">
+                <ServiceForm mode="create" />
+            </div>
         </div>
     );
 }
