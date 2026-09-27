@@ -55,7 +55,7 @@ function EditServiceContent({
                     asChild
                     variant="outline"
                 >
-                    <Link href="/admin/dashboard/services">
+                    <Link href="/admin/services">
                         <ArrowLeft className="mr-2 size-4" />
                         Back to Services
                     </Link>
@@ -84,7 +84,7 @@ function EditServiceContent({
                     size="icon"
                     className="mt-1 shrink-0"
                 >
-                    <Link href="/admin/dashboard/services">
+                    <Link href="/admin/services">
                         <ArrowLeft className="size-4" />
                     </Link>
                 </Button>

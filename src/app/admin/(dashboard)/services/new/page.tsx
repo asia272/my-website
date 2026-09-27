@@ -26,7 +26,7 @@ export default function NewServicePage() {
                     "
                 >
                     <Link
-                        href="/admin/dashboard/services"
+                        href="/admin/services"
                         className="flex items-center gap-2"
                     >
                         <ArrowLeft className="size-4 text-primary" />

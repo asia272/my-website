@@ -72,7 +72,7 @@ export default function ServiceList({
                     asChild
                     className="custom-btn mt-5"
                 >
-                    <Link href="/admin/dashboard/services/new">
+                    <Link href="/admin/services/new">
                         Create Service
                     </Link>
                 </Button>
@@ -212,7 +212,7 @@ export default function ServiceList({
                                     "
                                 >
                                     <Link
-                                        href={`/admin/dashboard/services/${service._id}/edit`}
+                                        href={`/admin/services/${service._id}/edit`}
                                         className="inline-flex items-center justify-center"
                                     >
                                         <Pencil className="mr-2 size-4 shrink-0 text-chart-2" />

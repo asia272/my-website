@@ -31,7 +31,7 @@ export default function ServicesPage() {
                     className="custom-btn w-full sm:w-auto"
                 >
                     <Link
-                        href="/admin/dashboard/services/new"
+                        href="/admin/services/new"
                         className="inline-flex items-center justify-center whitespace-nowrap"
                     >
                         <Plus className="mr-2 size-4 shrink-0" />
