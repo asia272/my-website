@@ -1,20 +1,13 @@
 "use client";
 
 import { useState } from "react";
-
-import {
-    Loader2,
-    Trash2,
-} from "lucide-react";
-
+import { Loader2, Trash2 } from "lucide-react";
 import { useMutation } from "convex/react";
+import toast from "react-hot-toast";
 
-import { toast } from "react-hot-toast";
 
-import { api } from "../../../../convex/_generated/api";
 import type { Id } from "../../../../convex/_generated/dataModel";
-
-import { Button } from "@/components/ui/button";
+import { api } from "../../../../convex/_generated/api";
 
 import {
     AlertDialog,
@@ -28,129 +21,114 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-interface DeleteServiceButtonProps {
+type DeleteServiceButtonProps = {
     serviceId: Id<"services">;
     serviceTitle: string;
-}
+};
 
 export default function DeleteServiceButton({
     serviceId,
     serviceTitle,
 }: DeleteServiceButtonProps) {
-    const [open, setOpen] =
-        useState(false);
+    const removeService = useMutation(api.services.remove);
 
-    const [
-        isDeleting,
-        setIsDeleting,
-    ] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
-    const removeService =
-        useMutation(
-            api.services.remove,
-        );
+    const handleDelete = async () => {
+        try {
+            setIsDeleting(true);
 
-    const handleDelete =
-        async () => {
-            if (isDeleting) {
-                return;
-            }
+            await removeService({
+                id: serviceId,
+            });
 
-            try {
-                setIsDeleting(true);
+            toast.success("Service deleted successfully.");
+            setOpen(false);
+        } catch (error) {
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "Failed to delete service.";
 
-                await removeService({
-                    id: serviceId,
-                });
-
-                toast.success(
-                    `"${serviceTitle}" deleted successfully.`,
-                );
-
-                setOpen(false);
-            } catch (error) {
-                console.error(
-                    "Failed to delete service:",
-                    error,
-                );
-
-                toast.error(
-                    error instanceof Error
-                        ? error.message
-                        : "Failed to delete service.",
-                );
-            } finally {
-                setIsDeleting(
-                    false,
-                );
-            }
-        };
+            toast.error(message);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     return (
         <AlertDialog
             open={open}
             onOpenChange={setOpen}
         >
-            <AlertDialogTrigger
-                asChild
-            >
-                <Button
+            <AlertDialogTrigger asChild>
+                <button
                     type="button"
-                    variant="outline"
-                    size="sm"
-                    className="h-9 rounded-md bg-transparent hover:border-destructive hover:bg-destructive/10 hover:text-destructive"
+                    disabled={isDeleting}
+                    className="
+                        inline-flex
+                        h-9
+                        items-center
+                        justify-center
+                        rounded-md
+                        bg-transparent
+                        px-3
+                        text-sm
+                        font-medium
+                        text-destructive
+                        transition-colors
+                        hover:bg-destructive/10
+                        disabled:pointer-events-none
+                        disabled:opacity-50
+                    "
+                    onClick={(event) =>
+                        event.stopPropagation()
+                    }
                 >
-                    <Trash2 className="size-4 sm:mr-2" />
+                    {isDeleting ? (
+                        <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                        <>
+                            <Trash2 className="size-4 sm:mr-2" />
 
-                    <span className="hidden sm:inline">
-                        Delete
-                    </span>
-                </Button>
+                            <span className="hidden sm:inline">
+                                Delete
+                            </span>
+                        </>
+                    )}
+                </button>
             </AlertDialogTrigger>
 
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>
-                        <h4>
-                            Delete{" "}
-                            <span className="text-red-600">
-                                "{serviceTitle}"
-                            </span>
-                            ?
-                        </h4>
+                        Delete Service?
                     </AlertDialogTitle>
 
                     <AlertDialogDescription>
-                        This action cannot be
-                        undone. This will
-                        permanently delete{" "}
+                        Are you sure you want to delete{" "}
                         <span className="font-medium text-foreground">
                             {serviceTitle}
-                        </span>{" "}
-                        from your services.
+                        </span>
+                        ? This action cannot be undone.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
 
                 <AlertDialogFooter>
                     <AlertDialogCancel
-                        disabled={
-                            isDeleting
-                        }
+                        disabled={isDeleting}
                     >
                         Cancel
                     </AlertDialogCancel>
 
                     <AlertDialogAction
-                        onClick={(
-                            event,
-                        ) => {
+                        disabled={isDeleting}
+                        onClick={(event) => {
                             event.preventDefault();
                             void handleDelete();
                         }}
-                        disabled={
-                            isDeleting
-                        }
-                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        className="bg-destructive text-white hover:bg-destructive/90"
                     >
                         {isDeleting ? (
                             <>

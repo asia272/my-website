@@ -87,18 +87,13 @@ export default defineSchema({
          * Example: "Code2", "Bot", "ShoppingCart"
          */
         icon: v.optional(v.string()),
-
         description: v.string(),
-
-        /**
-         * Dynamic list items displayed inside the service card.
-         */
         listItems: v.array(v.string()),
-
+        isActive: v.boolean(),
         createdAt: v.number(),
-
         updatedAt: v.number(),
     })
+        .index("by_active", ["isActive"])
         .index("by_created_at", ["createdAt"]),
 
 
