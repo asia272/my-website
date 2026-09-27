@@ -83,23 +83,28 @@ export default function ServiceForm({
 }: ServiceFormProps) {
     const router = useRouter();
 
-    const createService = useMutation(
-        api.services.create,
-    );
+    const createService =
+        useMutation(
+            api.services.create,
+        );
 
-    const updateService = useMutation(
-        api.services.update,
-    );
+    const updateService =
+        useMutation(
+            api.services.update,
+        );
 
-    const isEditMode = mode === "edit";
+    const isEditMode =
+        mode === "edit";
 
-    const [title, setTitle] = useState(
-        service?.title ?? "",
-    );
+    const [title, setTitle] =
+        useState(
+            service?.title ?? "",
+        );
 
-    const [icon, setIcon] = useState(
-        service?.icon ?? "",
-    );
+    const [icon, setIcon] =
+        useState(
+            service?.icon ?? "",
+        );
 
     const [description, setDescription] =
         useState(
@@ -117,7 +122,9 @@ export default function ServiceForm({
         useState(false);
 
     const [error, setError] =
-        useState<string | null>(null);
+        useState<string | null>(
+            null,
+        );
 
     useEffect(() => {
         if (!service) {
@@ -126,7 +133,9 @@ export default function ServiceForm({
 
         setTitle(service.title);
         setIcon(service.icon ?? "");
-        setDescription(service.description);
+        setDescription(
+            service.description,
+        );
 
         setListItems(
             service.listItems?.length
@@ -139,33 +148,48 @@ export default function ServiceForm({
         index: number,
         value: string,
     ) {
-        setListItems((currentItems) =>
-            currentItems.map((item, itemIndex) =>
-                itemIndex === index
-                    ? value
-                    : item,
-            ),
+        setListItems(
+            (currentItems) =>
+                currentItems.map(
+                    (
+                        item,
+                        itemIndex,
+                    ) =>
+                        itemIndex === index
+                            ? value
+                            : item,
+                ),
         );
     }
 
     function addListItem() {
-        setListItems((currentItems) => [
-            ...currentItems,
-            "",
-        ]);
+        setListItems(
+            (currentItems) => [
+                ...currentItems,
+                "",
+            ],
+        );
     }
 
-    function removeListItem(index: number) {
-        setListItems((currentItems) => {
-            if (currentItems.length === 1) {
-                return [""];
-            }
+    function removeListItem(
+        index: number,
+    ) {
+        setListItems(
+            (currentItems) => {
+                if (
+                    currentItems.length ===
+                    1
+                ) {
+                    return [""];
+                }
 
-            return currentItems.filter(
-                (_, itemIndex) =>
-                    itemIndex !== index,
-            );
-        });
+                return currentItems.filter(
+                    (_, itemIndex) =>
+                        itemIndex !==
+                        index,
+                );
+            },
+        );
     }
 
     async function handleSubmit(
@@ -183,7 +207,9 @@ export default function ServiceForm({
 
         const cleanedListItems =
             listItems
-                .map((item) => item.trim())
+                .map((item) =>
+                    item.trim(),
+                )
                 .filter(Boolean);
 
         if (!trimmedTitle) {
@@ -200,7 +226,10 @@ export default function ServiceForm({
             return;
         }
 
-        if (cleanedListItems.length === 0) {
+        if (
+            cleanedListItems.length ===
+            0
+        ) {
             setError(
                 "At least one service list item is required.",
             );
@@ -227,7 +256,9 @@ export default function ServiceForm({
                 await updateService({
                     id: service._id,
                     title: trimmedTitle,
-                    icon: icon.trim() || undefined,
+                    icon:
+                        icon.trim() ||
+                        undefined,
                     description:
                         trimmedDescription,
                     listItems:
@@ -240,7 +271,9 @@ export default function ServiceForm({
             } else {
                 await createService({
                     title: trimmedTitle,
-                    icon: icon.trim() || undefined,
+                    icon:
+                        icon.trim() ||
+                        undefined,
                     description:
                         trimmedDescription,
                     listItems:
@@ -272,7 +305,9 @@ export default function ServiceForm({
 
             toast.error(message);
         } finally {
-            setIsSubmitting(false);
+            setIsSubmitting(
+                false,
+            );
         }
     }
 
@@ -282,7 +317,6 @@ export default function ServiceForm({
             className="mx-auto w-full max-w-4xl"
         >
             <div className="rounded-lg border bg-card">
-                {/* Form fields */}
                 <div className="space-y-6 p-5 sm:p-6">
 
                     {/* Title */}
@@ -296,28 +330,31 @@ export default function ServiceForm({
                             value={title}
                             onChange={(event) =>
                                 setTitle(
-                                    event.target.value,
+                                    event.target
+                                        .value,
                                 )
                             }
                             placeholder="Web Development"
+                            maxLength={100}
                             disabled={
                                 isSubmitting
                             }
                             required
-                            maxLength={100}
                             className="rounded"
                         />
                     </div>
 
                     {/* Icon */}
                     <div className="space-y-2">
-                        <Label htmlFor="service-icon">
+                        <Label>
                             Icon
                         </Label>
 
                         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                             {SERVICE_ICONS.map(
-                                (serviceIcon) => {
+                                (
+                                    serviceIcon,
+                                ) => {
                                     const Icon =
                                         serviceIcon.icon;
 
@@ -382,10 +419,16 @@ export default function ServiceForm({
 
                         <Textarea
                             id="service-description"
-                            value={description}
-                            onChange={(event) =>
+                            value={
+                                description
+                            }
+                            onChange={(
+                                event,
+                            ) =>
                                 setDescription(
-                                    event.target.value,
+                                    event
+                                        .target
+                                        .value,
                                 )
                             }
                             placeholder="Describe the service, what you provide, and the value it offers to clients."
@@ -408,8 +451,10 @@ export default function ServiceForm({
                                 </Label>
 
                                 <p className="mt-1 text-xs text-muted-foreground">
-                                    Add the key features or
-                                    services included.
+                                    Add the key
+                                    features or
+                                    services
+                                    included.
                                 </p>
                             </div>
 
