@@ -104,7 +104,7 @@ export default function AdminVerifyForm() {
                 EMAIL_STORAGE_KEY,
             );
 
-            router.replace("/admin/dashboard");
+            router.replace("/admin");
             router.refresh();
         } catch (error) {
             console.error(error);

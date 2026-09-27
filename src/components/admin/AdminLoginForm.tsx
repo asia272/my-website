@@ -33,7 +33,7 @@ export default function AdminLoginForm() {
                 email.trim().toLowerCase(),
             );
 
-            router.push("/admin/verify");
+            router.push("/verify");
         } catch (error) {
             console.error(error);
 

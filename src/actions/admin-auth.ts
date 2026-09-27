@@ -342,5 +342,5 @@ export async function logoutAdmin() {
 
     cookieStore.delete(ADMIN_SESSION_COOKIE);
 
-    redirect("/admin/login");
+    redirect("/login");
 }
