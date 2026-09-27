@@ -1,11 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { Quote, Star } from "lucide-react";
+import { Quote, Star, ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { Marquee } from "../ui/marquee";
 import PageHeading from "../shared/PageHeading";
+import Autoplay from "embla-carousel-autoplay";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    type CarouselApi,
+} from "../ui/carousel";
+import { BorderBeam } from "../ui/border-beam";
 
 type Testimonial = {
     id: number;
@@ -67,9 +75,6 @@ const testimonials: Testimonial[] = [
     },
 ];
 
-const firstRow = testimonials.slice(0, testimonials.length / 2);
-const secondRow = testimonials.slice(testimonials.length / 2);
-
 const TestimonialCard = ({
     name,
     role,
@@ -84,17 +89,27 @@ const TestimonialCard = ({
         .join("")
         .toUpperCase();
 
-
     return (
         <figure
             className={cn(
-                "group relative w-64 shrink-0 cursor-pointer overflow-hidden rounded-2xl border p-5",
+                "group relative w-full cursor-pointer overflow-hidden rounded-2xl border p-5",
                 "border-border bg-card/80 backdrop-blur-sm",
                 "transition-all duration-300",
                 "hover:border-primary/30 hover:bg-card",
-                "sm:w-[360px]"
             )}
         >
+
+            {/* Beam moving opposite direction */}
+            <BorderBeam
+                duration={6}
+                delay={3}
+                size={400}
+                borderWidth={1}
+                initialOffset={0}
+                reverse
+                className="from-transparent via-blue-500 to-transparent"
+            />
+
             {/* Subtle glow */}
             <div
                 aria-hidden="true"
@@ -163,69 +178,193 @@ const TestimonialCard = ({
             </div>
         </figure>
     );
-
-
 };
 
-
 const TestimonialsSection = () => {
-    return (<section className="section overflow-hidden max-w-350 mx-auto" id="testimonials">
+    const [api, setApi] = useState<CarouselApi>();
+    const [current, setCurrent] = useState(0);
 
-        {/* Heading */}
-        <PageHeading
-            label="Testimonials"
-            title="What our clients"
-            highlightedText="say about us."
-            fontSize="clamp(1.7rem,3vw,2.11rem)"
-            description="Hear from clients and collaborators about their experience working with us to build modern, reliable, and impactful digital products."
-            isCenter
-        />
+    const totalSlides = testimonials.length;
 
-        {/* Marquee */}
-        <div className='relative flex h-full w-full flex-col items-center justify-center overflow-hidden  py-20 md:shadow-xl'>
-            {/* Left fade */}
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent sm:w-32 md:w-40"
+    useEffect(() => {
+        if (!api) return;
+
+        const updateCurrent = () => {
+            setCurrent(api.selectedScrollSnap());
+        };
+
+        updateCurrent();
+
+        api.on("select", updateCurrent);
+
+        return () => {
+            api.off("select", updateCurrent);
+        };
+    }, [api]);
+
+    const goToPrevious = () => {
+        api?.scrollPrev();
+    };
+
+    const goToNext = () => {
+        api?.scrollNext();
+    };
+
+    const progress =
+        totalSlides > 1
+            ? ((current + 1) / totalSlides) * 100
+            : 100;
+
+    // Auto-Play
+    const autoplay = Autoplay({
+        delay: 4000,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+    });
+
+    return (
+        <section
+            className="section mx-auto max-w-350 overflow-hidden"
+            id="testimonials"
+        >
+            {/* Heading */}
+            <PageHeading
+                label="Testimonials"
+                title="What our clients"
+                highlightedText="say about us."
+                fontSize="clamp(1.7rem,3vw,2.11rem)"
+                description="Hear from clients and collaborators about their experience working with us to build modern, reliable, and impactful digital products."
+                isCenter
             />
 
-            {/* Right fade */}
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent sm:w-32 md:w-40"
-            />
+            {/* Testimonials Carousel */}
+            <div className="relative mt-20 w-full px-4 sm:px-6 lg:px-8">
+                {/* Left fade */}
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-background to-transparent sm:w-10 md:w-16"
+                />
 
-            {/* Row 1 */}
-            <Marquee
-                pauseOnHover
-                className="[--duration:20s] "
-            >
-                {firstRow.map((testimonial) => (
-                    <TestimonialCard
-                        key={testimonial.id}
-                        {...testimonial}
-                    />
-                ))}
-            </Marquee>
+                {/* Right fade */}
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-background to-transparent sm:w-10 md:w-16"
+                />
+                <Carousel
+                    setApi={setApi}
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                    plugins={[autoplay]}
+                    className="w-full"
+                >
+                    <CarouselContent className="-ml-5">
+                        {testimonials.map((testimonial) => (
+                            <CarouselItem
+                                key={testimonial.id}
+                                className="basis-full pl-5 sm:basis-1/2 lg:basis-1/3"
+                            >
+                                <TestimonialCard {...testimonial} />
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                </Carousel>
+                {/* Controls + Progress */}
+                <div className="mt-10 flex items-center justify-center gap-5 sm:gap-8">
+                    {/* Previous */}
+                    <button
+                        type="button"
+                        onClick={goToPrevious}
+                        aria-label="Previous testimonial"
+                        className="
+                            flex
+                            h-14
+                            w-14
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-border
+                            bg-card/60
+                            text-foreground
+                            backdrop-blur-sm
+                            transition-all
+                            duration-300
+                            hover:border-primary/40
+                            hover:bg-card
+                            hover:text-primary
+                            active:scale-95
+                        "
+                    >
+                        <ArrowLeft
+                            size={17}
+                            strokeWidth={1.6}
+                        />
+                    </button>
 
-            {/* Row 2 */}
-            <Marquee
-                reverse
-                pauseOnHover
-                className="[--duration:20s]"
-            >
-                {secondRow.map((testimonial) => (
-                    <TestimonialCard
-                        key={testimonial.id}
-                        {...testimonial}
-                    />
-                ))}
-            </Marquee>
-        </div>
-    </section>
+                    {/* Progress */}
+                    <div className="flex min-w-[180px] flex-col items-center gap-3 sm:min-w-[300px]">
+                        <div className="flex items-center gap-3 font-mono text-sm">
+                            <span className="text-foreground">
+                                {String(current + 1).padStart(2, "0")}
+                            </span>
+
+                            <span className="text-muted-foreground">
+                                /
+                            </span>
+
+                            <span className="text-muted-foreground">
+                                {String(totalSlides).padStart(2, "0")}
+                            </span>
+                        </div>
+
+                        <div className="h-[3px] w-full overflow-hidden rounded-full bg-border">
+                            <div
+                                className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
+                                style={{
+                                    width: `${progress}%`,
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Next */}
+                    <button
+                        type="button"
+                        onClick={goToNext}
+                        aria-label="Next testimonial"
+                        className="
+                            flex
+                            h-14
+                            w-14
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-border
+                            bg-card/60
+                            text-foreground
+                            backdrop-blur-sm
+                            transition-all
+                            duration-300
+                            hover:border-primary/40
+                            hover:bg-card
+                            hover:text-primary
+                            active:scale-95
+                        "
+                    >
+                        <ArrowRight
+                            size={17}
+                            strokeWidth={1.6}
+                        />
+                    </button>
+                </div>
+            </div>
+        </section>
     );
-
-
 };
 
 export default TestimonialsSection;
