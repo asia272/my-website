@@ -558,14 +558,14 @@ export default function TeamForm({
                     >
                         <span
                             className={`relative flex h-5 w-9 shrink-0 items-center rounded-full border transition-colors ${isActive
-                                    ? "border-foreground bg-primary"
-                                    : "bg-muted"
+                                ? "border-foreground bg-primary"
+                                : "bg-muted"
                                 }`}
                         >
                             <span
                                 className={`absolute size-3.5 rounded-full bg-background transition-transform ${isActive
-                                        ? "translate-x-[17px]"
-                                        : "translate-x-[2px]"
+                                    ? "translate-x-[17px]"
+                                    : "translate-x-[2px]"
                                     }`}
                             />
                         </span>

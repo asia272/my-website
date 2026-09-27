@@ -138,23 +138,20 @@ async function ensureUniqueTitle(
  * Used by both:
  * - Admin Services List
  * - Public Services section
- *
- * Convex automatically keeps subscribed clients updated in realtime.
+
  */
 export const getAll = query({
     args: {},
     handler: async (ctx) => {
-        return await ctx.db.query("services").collect();
+        return await ctx.db
+            .query("services")
+            .withIndex("by_created_at")
+            .order("desc")
+            .collect();
     },
 });
 
-/**
- * Get a single service by ID.
- *
- * Useful for:
- * - Edit Service page
- * - Service detail views
- */
+// Get By Id
 export const getById = query({
     args: {
         id: v.id("services"),
