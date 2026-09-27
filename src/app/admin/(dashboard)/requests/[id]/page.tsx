@@ -169,7 +169,7 @@ export default function ClientRequestDetailsPage() {
                     className="custom-btn-outline"
                 >
                     <Link
-                        href="/admin/dashboard/requests"
+                        href="/admin/requests"
                         className="inline-flex items-center"
                     >
                         <ArrowLeft className="mr-2 size-4" />
@@ -195,7 +195,7 @@ export default function ClientRequestDetailsPage() {
                         asChild
                         className="custom-btn mt-5"
                     >
-                        <Link href="/admin/dashboard/requests">
+                        <Link href="/admin/requests">
                             Back to Requests
                         </Link>
                     </Button>
@@ -214,7 +214,7 @@ export default function ClientRequestDetailsPage() {
                     className="custom-btn-outline w-fit"
                 >
                     <Link
-                        href="/admin/dashboard/requests"
+                        href="/admin/requests"
                         className="inline-flex items-center"
                     >
                         <ArrowLeft className="mr-2 size-4" />

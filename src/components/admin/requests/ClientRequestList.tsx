@@ -667,7 +667,7 @@ export default function ClientRequestList({
                                             "
                                         >
                                             <Link
-                                                href={`/admin/dashboard/requests/${request._id}`}
+                                                href={`/admin/requests/${request._id}`}
                                                 className="inline-flex items-center justify-center"
                                             >
                                                 <Eye className="mr-2 size-4 shrink-0 text-chart-2" />

@@ -56,7 +56,7 @@ function EditProjectContent({
                     asChild
                     variant="outline"
                 >
-                    <Link href="/admin/dashboard/projects">
+                    <Link href="/admin/projects">
                         <ArrowLeft className="mr-2 size-4" />
                         Back to Projects
                     </Link>
@@ -85,7 +85,7 @@ function EditProjectContent({
                     size="icon"
                     className="mt-1 shrink-0"
                 >
-                    <Link href="/admin/dashboard/projects">
+                    <Link href="/admin/projects">
                         <ArrowLeft className="size-4" />
                     </Link>
                 </Button>

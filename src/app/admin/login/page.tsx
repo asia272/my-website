@@ -44,9 +44,9 @@ export default async function AdminLoginPage() {
                             </span>
                         </div>
 
-                        <h1 className="text-2xl font-semibold">
+                        <h3 className="text-2xl font-semibold">
                             Admin Login
-                        </h1>
+                        </h3>
 
                         <p className="mt-2 text-sm text-muted-foreground">
                             Enter your admin email to receive a

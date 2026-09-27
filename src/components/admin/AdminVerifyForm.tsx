@@ -174,7 +174,7 @@ export default function AdminVerifyForm() {
                     We sent a 6-digit verification code to
                 </p>
 
-                <p className="mt-1 break-all text-sm font-medium italic">
+                <p className="mt-1 break-all text-sm font-medium ">
                     {email || "your email"}
                 </p>
             </div>

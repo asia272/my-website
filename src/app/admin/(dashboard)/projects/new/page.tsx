@@ -23,7 +23,7 @@ export default function NewProjectPage() {
     "
                 >
                     <Link
-                        href="/admin/dashboard/projects"
+                        href="/admin/projects"
                         className="flex items-center gap-2"
                     >
                         <ArrowLeft className="size-4 text-primary" />

@@ -30,7 +30,7 @@ export default function ProjectsPage() {
                     className="custom-btn w-full sm:w-auto"
                 >
                     <Link
-                        href="/admin/dashboard/projects/new"
+                        href="/admin/projects/new"
                         className="inline-flex items-center justify-center whitespace-nowrap"
                     >
                         <Plus className="mr-2 size-4 shrink-0" />
