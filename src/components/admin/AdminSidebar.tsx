@@ -135,7 +135,7 @@ export default function AdminSidebar() {
                     "
                 >
                     <Link
-                        href="/admin/dashboard"
+                        href="/admin"
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3"
                     >
@@ -207,10 +207,7 @@ export default function AdminSidebar() {
                         {navigation.map((item) => {
                             const Icon = item.icon;
 
-                            const isActive =
-                                item.href === "/admin/dashboard"
-                                    ? pathname === item.href
-                                    : pathname.startsWith(item.href);
+                            const isActive = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(`${item.href}/`) || pathname === item.href;
 
                             return (
                                 <Link

@@ -56,7 +56,7 @@ function EditTeamContent({
                     asChild
                     variant="outline"
                 >
-                    <Link href="/admin/dashboard/team">
+                    <Link href="/admin/team">
                         <ArrowLeft className="mr-2 size-4" />
                         Back to Team
                     </Link>
@@ -85,7 +85,7 @@ function EditTeamContent({
                     size="icon"
                     className="mt-1 shrink-0"
                 >
-                    <Link href="/admin/dashboard/team">
+                    <Link href="/admin/team">
                         <ArrowLeft className="size-4" />
                     </Link>
                 </Button>

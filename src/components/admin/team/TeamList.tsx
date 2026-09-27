@@ -50,7 +50,7 @@ export default function TeamList({
                     asChild
                     className="custom-btn mt-5"
                 >
-                    <Link href="/admin/dashboard/team/new">
+                    <Link href="/admin/team/new">
                         Add Team Member
                     </Link>
                 </Button>
@@ -136,7 +136,7 @@ export default function TeamList({
         "
                             >
                                 <Link
-                                    href={`/admin/dashboard/team/${member._id}/edit`}
+                                    href={`/admin/team/${member._id}/edit`}
                                     className="inline-flex items-center justify-center"
                                 >
                                     <Pencil className="mr-2 size-4 shrink-0 text-chart-2" />

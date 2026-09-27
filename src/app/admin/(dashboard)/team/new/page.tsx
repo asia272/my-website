@@ -26,7 +26,7 @@ export default function NewTeamMemberPage() {
                     className="w-full sm:w-auto"
                 >
                     <Link
-                        href="/admin/dashboard/team"
+                        href="/admin/team"
                         className="inline-flex items-center justify-center"
                     >
                         <ArrowLeft className="mr-2 size-4" />
