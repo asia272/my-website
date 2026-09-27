@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Pencil, Plus, Trash2, Loader2 } from "lucide-react";
+import { Pencil, Plus, Trash2, Loader2, BriefcaseBusiness } from "lucide-react";
 import { useMutation, useQuery } from "convex/react";
 import { toast } from "react-hot-toast";
 
@@ -60,55 +60,82 @@ export default function ServicesPage() {
     return (
         <div className="space-y-8">
             {/* Heading */}
-            <div className="flex items-start justify-between gap-4">
+
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+
+
                 <AdminPageHeading
+                    label="services"
                     title="Services"
+                    labelClassName="text-chart-4"
                     description="Manage the services displayed on your website."
                 />
-
-                <Button asChild>
+                <Button
+                    asChild
+                    className="custom-btn w-full sm:w-auto"
+                >
                     <Link
                         href="/admin/dashboard/services/new"
-                        className="gap-2"
+                        className="inline-flex items-center justify-center whitespace-nowrap"
                     >
-                        <Plus className="size-4" />
-                        <span className="hidden sm:inline">
-                            Add Service
-                        </span>
+                        <Plus className="mr-2 size-4 shrink-0" />
+                        <span>  Add Service</span>
                     </Link>
                 </Button>
             </div>
-
             {/* Empty State */}
             {services.length === 0 ? (
+
+
                 <div
                     className="
-                        rounded-xl
-                        border
-                        bg-card
-                        p-8
-                        text-center
-                    "
+                    flex
+                    min-h-60
+                    flex-col
+                    items-center
+                    justify-center
+                    rounded-2xl
+                    border
+                    border-dashed
+                    border-border
+                    bg-card
+                    px-6
+                    text-center
+                "
                 >
-                    <h2 className="text-lg font-semibold">
-                        No services yet
-                    </h2>
+                    <div
+                        className="
+                        mb-4
+                        flex
+                        size-12
+                        items-center
+                        justify-center
+                        rounded-xl
+                        bg-chart-4/10
+                    "
+                    >
+                        <BriefcaseBusiness className="size-5 text-chart-4" />
+                    </div>
 
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <h3 className="font-medium">
+                        No services yet
+                    </h3>
+
+                    <p className="mt-1 max-w-sm text-sm text-secondary">
                         Create your first service to display
                         it on your website.
                     </p>
 
                     <Button
                         asChild
-                        className="mt-5"
+                        className="custom-btn mt-5"
                     >
                         <Link href="/admin/dashboard/services/new">
-                            <Plus className="mr-2 size-4" />
                             Create Service
                         </Link>
                     </Button>
                 </div>
+
             ) : (
                 <div
                     className="

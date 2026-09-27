@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useQuery } from "convex/react";
-
 import { api } from "../../../../../../../convex/_generated/api";
-import type { Id } from "../../../../../../../convex/_generated/dataModel";
+import { Id } from "../../../../../../../convex/_generated/dataModel";
 
 import { Button } from "@/components/ui/button";
 
