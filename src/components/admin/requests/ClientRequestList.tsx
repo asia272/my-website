@@ -382,15 +382,24 @@ export default function ClientRequestList({
                         <Select
                             value={statusFilter}
                             onValueChange={setStatusFilter}
+
                         >
                             <SelectTrigger
                                 id="request-status-filter"
-                                className="w-full"
+                                className="h-10
+                                w-full
+                                rounded
+                                "
                             >
                                 <SelectValue placeholder="All Statuses" />
                             </SelectTrigger>
 
-                            <SelectContent>
+                            <SelectContent className="      min-w-[var(--radix-select-trigger-width)]
+            rounded-md
+            border-border
+            bg-popover
+            p-1
+            shadow-lg">
                                 {statusOptions.map(
                                     (option) => (
                                         <SelectItem
@@ -420,12 +429,19 @@ export default function ClientRequestList({
                         >
                             <SelectTrigger
                                 id="request-service-filter"
-                                className="w-full"
+                                className="h-10
+                                w-full
+                                rounded"
                             >
                                 <SelectValue placeholder="All Services" />
                             </SelectTrigger>
 
-                            <SelectContent>
+                            <SelectContent className="      min-w-[var(--radix-select-trigger-width)]
+            rounded-md
+            border-border
+            bg-popover
+            p-1
+            shadow-lg">
                                 <SelectItem value="ALL">
                                     All Services
                                 </SelectItem>
