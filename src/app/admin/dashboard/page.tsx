@@ -62,7 +62,7 @@ export default function AdminDashboardPage() {
         recentRequests === undefined;
 
     return (
-        <div className="mx-auto w-full max-w-7xl">
+        <div className="mx-auto w-full max-w-7xl ">
             {/* Heading */}
 
             <AdminPageHeading
@@ -71,7 +71,7 @@ export default function AdminDashboardPage() {
                 title="Overview"
                 description="Manage your website content and client requests from one place."
             />
-            {/* Stats */}
+
             {/* Stats */}
             <div
                 className="

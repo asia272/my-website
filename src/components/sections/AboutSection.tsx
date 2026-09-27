@@ -300,7 +300,7 @@ export default function AboutSection() {
                             label="About Us"
                             title="Unlock Business Growth with Our"
                             highlightedText="Expert IT Solutions"
-                            description="At BuitinSoft, we deliver IT services designed to boost efficiency, streamline operations, and help your business scale with confidence."
+                            description="We deliver IT services designed to boost efficiency, streamline operations, and help your business scale with confidence."
                             titleMaxWidth="max-w-[680px]"
                             fontSize="clamp(1.7rem,3vw,2.11rem)"
                             className="max-w-none"

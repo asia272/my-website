@@ -24,7 +24,7 @@ export default async function AdminDashboardLayout({
                 <div className="min-w-0 flex-1">
                     <AdminHeader email={session.email} />
 
-                    <main className="min-h-screen lg:pl-78 sm:px-6 lg:px-8 pt-10">
+                    <main className="min-h-screen lg:pl-78 sm:px-6 lg:px-8 pt-10  pb-10">
                         {children}
                     </main>
                 </div>

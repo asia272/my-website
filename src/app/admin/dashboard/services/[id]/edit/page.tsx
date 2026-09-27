@@ -90,11 +90,11 @@ function EditServiceContent({
                 </Button>
 
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">
+                    <h2 className="text-2xl font-semibold tracking-tight">
                         Edit Service
-                    </h1>
+                    </h2>
 
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                         Update the information for{" "}
                         <span className="font-medium text-foreground">
                             {service.title}

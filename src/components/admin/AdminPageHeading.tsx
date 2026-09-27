@@ -12,7 +12,7 @@ export default function AdminPageHeading({
     labelClassName = "text-primary",
 }: AdminPageHeaderProps) {
     return (
-        <div className="mb-8">
+        <div className="mb-2">
             {label && (
                 <p
                     className={`text-sm font-medium ${labelClassName}`}

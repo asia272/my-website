@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -8,40 +9,39 @@ import { api } from "../../../../../../../convex/_generated/api";
 import type { Id } from "../../../../../../../convex/_generated/dataModel";
 
 import { Button } from "@/components/ui/button";
+import TeamForm from "@/components/admin/team/TeamForm";
 
-import ProjectForm from "@/components/admin/projects/ProjectForm";
-
-type EditProjectPageProps = {
+type EditTeamPageProps = {
     params: Promise<{
         id: string;
     }>;
 };
 
-export default async function EditProjectPage({
+export default async function EditTeamPage({
     params,
-}: EditProjectPageProps) {
+}: EditTeamPageProps) {
     const { id } = await params;
 
     return (
-        <EditProjectContent
-            projectId={id as Id<"projects">}
+        <EditTeamContent
+            teamMemberId={id as Id<"teamMembers">}
         />
     );
 }
 
-function EditProjectContent({
-    projectId,
+function EditTeamContent({
+    teamMemberId,
 }: {
-    projectId: Id<"projects">;
+    teamMemberId: Id<"teamMembers">;
 }) {
-    const project = useQuery(
-        api.projects.getById,
+    const teamMember = useQuery(
+        api.teamMembers.getById,
         {
-            id: projectId,
+            id: teamMemberId,
         },
     );
 
-    if (project === undefined) {
+    if (teamMember === undefined) {
         return (
             <div className="flex min-h-60 items-center justify-center">
                 <Loader2 className="size-6 animate-spin text-muted-foreground" />
@@ -49,26 +49,26 @@ function EditProjectContent({
         );
     }
 
-    if (project === null) {
+    if (teamMember === null) {
         return (
             <div className="space-y-6">
                 <Button
                     asChild
                     variant="outline"
                 >
-                    <Link href="/admin/dashboard/projects">
+                    <Link href="/admin/dashboard/team">
                         <ArrowLeft className="mr-2 size-4" />
-                        Back to Projects
+                        Back to Team
                     </Link>
                 </Button>
 
                 <div className="rounded-xl border p-8 text-center">
-                    <h1 className="text-xl font-semibold">
-                        Project Not Found
-                    </h1>
+                    <h2 className="text-xl font-semibold">
+                        Team Member Not Found
+                    </h2>
 
                     <p className="mt-2 text-sm text-muted-foreground">
-                        This project may have been deleted
+                        This team member may have been deleted
                         or the URL is invalid.
                     </p>
                 </div>
@@ -85,31 +85,33 @@ function EditProjectContent({
                     size="icon"
                     className="mt-1 shrink-0"
                 >
-                    <Link href="/admin/dashboard/projects">
+                    <Link href="/admin/dashboard/team">
                         <ArrowLeft className="size-4" />
                     </Link>
                 </Button>
 
                 <div>
                     <h2 className="text-2xl font-semibold tracking-tight">
-                        Edit Project
+                        Edit Team Member
                     </h2>
 
                     <p className="mt-1 text-sm text-muted-foreground">
                         Update the information for{" "}
                         <span className="font-medium text-foreground">
-                            {project.name}
+                            {teamMember.name}
                         </span>
                         .
                     </p>
                 </div>
             </div>
 
-            <ProjectForm
+
+            <TeamForm
                 mode="edit"
-                project={project}
+                teamMember={teamMember}
             />
 
         </div>
     );
 }
+
