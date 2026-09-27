@@ -43,9 +43,9 @@ export default function NewServicePage() {
                 />
             </div>
 
-            <div className="rounded-xl border bg-card p-6 sm:p-8">
-                <ServiceForm mode="create" />
-            </div>
+
+            <ServiceForm mode="create" />
+
         </div>
     );
 }

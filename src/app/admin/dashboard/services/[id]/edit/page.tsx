@@ -104,12 +104,12 @@ function EditServiceContent({
                 </div>
             </div>
 
-            <div className="rounded-xl border bg-card p-6 sm:p-8">
-                <ServiceForm
-                    mode="edit"
-                    service={service}
-                />
-            </div>
+
+            <ServiceForm
+                mode="edit"
+                service={service}
+            />
+
         </div>
     );
 }

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -5,15 +6,26 @@ import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2, Loader2 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import * as Icons from "lucide-react";
 
 import { api } from "../../../../convex/_generated/api";
 import type { Id } from "../../../../convex/_generated/dataModel";
+
+import { SERVICE_ICONS } from "@/lib/service-icons";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 type ServiceData = {
     _id: Id<"services">;
@@ -41,7 +53,11 @@ export default function ServiceForm({
     const updateService = useMutation(api.services.update);
 
     const [title, setTitle] = useState(service?.title ?? "");
-    const [icon, setIcon] = useState(service?.icon ?? "");
+
+    const [icon, setIcon] = useState(
+        service?.icon ?? "Code2",
+    );
+
     const [description, setDescription] = useState(
         service?.description ?? "",
     );
@@ -64,7 +80,9 @@ export default function ServiceForm({
 
     const removeListItem = (index: number) => {
         setListItems((items) =>
-            items.filter((_, itemIndex) => itemIndex !== index),
+            items.filter(
+                (_, itemIndex) => itemIndex !== index,
+            ),
         );
     };
 
@@ -102,7 +120,9 @@ export default function ServiceForm({
         }
 
         if (cleanListItems.length === 0) {
-            toast.error("Add at least one service feature.");
+            toast.error(
+                "Add at least one service feature.",
+            );
             return;
         }
 
@@ -118,13 +138,14 @@ export default function ServiceForm({
                     isActive,
                 });
 
-                toast.success("Service created successfully.");
-
-                router.push("/admin/dashboard/services");
-                router.refresh();
+                toast.success(
+                    "Service created successfully.",
+                );
             } else {
                 if (!service) {
-                    toast.error("Service data is missing.");
+                    toast.error(
+                        "Service data is missing.",
+                    );
                     return;
                 }
 
@@ -137,11 +158,12 @@ export default function ServiceForm({
                     isActive,
                 });
 
-                toast.success("Service updated successfully.");
-
-                router.push("/admin/dashboard/services");
-                router.refresh();
+                toast.success(
+                    "Service updated successfully.",
+                );
             }
+
+            router.push("/admin/dashboard/services");
         } catch (error) {
             const message =
                 error instanceof Error
@@ -154,192 +176,326 @@ export default function ServiceForm({
         }
     };
 
+    const SelectedIcon =
+        icon &&
+        Icons[icon as keyof typeof Icons];
+
     return (
         <form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="mx-auto w-full max-w-4xl"
         >
-            {/* Title */}
-            <div className="space-y-2">
-                <Label htmlFor="title">
-                    Service Title
-                </Label>
+            <div className="overflow-hidden rounded-xl border bg-card">
+                {/* ============================== */}
+                {/* FORM CONTENT */}
+                {/* ============================== */}
 
-                <Input
-                    id="title"
-                    value={title}
-                    onChange={(event) =>
-                        setTitle(event.target.value)
-                    }
-                    placeholder="Web Development"
-                    disabled={isSubmitting}
-                />
-            </div>
+                <div className="space-y-6 p-5 sm:p-6">
 
-            {/* Icon */}
-            <div className="space-y-2">
-                <Label htmlFor="icon">
-                    Icon
-                </Label>
 
-                <Input
-                    id="icon"
-                    value={icon}
-                    onChange={(event) =>
-                        setIcon(event.target.value)
-                    }
-                    placeholder="Code2"
-                    disabled={isSubmitting}
-                />
+                    <section className="space-y-4">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_220px]">
+                            {/* Service Title */}
+                            <div className="space-y-2">
+                                <Label htmlFor="title">
+                                    Service Title
+                                </Label>
 
-                <p className="text-xs text-muted-foreground">
-                    Enter a Lucide icon name, for example
-                    Code2, Bot, ShoppingCart.
-                </p>
-            </div>
+                                <Input
+                                    id="title"
+                                    value={title}
+                                    onChange={(event) =>
+                                        setTitle(
+                                            event.target.value,
+                                        )
+                                    }
+                                    placeholder="Web Development"
+                                    disabled={isSubmitting}
+                                />
+                            </div>
 
-            {/* Description */}
-            <div className="space-y-2">
-                <Label htmlFor="description">
-                    Description
-                </Label>
+                            {/* Service Icon */}
+                            <div className="space-y-2">
+                                <Label htmlFor="icon">
+                                    Service Icon
+                                </Label>
 
-                <Textarea
-                    id="description"
-                    value={description}
-                    onChange={(event) =>
-                        setDescription(event.target.value)
-                    }
-                    placeholder="Describe what this service includes..."
-                    rows={5}
-                    disabled={isSubmitting}
-                />
-            </div>
+                                <Select
+                                    value={icon}
+                                    onValueChange={setIcon}
+                                    disabled={isSubmitting}
+                                >
+                                    <SelectTrigger
+                                        id="icon"
+                                        className="w-full"
+                                    >
+                                        <SelectValue placeholder="Select icon">
+                                            {SelectedIcon &&
+                                                typeof SelectedIcon ===
+                                                "object" && (
+                                                    <div className="flex items-center gap-2">
+                                                        <SelectedIcon className="size-4" />
 
-            {/* List Items */}
-            <div className="space-y-3">
-                <div className="flex items-center justify-between gap-4">
-                    <div>
-                        <Label>
-                            Service Features
-                        </Label>
+                                                        <span>
+                                                            {icon}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                        </SelectValue>
+                                    </SelectTrigger>
 
-                        <p className="mt-1 text-xs text-muted-foreground">
-                            Add the features included in this service.
-                        </p>
-                    </div>
+                                    <SelectContent>
+                                        {SERVICE_ICONS.map(
+                                            (iconName) => {
+                                                const Icon =
+                                                    Icons[
+                                                    iconName as keyof typeof Icons
+                                                    ];
 
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={addListItem}
-                        disabled={isSubmitting}
-                    >
-                        <Plus className="mr-2 size-4" />
-                        Add Feature
-                    </Button>
-                </div>
+                                                if (
+                                                    !Icon ||
+                                                    typeof Icon !==
+                                                    "object"
+                                                ) {
+                                                    return null;
+                                                }
 
-                <div className="space-y-2">
-                    {listItems.map((item, index) => (
-                        <div
-                            key={index}
-                            className="flex items-center gap-2"
-                        >
-                            <Input
-                                value={item}
-                                onChange={(event) =>
-                                    updateListItem(
-                                        index,
+                                                return (
+                                                    <SelectItem
+                                                        key={
+                                                            iconName
+                                                        }
+                                                        value={
+                                                            iconName
+                                                        }
+                                                    >
+                                                        <div className="flex items-center gap-2">
+                                                            <Icon className="size-4" />
+
+                                                            <span>
+                                                                {
+                                                                    iconName
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                    </SelectItem>
+                                                );
+                                            },
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ========================== */}
+                    {/* DESCRIPTION */}
+                    {/* ========================== */}
+
+                    <section className="space-y-2">
+                        <div className="flex items-center justify-between gap-4">
+                            <div>
+                                <Label htmlFor="description">
+                                    Description
+                                </Label>
+
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    Explain what this service
+                                    provides.
+                                </p>
+                            </div>
+
+                            <span className="shrink-0 text-xs text-muted-foreground">
+                                {description.length}/500
+                            </span>
+                        </div>
+
+                        <Textarea
+                            id="description"
+                            value={description}
+                            onChange={(event) => {
+                                if (
+                                    event.target.value.length <=
+                                    500
+                                ) {
+                                    setDescription(
                                         event.target.value,
-                                    )
+                                    );
                                 }
-                                placeholder={`Feature ${index + 1}`}
-                                disabled={isSubmitting}
-                            />
+                            }}
+                            placeholder="Describe what this service includes..."
+                            rows={4}
+                            disabled={isSubmitting}
+                            className="resize-none"
+                        />
+                    </section>
+
+                    {/* ========================== */}
+                    {/* FEATURES */}
+                    {/* ========================== */}
+
+                    <section className="space-y-4">
+                        <div className="flex items-center justify-between gap-4">
+                            <div>
+                                <Label>
+                                    Service Features
+                                </Label>
+
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    Add the key features included
+                                    in this service.
+                                </p>
+                            </div>
 
                             <Button
                                 type="button"
                                 variant="outline"
-                                size="icon"
-                                onClick={() =>
-                                    removeListItem(index)
-                                }
-                                disabled={
-                                    isSubmitting ||
-                                    listItems.length === 1
-                                }
-                                aria-label={`Remove feature ${index + 1
-                                    }`}
+                                size="sm"
+                                onClick={addListItem}
+                                disabled={isSubmitting}
+                                className="shrink-0"
                             >
-                                <Trash2 className="size-4" />
+                                <Plus className="mr-2 size-4" />
+                                Add Feature
                             </Button>
                         </div>
-                    ))}
-                </div>
-            </div>
 
-            {/* Status */}
-            <div
-                className="
-                    flex items-center justify-between
-                    gap-4
-                    rounded-lg
-                    border
-                    bg-background/40
-                    p-4
-                "
-            >
-                <div>
-                    <Label>
-                        Service Status
-                    </Label>
+                        <div className="space-y-2">
+                            {listItems.map(
+                                (item, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <Input
+                                            value={item}
+                                            onChange={(
+                                                event,
+                                            ) =>
+                                                updateListItem(
+                                                    index,
+                                                    event.target
+                                                        .value,
+                                                )
+                                            }
+                                            placeholder={`Feature ${index + 1
+                                                }`}
+                                            disabled={
+                                                isSubmitting
+                                            }
+                                        />
 
-                    <p className="mt-1 text-xs text-muted-foreground">
-                        Inactive services will not be shown
-                        on the public website.
-                    </p>
-                </div>
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="icon"
+                                            onClick={() =>
+                                                removeListItem(
+                                                    index,
+                                                )
+                                            }
+                                            disabled={
+                                                isSubmitting ||
+                                                listItems.length ===
+                                                1
+                                            }
+                                            aria-label={`Remove feature ${index + 1
+                                                }`}
+                                            className="shrink-0"
+                                        >
+                                            <Trash2 className="size-4" />
+                                        </Button>
+                                    </div>
+                                ),
+                            )}
+                        </div>
+                    </section>
 
-                <div className="flex items-center gap-2">
-                    <Switch
-                        checked={isActive}
-                        onCheckedChange={setIsActive}
-                        disabled={isSubmitting}
-                        id="isActive"
-                    />
+                    {/* ========================== */}
+                    {/* STATUS */}
+                    {/* ========================== */}
 
-                    <Label
-                        htmlFor="isActive"
-                        className="cursor-pointer"
+                    <section
+                        className="
+                            flex
+                            items-center
+                            justify-between
+                            gap-4
+                            rounded-lg
+                            border
+                            bg-background/40
+                            p-4
+                        "
                     >
-                        {isActive ? "Active" : "Inactive"}
-                    </Label>
-                </div>
-            </div>
+                        <div className="min-w-0">
+                            <Label>
+                                Service Status
+                            </Label>
 
-            {/* Submit */}
-            <div className="flex justify-end">
-                <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="min-w-32"
+                            <p className="mt-1 text-xs text-muted-foreground">
+                                Inactive services won't appear
+                                on the public website.
+                            </p>
+                        </div>
+
+                        <div className="flex shrink-0 items-center gap-2">
+                            <Switch
+                                id="isActive"
+                                checked={isActive}
+                                onCheckedChange={setIsActive}
+                                disabled={isSubmitting}
+                            />
+
+                            <Label
+                                htmlFor="isActive"
+                                className="cursor-pointer"
+                            >
+                                {isActive
+                                    ? "Active"
+                                    : "Inactive"}
+                            </Label>
+                        </div>
+                    </section>
+                </div>
+
+                {/* ============================== */}
+                {/* FORM FOOTER */}
+                {/* ============================== */}
+
+                <div
+                    className="
+                        flex
+                        items-center
+                        justify-end
+                        border-t
+                        bg-background/30
+                        px-5
+                        py-4
+                        sm:px-6
+                    "
                 >
-                    {isSubmitting ? (
-                        <>
-                            <Loader2 className="mr-2 size-4 animate-spin" />
-                            {mode === "create"
-                                ? "Creating..."
-                                : "Updating..."}
-                        </>
-                    ) : mode === "create" ? (
-                        "Create Service"
-                    ) : (
-                        "Update Service"
-                    )}
-                </Button>
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="min-w-36"
+                    >
+                        {isSubmitting ? (
+                            <>
+                                <Loader2 className="mr-2 size-4 animate-spin" />
+
+                                {mode === "create"
+                                    ? "Creating..."
+                                    : "Updating..."}
+                            </>
+                        ) : mode === "create" ? (
+                            "Create Service"
+                        ) : (
+                            "Update Service"
+                        )}
+                    </Button>
+                </div>
             </div>
         </form>
     );
 }
+

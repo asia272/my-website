@@ -1,25 +1,25 @@
+
 "use client";
 
 import { useState } from "react";
 import { Loader2, Trash2 } from "lucide-react";
 import { useMutation } from "convex/react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
-
-import type { Id } from "../../../../convex/_generated/dataModel";
 import { api } from "../../../../convex/_generated/api";
+import type { Id } from "../../../../convex/_generated/dataModel";
 
+import { Button } from "@/components/ui/button";
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 type DeleteServiceButtonProps = {
     serviceId: Id<"services">;
@@ -30,12 +30,14 @@ export default function DeleteServiceButton({
     serviceId,
     serviceTitle,
 }: DeleteServiceButtonProps) {
-    const removeService = useMutation(api.services.remove);
+    const removeService = useMutation(
+        api.services.remove,
+    );
 
-    const [open, setOpen] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [isDeleting, setIsDeleting] =
+        useState(false);
 
-    const handleDelete = async () => {
+    async function handleDelete() {
         try {
             setIsDeleting(true);
 
@@ -43,104 +45,123 @@ export default function DeleteServiceButton({
                 id: serviceId,
             });
 
-            toast.success("Service deleted successfully.");
-            setOpen(false);
+            toast.success(
+                `"${serviceTitle}" deleted successfully.`,
+            );
         } catch (error) {
-            const message =
+            console.error(
+                "Failed to delete service:",
+                error,
+            );
+
+            toast.error(
                 error instanceof Error
                     ? error.message
-                    : "Failed to delete service.";
-
-            toast.error(message);
+                    : "Failed to delete service.",
+            );
         } finally {
             setIsDeleting(false);
         }
-    };
+    }
 
     return (
-        <AlertDialog
-            open={open}
-            onOpenChange={setOpen}
-        >
-            <AlertDialogTrigger asChild>
-                <button
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button
                     type="button"
+                    variant="outline"
+                    size="sm"
                     disabled={isDeleting}
+                    aria-label={`Delete ${serviceTitle}`}
                     className="
-                        inline-flex
                         h-9
-                        items-center
-                        justify-center
                         rounded-md
+                        border-border
                         bg-transparent
                         px-3
                         text-sm
                         font-medium
-                        text-destructive
-                        transition-colors
-                        hover:bg-destructive/10
-                        disabled:pointer-events-none
-                        disabled:opacity-50
+                        text-secondary
+                        transition-all
+                        duration-[var(--duration-normal)]
+                        ease-[var(--ease-standard)]
+                        hover:border-red-500/40
+                        hover:bg-red-500/10
+                        hover:text-red-500
                     "
-                    onClick={(event) =>
-                        event.stopPropagation()
-                    }
                 >
                     {isDeleting ? (
-                        <Loader2 className="size-4 animate-spin" />
+                        <>
+                            <Loader2 className="mr-2 size-4 animate-spin" />
+                            Deleting...
+                        </>
                     ) : (
                         <>
-                            <Trash2 className="size-4 sm:mr-2" />
-
-                            <span className="hidden sm:inline">
-                                Delete
-                            </span>
+                            <Trash2 className="mr-2 size-4 text-red-600" />
+                            Delete
                         </>
                     )}
-                </button>
-            </AlertDialogTrigger>
+                </Button>
+            </DialogTrigger>
 
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>
-                        Delete Service?
-                    </AlertDialogTitle>
+            <DialogContent className="border-border bg-card sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle>
+                        Delete service?
+                    </DialogTitle>
 
-                    <AlertDialogDescription>
+                    <DialogDescription>
                         Are you sure you want to delete{" "}
                         <span className="font-medium text-foreground">
-                            {serviceTitle}
+                            "{serviceTitle}"
                         </span>
                         ? This action cannot be undone.
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
+                    </DialogDescription>
+                </DialogHeader>
 
-                <AlertDialogFooter>
-                    <AlertDialogCancel
-                        disabled={isDeleting}
-                    >
-                        Cancel
-                    </AlertDialogCancel>
+                <DialogFooter className="gap-2 sm:gap-2">
+                    <DialogClose asChild>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            disabled={isDeleting}
+                            className="
+                                border-border
+                                bg-transparent
+                                text-secondary
+                                hover:bg-muted
+                                hover:text-foreground
+                            "
+                        >
+                            Cancel
+                        </Button>
+                    </DialogClose>
 
-                    <AlertDialogAction
+                    <Button
+                        type="button"
+                        onClick={handleDelete}
                         disabled={isDeleting}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            void handleDelete();
-                        }}
-                        className="bg-destructive text-white hover:bg-destructive/90"
+                        className="
+                            bg-destructive
+                            text-destructive-foreground
+                            hover:bg-destructive/90
+                        "
                     >
                         {isDeleting ? (
                             <>
-                                <Loader2 className="mr-2 size-4 animate-spin" />
+                                <Loader2 className="size-4 animate-spin" />
                                 Deleting...
                             </>
                         ) : (
-                            "Delete"
+                            <>
+                                <Trash2 className="size-4" />
+                                Delete Service
+                            </>
                         )}
-                    </AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     );
 }
+

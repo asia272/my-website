@@ -1,149 +1,237 @@
+
 "use client";
 
 import Link from "next/link";
 import {
-    Bot,
-    Code2,
-    Database,
-    Globe,
-    Palette,
     Pencil,
-    Server,
-    ShoppingCart,
-    Smartphone,
+    Wrench,
 } from "lucide-react";
 
-import { Doc } from "../../../../convex/_generated/dataModel";
+import type { Doc } from "../../../../convex/_generated/dataModel";
+
+import { Button } from "@/components/ui/button";
+import DeleteServiceButton from "./DeleteServiceButton";
 import AdminListSkeleton from "@/components/skeleton/AdminListSkeleton";
 
-import DeleteServiceButton from "./DeleteServiceButton";
+type Service = Doc<"services">;
 
 type ServiceListProps = {
-    services: Doc<"services">[] | undefined;
+    services: Service[] | undefined;
 };
 
-const ICON_MAP = {
-    Code2,
-    Bot,
-    ShoppingCart,
-    Smartphone,
-    Palette,
-    Database,
-    Globe,
-    Server,
-};
-
-export default function ServiceList({ services }: ServiceListProps) {
+export default function ServiceList({
+    services,
+}: ServiceListProps) {
     if (services === undefined) {
-        return <AdminListSkeleton />;
+        return (
+            <AdminListSkeleton />
+        );
     }
 
     if (services.length === 0) {
         return (
-            <div className="flex min-h-52 flex-col items-center justify-center rounded-2xl border border-dashed border-border px-5 py-10 text-center">
-                <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted">
-                    <Code2 className="size-5 text-muted-foreground" />
+            <div
+                className="
+                    flex
+                    min-h-60
+                    flex-col
+                    items-center
+                    justify-center
+                    rounded-2xl
+                    border
+                    border-dashed
+                    border-border
+                    bg-card
+                    px-6
+                    text-center
+                "
+            >
+                <div
+                    className="
+                        mb-4
+                        flex
+                        size-12
+                        items-center
+                        justify-center
+                        rounded-xl
+                        bg-chart-3/10
+                    "
+                >
+                    <Wrench className="size-5 text-chart-3" />
                 </div>
 
-                <h3 className="text-base font-semibold text-foreground">
-                    No services found
+                <h3 className="font-medium">
+                    No services yet
                 </h3>
 
-                <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-                    Add your first service to display it on your website.
+                <p className="mt-1 max-w-sm text-sm text-secondary">
+                    Create your first service to start
+                    building your portfolio.
                 </p>
 
-                <Link
-                    href="/admin/dashboard/services/new"
+                <Button
+                    asChild
                     className="custom-btn mt-5"
                 >
-                    Add Service
-                </Link>
+                    <Link href="/admin/dashboard/services/new">
+                        Create Service
+                    </Link>
+                </Button>
             </div>
         );
     }
 
     return (
         <div className="space-y-4">
-            {services.map((service) => {
-                const ServiceIcon =
-                    service.icon &&
-                        service.icon in ICON_MAP
-                        ? ICON_MAP[
-                        service.icon as keyof typeof ICON_MAP
-                        ]
-                        : Code2;
+            {services.map((service) => (
+                <div
+                    key={service._id}
+                    className="
+                        group
+                        rounded-md
+                        border
+                        border-border
+                        bg-card
+                        p-4
+                    "
+                >
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
 
-                return (
-                    <div
-                        key={service._id}
-                        className="rounded-md border border-border bg-card p-4"
-                    >
-                        <div className="flex items-start gap-4">
-                            {/* Service Icon */}
-                            <div className="hidden size-16 shrink-0 items-center justify-center rounded-md border border-border bg-muted sm:flex">
-                                <ServiceIcon className="size-7 text-primary" />
+                        {/* Service information */}
+                        <div className="flex min-w-0 items-start gap-4">
+
+                            {/* Icon */}
+                            <div
+                                className="
+                                    hidden
+                                    size-16
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    overflow-hidden
+                                    rounded-md
+                                    border
+                                    border-border
+                                    bg-muted
+                                    sm:flex
+                                "
+                            >
+                                <Wrench className="size-5 text-chart-3" />
                             </div>
 
-                            {/* Service Content */}
-                            <div className="min-w-0 flex-1">
-                                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                                    <div className="min-w-0">
-                                        <h3 className="truncate text-base font-semibold text-foreground">
-                                            {service.title}
-                                        </h3>
+                            {/* Details */}
+                            <div className="min-w-0">
 
-                                        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
-                                            {service.description}
-                                        </p>
-                                    </div>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <h4 className="truncate font-medium">
+                                        {service.title}
+                                    </h4>
 
-                                    {/* Actions */}
-                                    <div className="flex shrink-0 items-center gap-2">
-                                        <Link
-                                            href={`/admin/dashboard/services/${service._id}/edit`}
-                                            className="inline-flex h-9 items-center gap-2 rounded-md border border-border bg-transparent px-3 text-sm font-medium text-foreground transition-colors hover:border-chart-2/40 hover:bg-chart-2/10 hover:text-chart-2"
-                                        >
-                                            <Pencil className="size-4" />
-                                            <span className="hidden sm:inline">
-                                                Edit
-                                            </span>
-                                        </Link>
-
-                                        <DeleteServiceButton
-                                            serviceId={service._id}
-                                            serviceTitle={service.title}
-                                        />
-                                    </div>
+                                    <span
+                                        className={
+                                            service.isActive
+                                                ? `
+                                                    rounded-full
+                                                    bg-chart-4/10
+                                                    px-2
+                                                    py-0.5
+                                                    text-xs
+                                                    font-medium
+                                                    text-chart-4
+                                                `
+                                                : `
+                                                    rounded-full
+                                                    bg-muted
+                                                    px-2
+                                                    py-0.5
+                                                    text-xs
+                                                    font-medium
+                                                    text-secondary
+                                                `
+                                        }
+                                    >
+                                        {service.isActive
+                                            ? "Active"
+                                            : "Inactive"}
+                                    </span>
                                 </div>
 
-                                {/* List Items */}
+                                <p className="mt-1 text-sm text-secondary">
+                                    {service.listItems.length}{" "}
+                                    {service.listItems.length === 1
+                                        ? "feature"
+                                        : "features"}
+                                </p>
+
+                                <p className="mt-2 line-clamp-2 max-w-2xl text-sm text-secondary">
+                                    {service.description}
+                                </p>
+
                                 {service.listItems.length > 0 && (
-                                    <div className="mt-3 flex flex-wrap gap-2">
-                                        {service.listItems
-                                            .slice(0, 3)
-                                            .map((item, index) => (
+                                    <div className="mt-2 flex flex-wrap gap-2">
+                                        {service.listItems.map(
+                                            (item, index) => (
                                                 <span
                                                     key={`${service._id}-${index}`}
-                                                    className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground"
+                                                    className="
+                                                        rounded-md
+                                                        bg-muted
+                                                        px-2
+                                                        py-1
+                                                        text-xs
+                                                        text-secondary
+                                                    "
                                                 >
                                                     {item}
                                                 </span>
-                                            ))}
-
-                                        {service.listItems.length > 3 && (
-                                            <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground">
-                                                +{service.listItems.length - 3}{" "}
-                                                more
-                                            </span>
+                                            ),
                                         )}
                                     </div>
                                 )}
                             </div>
                         </div>
+
+                        {/* Actions */}
+                        <div className="flex shrink-0 items-center gap-2">
+
+                            <Button
+                                asChild
+                                variant="outline"
+                                size="sm"
+                                className="
+                                    h-9
+                                    rounded-md
+                                    border-border
+                                    bg-transparent
+                                    px-3
+                                    text-sm
+                                    font-medium
+                                    text-secondary
+                                    transition-all
+                                    duration-[var(--duration-normal)]
+                                    ease-[var(--ease-standard)]
+                                    hover:border-chart-2/40
+                                    hover:bg-chart-2/10
+                                    hover:text-chart-2
+                                "
+                            >
+                                <Link
+                                    href={`/admin/dashboard/services/${service._id}/edit`}
+                                    className="inline-flex items-center justify-center"
+                                >
+                                    <Pencil className="mr-2 size-4 shrink-0 text-chart-2" />
+                                    <span>Edit</span>
+                                </Link>
+                            </Button>
+
+                            <DeleteServiceButton
+                                serviceId={service._id}
+                                serviceTitle={service.title}
+                            />
+                        </div>
                     </div>
-                );
-            })}
+                </div>
+            ))}
         </div>
     );
 }
