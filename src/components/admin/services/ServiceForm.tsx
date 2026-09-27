@@ -227,7 +227,22 @@ export default function ServiceForm({
                                 >
                                     <SelectTrigger
                                         id="icon"
-                                        className="w-full"
+                                        className="  h-8
+        w-full
+        min-w-0
+        rounded
+        border
+        border-border
+        bg-transparent
+        px-2.5
+        py-1
+        text-sm
+        font-medium
+        text-foreground
+        shadow-none
+        transition-colors
+        focus:border-primary
+        focus:ring-0"
                                     >
                                         <SelectValue placeholder="Select icon">
                                             {SelectedIcon &&
@@ -244,7 +259,15 @@ export default function ServiceForm({
                                         </SelectValue>
                                     </SelectTrigger>
 
-                                    <SelectContent>
+                                    <SelectContent
+                                        className="
+            min-w-[var(--radix-select-trigger-width)]
+            rounded-md
+            border-border
+            bg-popover
+            p-1
+            shadow-lg"
+                                    >
                                         {SERVICE_ICONS.map(
                                             (iconName) => {
                                                 const Icon =
@@ -477,7 +500,7 @@ export default function ServiceForm({
                     <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="min-w-36"
+                        className="custom-btn"
                     >
                         {isSubmitting ? (
                             <>
