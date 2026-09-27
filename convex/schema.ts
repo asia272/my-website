@@ -81,25 +81,26 @@ export default defineSchema({
      */
     services: defineTable({
         title: v.string(),
-        slug: v.string(),
-        shortDescription: v.string(),
-        description: v.string(),
 
         /**
-         * Store an icon identifier such as:
-         * "Code2", "ShoppingCart", "Bot"
+         * Lucide icon name.
+         * Example: "Code2", "Bot", "ShoppingCart"
          */
         icon: v.optional(v.string()),
 
-        order: v.number(),
-        isActive: v.boolean(),
+        description: v.string(),
+
+        /**
+         * Dynamic list items displayed inside the service card.
+         */
+        listItems: v.array(v.string()),
 
         createdAt: v.number(),
+
         updatedAt: v.number(),
     })
-        .index("by_slug", ["slug"])
-        .index("by_active", ["isActive"])
-        .index("by_order", ["order"]),
+        .index("by_created_at", ["createdAt"]),
+
 
     /**
      * Completed/showcase projects.
