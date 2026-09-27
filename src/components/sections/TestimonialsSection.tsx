@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { Quote, Star, ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import TestimonialCard from "../TestimonialsCard";
+
 import PageHeading from "../shared/PageHeading";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -13,7 +13,7 @@ import {
     CarouselItem,
     type CarouselApi,
 } from "../ui/carousel";
-import { BorderBeam } from "../ui/border-beam";
+
 
 type Testimonial = {
     id: number;
@@ -75,110 +75,7 @@ const testimonials: Testimonial[] = [
     },
 ];
 
-const TestimonialCard = ({
-    name,
-    role,
-    company,
-    message,
-    image,
-}: Testimonial) => {
-    const initials = name
-        .split(" ")
-        .map((word) => word[0])
-        .slice(0, 2)
-        .join("")
-        .toUpperCase();
 
-    return (
-        <figure
-            className={cn(
-                "group relative w-full cursor-pointer overflow-hidden rounded-2xl border p-5",
-                "border-border bg-card/80 backdrop-blur-sm",
-                "transition-all duration-300",
-                "hover:border-primary/30 hover:bg-card",
-            )}
-        >
-
-            {/* Beam moving opposite direction */}
-            <BorderBeam
-                duration={6}
-                delay={3}
-                size={400}
-                borderWidth={1}
-                initialOffset={0}
-                reverse
-                className="from-transparent via-blue-500 to-transparent"
-            />
-
-            {/* Subtle glow */}
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-16 -top-16 h-32 w-32 rounded-full bg-primary/5 blur-3xl transition-all duration-300 group-hover:bg-primary/10"
-            />
-
-            <div className="relative z-10">
-                {/* Client Header */}
-                <div className="flex items-center gap-3">
-                    {image ? (
-                        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-border">
-                            <Image
-                                src={image}
-                                alt={name}
-                                fill
-                                sizes="44px"
-                                className="object-cover"
-                            />
-                        </div>
-                    ) : (
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xs font-semibold text-primary">
-                            {initials}
-                        </div>
-                    )}
-
-                    <figcaption className="min-w-0">
-                        <div className="truncate text-sm font-semibold text-foreground">
-                            {name}
-                        </div>
-
-                        <div className="mt-0.5 truncate text-xs text-muted-foreground">
-                            {role}
-                            {company && ` · ${company}`}
-                        </div>
-                    </figcaption>
-
-                    {/* Quote Icon */}
-                    <div className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/10 bg-primary/5">
-                        <Quote
-                            size={15}
-                            strokeWidth={1.8}
-                            className="text-primary"
-                        />
-                    </div>
-                </div>
-
-                {/* Testimonial */}
-                <blockquote className="mt-6 min-h-[112px] text-sm leading-7 text-muted-foreground">
-                    “{message}”
-                </blockquote>
-
-                {/* Rating */}
-                <div
-                    className="mt-6 flex items-center justify-center gap-1.5"
-                    aria-label="5 out of 5 stars"
-                >
-                    {Array.from({ length: 5 }).map((_, index) => (
-                        <Star
-                            key={index}
-                            size={14}
-                            strokeWidth={1.5}
-                            className="fill-primary text-primary"
-                        />
-                    ))}
-                </div>
-            </div>
-        </figure>
-    );
-};
 
 const TestimonialsSection = () => {
     const [api, setApi] = useState<CarouselApi>();
@@ -224,9 +121,53 @@ const TestimonialsSection = () => {
 
     return (
         <section
-            className="section mx-auto max-w-350 overflow-hidden"
+            className="section relative mx-auto max-w-350 overflow-hidden"
             id="testimonials"
         >
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+            >
+                <div
+                    className="
+            absolute
+            left-1/2
+            top-[15%]
+            h-[400px]
+            w-[400px]
+            -translate-x-1/2
+            rounded-full
+            bg-[var(--chart-2)]/10
+            blur-[120px]
+        "
+                />
+
+                <div
+                    className="
+            absolute
+            -right-20
+            top-10
+            h-[300px]
+            w-[300px]
+            rounded-full
+            bg-[var(--chart-3)]/10
+            blur-[110px]
+        "
+                />
+
+                <div
+                    className="
+            absolute
+            -left-20
+            bottom-0
+            h-[300px]
+            w-[300px]
+            rounded-full
+            bg-[var(--chart-4)]/8
+            blur-[110px]
+        "
+                />
+            </div>
             {/* Heading */}
             <PageHeading
                 label="Testimonials"
@@ -239,17 +180,7 @@ const TestimonialsSection = () => {
 
             {/* Testimonials Carousel */}
             <div className="relative mt-20 w-full px-4 sm:px-6 lg:px-8">
-                {/* Left fade */}
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-background to-transparent sm:w-10 md:w-16"
-                />
 
-                {/* Right fade */}
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-background to-transparent sm:w-10 md:w-16"
-                />
                 <Carousel
                     setApi={setApi}
                     opts={{
@@ -271,7 +202,7 @@ const TestimonialsSection = () => {
                     </CarouselContent>
                 </Carousel>
                 {/* Controls + Progress */}
-                <div className="mt-10 flex items-center justify-center gap-5 sm:gap-8">
+                <div className="mt-12 flex items-center justify-center gap-5 sm:gap-8">
                     {/* Previous */}
                     <button
                         type="button"
