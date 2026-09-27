@@ -4,7 +4,10 @@
 import { useState } from "react";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2, Loader2 } from "lucide-react";
+import {
+    Loader2,
+    Trash2,
+} from "lucide-react";
 import { toast } from "react-hot-toast";
 import * as Icons from "lucide-react";
 
@@ -49,52 +52,102 @@ export default function ServiceForm({
 }: ServiceFormProps) {
     const router = useRouter();
 
-    const createService = useMutation(api.services.create);
-    const updateService = useMutation(api.services.update);
+    const createService = useMutation(
+        api.services.create,
+    );
 
-    const [title, setTitle] = useState(service?.title ?? "");
+    const updateService = useMutation(
+        api.services.update,
+    );
+
+    const [title, setTitle] = useState(
+        service?.title ?? "",
+    );
 
     const [icon, setIcon] = useState(
         service?.icon ?? "Code2",
     );
 
-    const [description, setDescription] = useState(
-        service?.description ?? "",
-    );
-
-    const [listItems, setListItems] = useState<string[]>(
-        service?.listItems?.length
-            ? service.listItems
-            : [""],
-    );
-
-    const [isActive, setIsActive] = useState(
-        service?.isActive ?? true,
-    );
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const addListItem = () => {
-        setListItems((items) => [...items, ""]);
-    };
-
-    const removeListItem = (index: number) => {
-        setListItems((items) =>
-            items.filter(
-                (_, itemIndex) => itemIndex !== index,
-            ),
+    const [description, setDescription] =
+        useState(
+            service?.description ?? "",
         );
+
+    const [listItems, setListItems] =
+        useState<string[]>(
+            service?.listItems?.length
+                ? service.listItems
+                : [],
+        );
+
+    const [featureInput, setFeatureInput] =
+        useState("");
+
+    const [isActive, setIsActive] =
+        useState(
+            service?.isActive ?? true,
+        );
+
+    const [isSubmitting, setIsSubmitting] =
+        useState(false);
+
+    const addFeature = () => {
+        const cleanFeature =
+            featureInput.trim();
+
+        if (!cleanFeature) {
+            return;
+        }
+
+        if (
+            listItems.some(
+                (item) =>
+                    item.toLowerCase() ===
+                    cleanFeature.toLowerCase(),
+            )
+        ) {
+            toast.error(
+                "This feature has already been added.",
+            );
+            return;
+        }
+
+        setListItems((items) => [
+            ...items,
+            cleanFeature,
+        ]);
+
+        setFeatureInput("");
     };
 
-    const updateListItem = (
+    const removeFeature = (
         index: number,
-        value: string,
     ) => {
         setListItems((items) =>
-            items.map((item, itemIndex) =>
-                itemIndex === index ? value : item,
+            items.filter(
+                (_, itemIndex) =>
+                    itemIndex !== index,
             ),
         );
+    };
+
+    const handleFeatureKeyDown = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            addFeature();
+        }
+
+        if (
+            event.key === "Backspace" &&
+            !featureInput &&
+            listItems.length > 0
+        ) {
+            setListItems((items) =>
+                items.slice(0, -1),
+            );
+        }
     };
 
     const handleSubmit = async (
@@ -102,24 +155,37 @@ export default function ServiceForm({
     ) => {
         event.preventDefault();
 
-        const cleanTitle = title.trim();
-        const cleanDescription = description.trim();
+        const cleanTitle =
+            title.trim();
 
-        const cleanListItems = listItems
-            .map((item) => item.trim())
-            .filter(Boolean);
+        const cleanDescription =
+            description.trim();
+
+        const cleanListItems =
+            listItems
+                .map((item) =>
+                    item.trim(),
+                )
+                .filter(Boolean);
 
         if (!cleanTitle) {
-            toast.error("Service title is required.");
+            toast.error(
+                "Service title is required.",
+            );
             return;
         }
 
         if (!cleanDescription) {
-            toast.error("Service description is required.");
+            toast.error(
+                "Service description is required.",
+            );
             return;
         }
 
-        if (cleanListItems.length === 0) {
+        if (
+            cleanListItems.length ===
+            0
+        ) {
             toast.error(
                 "Add at least one service feature.",
             );
@@ -132,9 +198,13 @@ export default function ServiceForm({
             if (mode === "create") {
                 await createService({
                     title: cleanTitle,
-                    icon: icon.trim() || undefined,
-                    description: cleanDescription,
-                    listItems: cleanListItems,
+                    icon:
+                        icon.trim() ||
+                        undefined,
+                    description:
+                        cleanDescription,
+                    listItems:
+                        cleanListItems,
                     isActive,
                 });
 
@@ -152,9 +222,13 @@ export default function ServiceForm({
                 await updateService({
                     id: service._id,
                     title: cleanTitle,
-                    icon: icon.trim() || undefined,
-                    description: cleanDescription,
-                    listItems: cleanListItems,
+                    icon:
+                        icon.trim() ||
+                        undefined,
+                    description:
+                        cleanDescription,
+                    listItems:
+                        cleanListItems,
                     isActive,
                 });
 
@@ -163,7 +237,9 @@ export default function ServiceForm({
                 );
             }
 
-            router.push("/admin/dashboard/services");
+            router.push(
+                "/admin/dashboard/services",
+            );
         } catch (error) {
             const message =
                 error instanceof Error
@@ -178,7 +254,9 @@ export default function ServiceForm({
 
     const SelectedIcon =
         icon &&
-        Icons[icon as keyof typeof Icons];
+        Icons[
+        icon as keyof typeof Icons
+        ];
 
     return (
         <form
@@ -186,15 +264,20 @@ export default function ServiceForm({
             className="mx-auto w-full max-w-4xl"
         >
             <div className="overflow-hidden rounded-xl border bg-card">
+
                 {/* ============================== */}
                 {/* FORM CONTENT */}
                 {/* ============================== */}
 
                 <div className="space-y-6 p-5 sm:p-6">
 
+                    {/* ========================== */}
+                    {/* TITLE + ICON */}
+                    {/* ========================== */}
 
                     <section className="space-y-4">
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_220px]">
+
                             {/* Service Title */}
                             <div className="space-y-2">
                                 <Label htmlFor="title">
@@ -204,13 +287,19 @@ export default function ServiceForm({
                                 <Input
                                     id="title"
                                     value={title}
-                                    onChange={(event) =>
+                                    onChange={(
+                                        event,
+                                    ) =>
                                         setTitle(
-                                            event.target.value,
+                                            event
+                                                .target
+                                                .value,
                                         )
                                     }
                                     placeholder="Web Development"
-                                    disabled={isSubmitting}
+                                    disabled={
+                                        isSubmitting
+                                    }
                                 />
                             </div>
 
@@ -221,28 +310,36 @@ export default function ServiceForm({
                                 </Label>
 
                                 <Select
-                                    value={icon}
-                                    onValueChange={setIcon}
-                                    disabled={isSubmitting}
+                                    value={
+                                        icon
+                                    }
+                                    onValueChange={
+                                        setIcon
+                                    }
+                                    disabled={
+                                        isSubmitting
+                                    }
                                 >
                                     <SelectTrigger
                                         id="icon"
-                                        className="  h-8
-        w-full
-        min-w-0
-        rounded
-        border
-        border-border
-        bg-transparent
-        px-2.5
-        py-1
-        text-sm
-        font-medium
-        text-foreground
-        shadow-none
-        transition-colors
-        focus:border-primary
-        focus:ring-0"
+                                        className="
+                                            h-8
+                                            w-full
+                                            min-w-0
+                                            rounded
+                                            border
+                                            border-border
+                                            bg-transparent
+                                            px-2.5
+                                            py-1
+                                            text-sm
+                                            font-medium
+                                            text-foreground
+                                            shadow-none
+                                            transition-colors
+                                            focus:border-primary
+                                            focus:ring-0
+                                        "
                                     >
                                         <SelectValue placeholder="Select icon">
                                             {SelectedIcon &&
@@ -252,7 +349,9 @@ export default function ServiceForm({
                                                         <SelectedIcon className="size-4" />
 
                                                         <span>
-                                                            {icon}
+                                                            {
+                                                                icon
+                                                            }
                                                         </span>
                                                     </div>
                                                 )}
@@ -261,15 +360,18 @@ export default function ServiceForm({
 
                                     <SelectContent
                                         className="
-            min-w-[var(--radix-select-trigger-width)]
-            rounded-md
-            border-border
-            bg-popover
-            p-1
-            shadow-lg"
+                                            min-w-[var(--radix-select-trigger-width)]
+                                            rounded-md
+                                            border-border
+                                            bg-popover
+                                            p-1
+                                            shadow-lg
+                                        "
                                     >
                                         {SERVICE_ICONS.map(
-                                            (iconName) => {
+                                            (
+                                                iconName,
+                                            ) => {
                                                 const Icon =
                                                     Icons[
                                                     iconName as keyof typeof Icons
@@ -310,7 +412,6 @@ export default function ServiceForm({
                             </div>
                         </div>
                     </section>
-
                     {/* ========================== */}
                     {/* DESCRIPTION */}
                     {/* ========================== */}
@@ -321,11 +422,6 @@ export default function ServiceForm({
                                 <Label htmlFor="description">
                                     Description
                                 </Label>
-
-                                <p className="mt-1 text-xs text-muted-foreground">
-                                    Explain what this service
-                                    provides.
-                                </p>
                             </div>
 
                             <span className="shrink-0 text-xs text-muted-foreground">
@@ -335,109 +431,148 @@ export default function ServiceForm({
 
                         <Textarea
                             id="description"
-                            value={description}
-                            onChange={(event) => {
+                            value={
+                                description
+                            }
+                            onChange={(
+                                event,
+                            ) => {
                                 if (
-                                    event.target.value.length <=
+                                    event
+                                        .target
+                                        .value
+                                        .length <=
                                     500
                                 ) {
                                     setDescription(
-                                        event.target.value,
+                                        event
+                                            .target
+                                            .value,
                                     );
                                 }
                             }}
                             placeholder="Describe what this service includes..."
                             rows={4}
-                            disabled={isSubmitting}
+                            disabled={
+                                isSubmitting
+                            }
                             className="resize-none"
                         />
                     </section>
-
                     {/* ========================== */}
                     {/* FEATURES */}
                     {/* ========================== */}
-
                     <section className="space-y-4">
-                        <div className="flex items-center justify-between gap-4">
-                            <div>
-                                <Label>
-                                    Service Features
-                                </Label>
+                        <div>
+                            <Label>
+                                Service Features
+                            </Label>
+                        </div>
 
-                                <p className="mt-1 text-xs text-muted-foreground">
-                                    Add the key features included
-                                    in this service.
-                                </p>
-                            </div>
+                        {/* Feature input + Add button */}
+                        <div className="flex items-center gap-2">
+                            <Input
+                                value={featureInput}
+                                onChange={(event) =>
+                                    setFeatureInput(
+                                        event.target.value,
+                                    )
+                                }
+                                onKeyDown={
+                                    handleFeatureKeyDown
+                                }
+                                placeholder="Type a feature..."
+                                disabled={isSubmitting}
+                                className="min-w-0 flex-1"
+                            />
 
                             <Button
                                 type="button"
                                 variant="outline"
-                                size="sm"
-                                onClick={addListItem}
-                                disabled={isSubmitting}
-                                className="shrink-0"
+                                onClick={addFeature}
+                                disabled={
+                                    isSubmitting ||
+                                    !featureInput.trim()
+                                }
+                                className="
+        h-8
+        shrink-0
+        rounded
+        border
+        border-border
+        bg-transparent
+        px-3
+        py-1
+        text-sm
+        font-medium
+        text-foreground
+        shadow-none
+        transition-colors
+        hover:bg-accent
+    "
                             >
-                                <Plus className="mr-2 size-4" />
                                 Add Feature
                             </Button>
+
+
                         </div>
 
-                        <div className="space-y-2">
-                            {listItems.map(
-                                (item, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-center gap-2"
-                                    >
-                                        <Input
-                                            value={item}
-                                            onChange={(
-                                                event,
-                                            ) =>
-                                                updateListItem(
-                                                    index,
-                                                    event.target
-                                                        .value,
-                                                )
-                                            }
-                                            placeholder={`Feature ${index + 1
-                                                }`}
-                                            disabled={
-                                                isSubmitting
-                                            }
-                                        />
-
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            size="icon"
-                                            onClick={() =>
-                                                removeListItem(
-                                                    index,
-                                                )
-                                            }
-                                            disabled={
-                                                isSubmitting ||
-                                                listItems.length ===
-                                                1
-                                            }
-                                            aria-label={`Remove feature ${index + 1
-                                                }`}
-                                            className="shrink-0"
+                        {/* Added features */}
+                        {listItems.length > 0 && (
+                            <div className="space-y-2">
+                                {listItems.map(
+                                    (item, index) => (
+                                        <div
+                                            key={`${item}-${index}`}
+                                            className="
+                            flex
+                            items-center
+                            justify-between
+                            gap-3
+                            rounded-md
+                            border
+                            border-border
+                            bg-muted/30
+                            px-3
+                            py-2
+                        "
                                         >
-                                            <Trash2 className="size-4" />
-                                        </Button>
-                                    </div>
-                                ),
-                            )}
-                        </div>
-                    </section>
+                                            <span className="min-w-0 truncate text-sm text-foreground">
+                                                {item}
+                                            </span>
 
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() =>
+                                                    removeFeature(
+                                                        index,
+                                                    )
+                                                }
+                                                disabled={
+                                                    isSubmitting
+                                                }
+                                                aria-label={`Remove ${item}`}
+                                                className="
+                                size-7
+                                shrink-0
+                                text-muted-foreground
+                                hover:bg-destructive/10
+                                hover:text-destructive
+                            "
+                                            >
+                                                <Trash2 className="size-4" />
+                                            </Button>
+                                        </div>
+                                    ),
+                                )}
+                            </div>
+                        )}
+                    </section>
                     {/* ========================== */}
                     {/* STATUS */}
                     {/* ========================== */}
-
                     <section
                         className="
                             flex
@@ -464,9 +599,15 @@ export default function ServiceForm({
                         <div className="flex shrink-0 items-center gap-2">
                             <Switch
                                 id="isActive"
-                                checked={isActive}
-                                onCheckedChange={setIsActive}
-                                disabled={isSubmitting}
+                                checked={
+                                    isActive
+                                }
+                                onCheckedChange={
+                                    setIsActive
+                                }
+                                disabled={
+                                    isSubmitting
+                                }
                             />
 
                             <Label
@@ -499,18 +640,22 @@ export default function ServiceForm({
                 >
                     <Button
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={
+                            isSubmitting
+                        }
                         className="custom-btn"
                     >
                         {isSubmitting ? (
                             <>
                                 <Loader2 className="mr-2 size-4 animate-spin" />
 
-                                {mode === "create"
+                                {mode ===
+                                    "create"
                                     ? "Creating..."
                                     : "Updating..."}
                             </>
-                        ) : mode === "create" ? (
+                        ) : mode ===
+                            "create" ? (
                             "Create Service"
                         ) : (
                             "Update Service"
@@ -521,4 +666,3 @@ export default function ServiceForm({
         </form>
     );
 }
-
