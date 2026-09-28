@@ -105,7 +105,7 @@ export default function DeleteProjectButton({
 
       <DialogContent className="border-border bg-card sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="!text-[22px]">
             Delete project?
           </DialogTitle>
 
