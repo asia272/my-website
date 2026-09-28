@@ -1,25 +1,62 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
-import { cn } from "cn"
+import * as React from "react";
+import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
+import { cn } from "cn";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
-function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
-  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
+function AlertDialog({
+  ...props
+}: AlertDialogPrimitive.Root.Props) {
+  return (
+    <AlertDialogPrimitive.Root
+      data-slot="alert-dialog"
+      {...props}
+    />
+  );
 }
 
-function AlertDialogTrigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
+type AlertDialogTriggerProps =
+  AlertDialogPrimitive.Trigger.Props & {
+    asChild?: boolean;
+  };
+
+function AlertDialogTrigger({
+  asChild = false,
+  children,
+  ...props
+}: AlertDialogTriggerProps) {
+  const childElement =
+    asChild &&
+      React.isValidElement<{
+        children?: React.ReactNode;
+      }>(children)
+      ? children
+      : null;
+
   return (
-    <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-  )
+    <AlertDialogPrimitive.Trigger
+      data-slot="alert-dialog-trigger"
+      render={childElement ?? undefined}
+      {...props}
+    >
+      {asChild
+        ? childElement?.props.children
+        : children}
+    </AlertDialogPrimitive.Trigger>
+  );
 }
 
-function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
+function AlertDialogPortal({
+  ...props
+}: AlertDialogPrimitive.Portal.Props) {
   return (
-    <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-  )
+    <AlertDialogPrimitive.Portal
+      data-slot="alert-dialog-portal"
+      {...props}
+    />
+  );
 }
 
 function AlertDialogOverlay({
@@ -35,7 +72,7 @@ function AlertDialogOverlay({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogContent({
@@ -43,11 +80,12 @@ function AlertDialogContent({
   size = "default",
   ...props
 }: AlertDialogPrimitive.Popup.Props & {
-  size?: "default" | "sm"
+  size?: "default" | "sm";
 }) {
   return (
     <AlertDialogPortal>
       <AlertDialogOverlay />
+
       <AlertDialogPrimitive.Popup
         data-slot="alert-dialog-content"
         data-size={size}
@@ -58,7 +96,7 @@ function AlertDialogContent({
         {...props}
       />
     </AlertDialogPortal>
-  )
+  );
 }
 
 function AlertDialogHeader({
@@ -69,12 +107,12 @@ function AlertDialogHeader({
     <div
       data-slot="alert-dialog-header"
       className={cn(
-        "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]",
+        "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]",
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogFooter({
@@ -90,7 +128,7 @@ function AlertDialogFooter({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogMedia({
@@ -106,13 +144,15 @@ function AlertDialogMedia({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogTitle({
   className,
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
+}: React.ComponentProps<
+  typeof AlertDialogPrimitive.Title
+>) {
   return (
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
@@ -122,13 +162,15 @@ function AlertDialogTitle({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogDescription({
   className,
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
+}: React.ComponentProps<
+  typeof AlertDialogPrimitive.Description
+>) {
   return (
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
@@ -138,7 +180,7 @@ function AlertDialogDescription({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AlertDialogAction({
@@ -151,24 +193,55 @@ function AlertDialogAction({
       className={cn(className)}
       {...props}
     />
-  )
+  );
 }
+
+type AlertDialogCancelProps =
+  AlertDialogPrimitive.Close.Props &
+  Pick<
+    React.ComponentProps<typeof Button>,
+    "variant" | "size"
+  > & {
+    asChild?: boolean;
+  };
 
 function AlertDialogCancel({
   className,
   variant = "outline",
   size = "default",
+  asChild = false,
+  children,
   ...props
-}: AlertDialogPrimitive.Close.Props &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+}: AlertDialogCancelProps) {
+  const childElement =
+    asChild &&
+      React.isValidElement<{
+        children?: React.ReactNode;
+      }>(children)
+      ? children
+      : null;
+
   return (
     <AlertDialogPrimitive.Close
       data-slot="alert-dialog-cancel"
       className={cn(className)}
-      render={<Button variant={variant} size={size} />}
+      render={
+        asChild
+          ? childElement ?? undefined
+          : (
+            <Button
+              variant={variant}
+              size={size}
+            />
+          )
+      }
       {...props}
-    />
-  )
+    >
+      {asChild
+        ? childElement?.props.children
+        : children}
+    </AlertDialogPrimitive.Close>
+  );
 }
 
 export {
@@ -184,4 +257,4 @@ export {
   AlertDialogPortal,
   AlertDialogTitle,
   AlertDialogTrigger,
-}
+};
