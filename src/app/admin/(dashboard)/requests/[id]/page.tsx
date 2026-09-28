@@ -117,8 +117,10 @@ export default function ClientRequestDetailsPage() {
     const [isUpdatingStatus, setIsUpdatingStatus] =
         useState(false);
 
-    const handleStatusChange = async (value: string) => {
-        if (!request || isUpdatingStatus) {
+    const handleStatusChange = async (
+        value: (typeof statusOptions)[number]["value"] | null
+    ) => {
+        if (!request || isUpdatingStatus || !value) {
             return;
         }
 
@@ -127,13 +129,7 @@ export default function ClientRequestDetailsPage() {
 
             await updateStatus({
                 id: request._id,
-                status: value as
-                    | "NEW"
-                    | "REVIEWING"
-                    | "CONTACTED"
-                    | "IN_PROGRESS"
-                    | "COMPLETED"
-                    | "REJECTED",
+                status: value,
             });
 
             toast.success("Request status updated successfully.");
@@ -423,8 +419,7 @@ export default function ClientRequestDetailsPage() {
 
                                 <div className="min-w-0">
                                     <p className="truncate text-sm font-medium">
-                                        {request.attachmentFileName ??
-                                            "Project brief PDF"}
+                                        "Project brief PDF"
                                     </p>
 
                                     <span className="mt-1 inline-flex rounded-full border border-destructive/20 bg-destructive/5 px-2 py-0.5 text-[11px] font-medium text-destructive">
@@ -458,10 +453,7 @@ export default function ClientRequestDetailsPage() {
                                 >
                                     <a
                                         href={request.attachmentUrl}
-                                        download={
-                                            request.attachmentFileName ??
-                                            "project-brief.pdf"
-                                        }
+                                        download="project-brief.pdf"
                                         className="flex items-center whitespace-nowrap"
                                     >
                                         <Download className="mr-2 size-4 shrink-0" />

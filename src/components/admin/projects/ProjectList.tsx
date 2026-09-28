@@ -257,7 +257,9 @@ export default function ProjectList({
 
                     <Select
                         value={typeFilter}
-                        onValueChange={setTypeFilter}
+                        onValueChange={(value) => {
+                            setTypeFilter(value ?? "")
+                        }}
                     >
                         <SelectTrigger
                             id="project-type-filter"
