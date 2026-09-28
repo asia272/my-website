@@ -27,69 +27,16 @@ type WaveTextProps = Omit<
     HTMLMotionProps<"span">,
     "children"
 > & {
-    /**
-     * Text to animate.
-     */
+
     children: string;
-
-    /**
-     * Element rendered by WaveText.
-     *
-     * Use "span" when WaveText is inside
-     * another heading.
-     */
     as?: WaveElement;
-
-    /**
-     * Start animation when the text enters
-     * the viewport.
-     */
     startOnView?: boolean;
-
-    /**
-     * Animate only once.
-     */
-    once?: boolean;
-
-    /**
-     * Delay before the first character.
-     */
+    once?: boolean;//only first time
     delay?: number;
-
-    /**
-     * Delay between characters.
-     */
     stagger?: number;
-
-    /**
-     * Duration of each character animation.
-     */
     duration?: number;
-
-    /**
-     * Vertical height of the sine wave.
-     *
-     * Example:
-     * 10 = subtle
-     * 20 = visible
-     * 30 = dramatic
-     */
     amplitude?: number;
-
-    /**
-     * Controls the width of the sine wave.
-     *
-     * Smaller number = tighter wave.
-     * Larger number = smoother/wider wave.
-     */
     wavelength?: number;
-
-    /**
-     * Additional class applied to
-     * every animated character.
-     *
-     * Useful for gradient text.
-     */
     characterClassName?: string;
 };
 
@@ -125,20 +72,6 @@ export default function WaveText({
         amount: 0.25,
     });
 
-    /**
-     * Split text into words while preserving spaces.
-     *
-     * Example:
-     *
-     * "Hello world"
-     *
-     * becomes:
-     *
-     * ["Hello", " ", "world"]
-     *
-     * This allows the browser to wrap between words,
-     * but never between characters of the same word.
-     */
     const words = useMemo(
         () => children.split(/(\s+)/),
         [children]
@@ -148,7 +81,8 @@ export default function WaveText({
         ? isInView
         : true;
 
-    const MotionComponent = motionElements[as];
+    const MotionComponent =
+        motionElements[as] as React.ElementType;
 
     return (
         <MotionComponent
@@ -173,13 +107,7 @@ export default function WaveText({
                     );
                 }
 
-                /**
-                 * Keep the complete word together.
-                 *
-                 * The browser can move this entire word
-                 * to the next line, but cannot break it
-                 * between individual characters.
-                 */
+
                 return (
                     <span
                         key={`word-${wordIndex}`}
