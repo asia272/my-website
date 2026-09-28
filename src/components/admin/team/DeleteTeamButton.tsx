@@ -92,7 +92,7 @@ export default function DeleteTeamMemberButton({
 
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>
+                    <AlertDialogTitle className="!text-[22px]">
                         <h4>Delete  <span className="text-red-600">" {teamMemberName} "</span>? </h4>
 
                     </AlertDialogTitle>

@@ -342,7 +342,7 @@ export default function ProjectForm({
             }
 
             router.push(
-                "/admin/dashboard/projects",
+                "/admin/projects",
             );
         } catch (error) {
             console.error(
