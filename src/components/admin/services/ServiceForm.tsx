@@ -9,12 +9,15 @@ import {
     Trash2,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import * as Icons from "lucide-react";
+// import * as Icons from "lucide-react";
 
 import { api } from "../../../../convex/_generated/api";
 import type { Id } from "../../../../convex/_generated/dataModel";
 
-import { SERVICE_ICONS } from "@/lib/service-icons";
+import {
+    SERVICE_ICONS,
+    getServiceIcon,
+} from "@/lib/service-icons";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -252,11 +255,7 @@ export default function ServiceForm({
         }
     };
 
-    const SelectedIcon =
-        icon &&
-        Icons[
-        icon as keyof typeof Icons
-        ];
+    const SelectedIcon = getServiceIcon(icon);
 
     return (
         <form
@@ -310,15 +309,11 @@ export default function ServiceForm({
                                 </Label>
 
                                 <Select
-                                    value={
-                                        icon
-                                    }
-                                    onValueChange={
-                                        setIcon
-                                    }
-                                    disabled={
-                                        isSubmitting
-                                    }
+                                    value={icon}
+                                    onValueChange={(value) => {
+                                        setIcon(value ?? "Code2");
+                                    }}
+                                    disabled={isSubmitting}
                                 >
                                     <SelectTrigger
                                         id="icon"
@@ -342,19 +337,11 @@ export default function ServiceForm({
                                         "
                                     >
                                         <SelectValue placeholder="Select icon">
-                                            {SelectedIcon &&
-                                                typeof SelectedIcon ===
-                                                "object" && (
-                                                    <div className="flex items-center gap-2">
-                                                        <SelectedIcon className="size-4" />
+                                            <div className="flex items-center gap-2">
+                                                <SelectedIcon className="size-4" />
 
-                                                        <span>
-                                                            {
-                                                                icon
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                )}
+                                                <span>{icon}</span>
+                                            </div>
                                         </SelectValue>
                                     </SelectTrigger>
 
@@ -372,19 +359,7 @@ export default function ServiceForm({
                                             (
                                                 iconName,
                                             ) => {
-                                                const Icon =
-                                                    Icons[
-                                                    iconName as keyof typeof Icons
-                                                    ];
-
-                                                if (
-                                                    !Icon ||
-                                                    typeof Icon !==
-                                                    "object"
-                                                ) {
-                                                    return null;
-                                                }
-
+                                                const Icon = getServiceIcon(iconName);
                                                 return (
                                                     <SelectItem
                                                         key={

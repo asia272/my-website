@@ -1,3 +1,6 @@
+import * as Icons from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
 export const SERVICE_ICONS = [
     "Code2",
     "Code",
@@ -139,3 +142,15 @@ export const SERVICE_ICONS = [
 
 export type ServiceIconName =
     (typeof SERVICE_ICONS)[number];
+
+export function getServiceIcon(
+    iconName?: string
+): LucideIcon {
+    const icon = iconName
+        ? Icons[
+        iconName as keyof typeof Icons
+        ]
+        : undefined;
+
+    return (icon ?? Icons.Code2) as LucideIcon;
+}
