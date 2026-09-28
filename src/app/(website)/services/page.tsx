@@ -8,6 +8,8 @@ import { api } from "../../../../convex/_generated/api";
 
 import PageHero from "@/components/shared/PageHero";
 import ServiceCard from "@/components/ServiceCard";
+import SectionSkeleton from "@/components/skeleton/SectionSkeleton";
+import OrbitDecorations from "@/components/shared/OrbitDecorations";
 
 const ServicesPage = () => {
     const services = useQuery(api.services.getAll);
@@ -31,6 +33,7 @@ const ServicesPage = () => {
             />
 
             <section className="section">
+                <OrbitDecorations />
                 <div className="container">
                     {/* Loading */}
                     {isLoading && (
@@ -42,16 +45,7 @@ const ServicesPage = () => {
                             "
                         >
                             {Array.from({ length: 6 }).map((_, index) => (
-                                <div
-                                    key={index}
-                                    className="
-                                        min-h-[430px]
-                                        animate-pulse
-                                        rounded-2xl
-                                        border border-white/10
-                                        bg-white/[0.03]
-                                    "
-                                />
+                                <SectionSkeleton />
                             ))}
                         </div>
                     )}
