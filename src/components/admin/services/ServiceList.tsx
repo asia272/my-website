@@ -6,8 +6,8 @@ import {
     Pencil,
     BriefcaseBusiness,
 } from "lucide-react";
-import * as Icons from "lucide-react";
 
+import { getServiceIcon } from "@/lib/service-icons";
 import type { Doc } from "../../../../convex/_generated/dataModel";
 
 import { Button } from "@/components/ui/button";
@@ -83,19 +83,7 @@ export default function ServiceList({
     return (
         <div className="space-y-4">
             {services.map((service) => {
-                /*
-                 * The database stores the icon as a string:
-                 * "Code2", "Globe", "ShoppingCart", etc.
-                 *
-                 * Convert that string into the actual
-                 * Lucide React component.
-                 */
-                const Icon =
-                    service.icon &&
-                    Icons[
-                    service.icon as keyof typeof Icons
-                    ];
-
+                const Icon = getServiceIcon(service.icon);
                 return (
                     <div
                         key={service._id}
@@ -128,12 +116,7 @@ export default function ServiceList({
                                         sm:flex
                                     "
                                 >
-                                    {Icon &&
-                                        typeof Icon === "object" ? (
-                                        <Icon className="size-6 text-chart-4" />
-                                    ) : (
-                                        <BriefcaseBusiness className="size-6 text-chart-4" />
-                                    )}
+                                    <Icon className="size-6 text-chart-4" />
                                 </div>
 
                                 {/* Details */}
