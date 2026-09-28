@@ -23,6 +23,7 @@ import {
 
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import ServiceCardSkeleton from "../skeleton/ServiceCardSkeleton";
 
 const ServicesSection = () => {
     const services = useQuery(api.services.getAll);
@@ -75,22 +76,13 @@ const ServicesSection = () => {
                 {isLoading && (
                     <div
                         className="
-                            mt-12 grid gap-5
-                            md:grid-cols-2
-                            lg:grid-cols-3
-                        "
+        mt-12 grid gap-5
+        md:grid-cols-2
+        lg:grid-cols-3
+    "
                     >
                         {Array.from({ length: 3 }).map((_, index) => (
-                            <div
-                                key={index}
-                                className="
-                                    h-[430px]
-                                    animate-pulse
-                                    rounded-2xl
-                                    border border-white/10
-                                    bg-white/[0.03]
-                                "
-                            />
+                            <ServiceCardSkeleton key={index} />
                         ))}
                     </div>
                 )}
@@ -147,23 +139,30 @@ const ServicesSection = () => {
                             className="w-full"
                         >
                             <CarouselContent className="-ml-4">
-                                {activeServices.map((service) => (
+                                {activeServices.map((service, index) => (
                                     <CarouselItem
                                         key={service._id}
+
                                         className="
-                                            basis-full
-                                            pl-4
-                                            md:basis-1/2
-                                            lg:basis-1/3
-                                        "
+            basis-full
+            pl-4
+            md:basis-1/2
+            lg:basis-1/3
+        "
                                     >
-                                        <ServiceCard
-                                            title={service.title}
-                                            icon={service.icon}
-                                            description={service.description}
-                                            listItems={service.listItems}
-                                            className="h-full min-h-[400px]"
-                                        />
+                                        <div data-aos="fade-up"
+                                            data-aos-delay={index * 100}
+                                            data-aos-duration="700">
+                                            <ServiceCard
+                                                title={service.title}
+                                                icon={service.icon}
+                                                description={service.description}
+                                                listItems={service.listItems}
+                                                className="h-full min-h-[400px]"
+                                            />
+
+                                        </div>
+
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
@@ -459,7 +458,7 @@ const ServicesSection = () => {
                             <Link
                                 href="/services"
                                 className="
-            custom-btn
+            custom-btn-outline
             inline-flex items-center gap-2
             px-5 py-3
             text-sm

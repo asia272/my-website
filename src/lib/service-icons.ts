@@ -7,6 +7,7 @@ export const SERVICE_ICONS = [
     "Brackets",
     "Binary",
     "Bug",
+    "Layers3",//ToDo
     "BugOff",
     "GitBranch",
     "GitMerge",
