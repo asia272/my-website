@@ -95,7 +95,7 @@ export default function DeleteClientRequestButton({
 
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>
+                    <AlertDialogTitle className="!text-[22px]">
                         Delete &quot;{clientName}&quot; request?
                     </AlertDialogTitle>
 
