@@ -167,6 +167,7 @@ const TestimonialsSection = () => {
             blur-[110px]
         "
                 />
+
             </div>
             {/* Heading */}
             <PageHeading

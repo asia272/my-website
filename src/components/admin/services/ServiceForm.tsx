@@ -238,7 +238,7 @@ export default function ServiceForm({
             }
 
             router.push(
-                "/admin/dashboard/services",
+                "/admin/services",
             );
         } catch (error) {
             const message =
