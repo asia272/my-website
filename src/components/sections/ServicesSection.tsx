@@ -60,7 +60,7 @@ const ServicesSection = () => {
     const isLoading = services === undefined;
 
     return (
-        <section className="section overflow-hidden">
+        <section className="section overflow-hidden" id="services">
             <div className="container">
                 {/* Heading */}
                 <PageHeading

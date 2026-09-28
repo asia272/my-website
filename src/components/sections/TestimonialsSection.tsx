@@ -128,6 +128,7 @@ const TestimonialsSection = () => {
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
             >
+                {/* Backgroud Decoration */}
                 <div
                     className="
             absolute
@@ -192,12 +193,19 @@ const TestimonialsSection = () => {
                     className="w-full"
                 >
                     <CarouselContent className="-ml-5">
-                        {testimonials.map((testimonial) => (
+                        {testimonials.map((testimonial, index) => (
                             <CarouselItem
                                 key={testimonial.id}
                                 className="basis-full pl-5 sm:basis-1/2 lg:basis-1/3"
                             >
-                                <TestimonialCard {...testimonial} />
+                                <div
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 100}
+                                    data-aos-duration="700"
+                                    className="h-full"
+                                >
+                                    <TestimonialCard {...testimonial} />
+                                </div>
                             </CarouselItem>
                         ))}
                     </CarouselContent>

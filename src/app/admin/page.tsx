@@ -13,7 +13,7 @@ import { useQuery } from "convex/react";
 
 import { api } from "../../../convex/_generated/api";
 
-import DashboardCard from "@/components/admin/Dashboard";
+import DashboardCard from "@/components/admin/DashboardCard";
 import AdminPageHeading from "@/components/admin/AdminPageHeading";
 import DashboardCardSkeleton from "@/components/skeleton/DashboardCardSkeleton";
 
@@ -153,7 +153,7 @@ export default function AdminDashboardPage() {
                         </div>
 
                         <Link
-                            href="/admin/dashboard/requests"
+                            href="/admin/requests"
                             className="
         group
         inline-flex
@@ -235,7 +235,7 @@ export default function AdminDashboardPage() {
                                 {recentRequests.map((request) => (
                                     <Link
                                         key={request._id}
-                                        href={`/admin/dashboard/requests/${request._id}`}
+                                        href={`/admin/requests/${request._id}`}
                                         className="
                       block
                       rounded-xl
@@ -300,28 +300,28 @@ export default function AdminDashboardPage() {
 
                     <div className="mt-6 grid gap-3 sm:grid-cols-2">
                         <Link
-                            href="/admin/dashboard/projects/new"
+                            href="/admin/projects/new"
                             className="custom-btn text-center"
                         >
                             Add Project
                         </Link>
 
                         <Link
-                            href="/admin/dashboard/services/new"
+                            href="/admin/services/new"
                             className="custom-btn text-center"
                         >
                             Add Service
                         </Link>
 
                         <Link
-                            href="/admin/dashboard/team/new"
+                            href="/admin/team/new"
                             className="custom-btn text-center"
                         >
                             Add Team Member
                         </Link>
 
                         <Link
-                            href="/admin/dashboard/requests"
+                            href="/admin/requests"
                             className=" custom-btn-outline  "  >
                             View Requests
                         </Link>
