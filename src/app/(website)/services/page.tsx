@@ -23,7 +23,7 @@ const ServicesPage = () => {
     const isLoading = services === undefined;
 
     return (
-        <>
+        <div>
             <PageHero
                 breadcrumb="Services"
                 label="What We Do"
@@ -108,7 +108,8 @@ const ServicesPage = () => {
                     )}
                 </div>
             </section>
-        </>
+        </div>
+
     );
 };
 

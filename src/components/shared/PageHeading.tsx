@@ -152,14 +152,16 @@ export default function PageHeading({
             {description && (
                 <p data-aos="fade-up"
                     className={`
-    max-w-2xl
+    w-fit
+    max-w-[90%]
     text-lg
     leading-7
     text-secondary
     sm:text-xl
     sm:leading-8
     ${isCenter ? "mx-auto" : ""}
-`}>
+`}
+                >
                     {description}
                 </p>
             )}
