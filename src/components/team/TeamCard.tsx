@@ -123,13 +123,13 @@ const TeamCard = ({
 
             <CardContent className="flex flex-1 flex-col justify-start space-y-3 p-5">
                 <div className="space-y-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-primary">
                         {role}
                     </p>
 
-                    <h3 className="text-xl font-bold tracking-tight text-foreground">
+                    <h4 className="text-xl font-bold tracking-tight text-foreground">
                         {name}
-                    </h3>
+                    </h4>
                 </div>
 
                 <p
