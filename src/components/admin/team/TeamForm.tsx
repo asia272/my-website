@@ -322,7 +322,7 @@ export default function TeamForm({
             }
 
             router.push(
-                "/admin/dashboard/team",
+                "/admin/team",
             );
         } catch (error) {
             console.error(
