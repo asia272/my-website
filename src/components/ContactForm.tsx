@@ -816,12 +816,13 @@ const ContactForm = () => {
                                 value={
                                     formData.serviceType
                                 }
-                                onValueChange={(value) =>
-                                    updateField(
-                                        "serviceType",
-                                        value,
-                                    )
-                                }
+                                onValueChange={(value) => {
+                                    if (!value) {
+                                        return;
+                                    }
+
+                                    updateField("serviceType", value);
+                                }}
                                 disabled={
                                     isSubmitting
                                 }

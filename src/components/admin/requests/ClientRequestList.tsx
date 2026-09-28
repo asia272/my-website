@@ -381,7 +381,9 @@ export default function ClientRequestList({
 
                         <Select
                             value={statusFilter}
-                            onValueChange={setStatusFilter}
+                            onValueChange={(value) => {
+                                setStatusFilter(value ?? "ALL");
+                            }}
 
                         >
                             <SelectTrigger
@@ -425,7 +427,9 @@ export default function ClientRequestList({
 
                         <Select
                             value={serviceFilter}
-                            onValueChange={setServiceFilter}
+                            onValueChange={(value) => {
+                                setServiceFilter(value ?? "ALL");
+                            }}
                         >
                             <SelectTrigger
                                 id="request-service-filter"
@@ -682,14 +686,16 @@ export default function ClientRequestList({
                                             value={
                                                 request.status
                                             }
-                                            onValueChange={(
-                                                value
-                                            ) =>
+                                            onValueChange={(value) => {
+                                                if (!value) {
+                                                    return;
+                                                }
+
                                                 handleStatusChange(
                                                     request._id,
                                                     value
-                                                )
-                                            }
+                                                );
+                                            }}
                                             disabled={
                                                 updatingRequestId ===
                                                 request._id

@@ -36,7 +36,7 @@ export default function NewTeamMemberPage() {
             </div>
 
             {/* Form */}
-            <TeamForm />
+            <TeamForm mode="create" />
         </div>
     );
 }

@@ -65,7 +65,7 @@ export default function DeleteProjectButton({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <Button
           type="button"
           variant="outline"
@@ -119,7 +119,7 @@ export default function DeleteProjectButton({
         </DialogHeader>
 
         <DialogFooter className="gap-2 sm:gap-2">
-          <DialogClose asChild>
+          <DialogClose>
             <Button
               type="button"
               variant="outline"
