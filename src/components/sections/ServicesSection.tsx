@@ -60,7 +60,31 @@ const ServicesSection = () => {
     const isLoading = services === undefined;
 
     return (
-        <section className="section overflow-hidden" id="services">
+        <section className="services-section-bg section relative isolate overflow-hidden" id="services">
+
+
+            {/* Animated digital-wave background */}
+            <div
+                aria-hidden="true"
+                className="services-wave-bg pointer-events-none absolute inset-0 z-0"
+            >
+                {/* Moving image layer */}
+                <div className="services-wave-bg__image absolute -inset-[4%]" />
+
+                {/* Readability overlay */}
+                <div className="services-wave-bg__overlay absolute inset-0" />
+
+                {/* Subtle ambient glow */}
+                <div className="services-wave-bg__glow absolute inset-0" />
+            </div>
+
+
+
+
+
+
+
+
             <div className="container">
                 {/* Heading */}
                 <PageHeading
@@ -169,35 +193,56 @@ const ServicesSection = () => {
                         </Carousel>
 
 
+
                         {/* Premium Services Navigator */}
-                        <div className="relative  mt-12">
-                            {/* Ambient glow */}
+                        <div className="relative mt-12">
+
+                            {/* Orbit-style dark decoration */}
                             <div
+                                aria-hidden="true"
                                 className="
             pointer-events-none
-            absolute -inset-x-10 -top-10
-            h-32
-            bg-[radial-gradient(
-                ellipse_at_center,
-                rgba(109,101,254,0.10),
-                transparent_65%
-            )]
+            absolute left-1/2 top-1/2
+            h-36 w-[75%]
+            -translate-x-1/2 -translate-y-1/2
+            rounded-[50%]
+            bg-[#020210]/80
+            blur-2xl
+            sm:h-40
+            sm:w-[65%]
+        "
+                            />
+
+                            {/* Wider ambient shadow */}
+                            <div
+                                aria-hidden="true"
+                                className="
+            pointer-events-none
+            absolute left-1/2 top-1/2
+            h-40 w-[100%]
+            -translate-x-1/2 -translate-y-1/2
+            rounded-[50%]
+            bg-black/50
             blur-2xl
         "
                             />
 
+
+
+
+                            {/* Controls */}
                             <div
                                 className="
             relative
-            flex flex-col
+            z-10
+            flex
+            flex-col
             items-center
             justify-center
             gap-7
             sm:gap-8
-          
         "
                             >
-
 
                                 {/* CENTER — Advanced progress */}
                                 <div className="flex w-full max-w-md items-center gap-4">
@@ -207,7 +252,7 @@ const ServicesSection = () => {
                     text-[8px]
                     font-semibold
                     tracking-[0.2em]
-                    text-white/20
+                    text-white/30
                 "
                                     >
                                         01
@@ -215,16 +260,14 @@ const ServicesSection = () => {
 
                                     {/* Track */}
                                     <div className="relative flex h-5 flex-1 items-center">
-                                        {/* Base */}
                                         <div
                                             className="
                         absolute left-0 right-0
                         h-px
-                        bg-white/[0.10]
+                        bg-white/[0.12]
                     "
                                         />
 
-                                        {/* Active line */}
                                         <div
                                             className="
                         absolute left-0
@@ -257,17 +300,11 @@ const ServicesSection = () => {
                                                 return (
                                                     <span
                                                         key={index}
-                                                        className={`
-                                    relative
-                                    flex items-center justify-center
-                                    transition-all duration-500
-                                    ${isActive
-                                                                ? "size-3"
-                                                                : "size-1.5"
-                                                            }
-                                `}
+                                                        className={cn(
+                                                            "relative flex items-center justify-center transition-all duration-500",
+                                                            isActive ? "size-3" : "size-1.5"
+                                                        )}
                                                     >
-                                                        {/* Active aura */}
                                                         {isActive && (
                                                             <span
                                                                 className="
@@ -281,17 +318,14 @@ const ServicesSection = () => {
                                                         )}
 
                                                         <span
-                                                            className={`
-                                        relative
-                                        rounded-full
-                                        transition-all duration-500
-                                        ${isActive
+                                                            className={cn(
+                                                                "relative rounded-full transition-all duration-500",
+                                                                isActive
                                                                     ? "size-2.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]"
                                                                     : isPassed
                                                                         ? "size-1.5 bg-[#9e45b1]"
                                                                         : "size-1.5 bg-white/15"
-                                                                }
-                                    `}
+                                                            )}
                                                         />
                                                     </span>
                                                 );
@@ -305,7 +339,7 @@ const ServicesSection = () => {
                     text-[8px]
                     font-semibold
                     tracking-[0.2em]
-                    text-white/20
+                    text-white/30
                 "
                                     >
                                         {String(Math.max(snapCount, 1)).padStart(2, "0")}
@@ -313,142 +347,134 @@ const ServicesSection = () => {
                                 </div>
 
                                 {/* Navigation */}
-                                <div className="flex items-center justify-between gap-4 sm:justify-end">
-                                    {/* Controls */}
-                                    <div className="flex items-center gap-2">
-                                        {/* Previous */}
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => carouselApi?.scrollPrev()}
-                                            disabled={!carouselApi || activeServices.length <= 1}
-                                            aria-label="Previous service"
+                                <div className="flex items-center justify-center gap-2">
+
+                                    {/* Previous */}
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => carouselApi?.scrollPrev()}
+                                        disabled={!carouselApi || activeServices.length <= 1}
+                                        aria-label="Previous service"
+                                        className="
+                    group relative
+                    size-12
+                    overflow-hidden
+                    rounded-full
+                    border border-white/[0.10]
+                    bg-[#020210]/70
+                    text-white/50
+                    backdrop-blur-md
+                    transition-all duration-500
+                    hover:border-[#6d65fe]/50
+                    hover:bg-[#6d65fe]/10
+                    hover:text-white
+                    hover:shadow-[0_0_30px_rgba(109,101,254,0.15)]
+                    disabled:pointer-events-none
+                    disabled:opacity-20
+                "
+                                    >
+                                        <span
                                             className="
-                        group relative
-                        size-12
-                        overflow-hidden
+                        pointer-events-none
+                        absolute inset-[-50%]
                         rounded-full
-                        border border-white/[0.10]
-                        bg-white/[0.025]
-                        text-white/45
-                        backdrop-blur-xl
-                        transition-all duration-500
-                        hover:border-[#6d65fe]/50
-                        hover:bg-[#6d65fe]/10
-                        hover:text-white
-                        hover:shadow-[0_0_30px_rgba(109,101,254,0.15)]
-                        disabled:pointer-events-none
-                        disabled:opacity-20
+                        bg-[conic-gradient(
+                            from_0deg,
+                            transparent,
+                            rgba(109,101,254,0.35),
+                            transparent
+                        )]
+                        opacity-0
+                        transition-opacity
+                        duration-500
+                        group-hover:opacity-100
                     "
-                                        >
-                                            {/* Rotating glow */}
-                                            <span
-                                                className="
-                            pointer-events-none
-                            absolute inset-[-50%]
-                            rounded-full
-                            bg-[conic-gradient(
-                                from_0deg,
-                                transparent,
-                                rgba(109,101,254,0.35),
-                                transparent
-                            )]
-                            opacity-0
-                            transition-opacity
-                            duration-500
-                            group-hover:opacity-100
-                        "
-                                            />
+                                        />
 
-                                            {/* Inner */}
-                                            <span
-                                                className="
-                            absolute inset-px
-                            rounded-full
-                            bg-[#050516]
-                        "
-                                            />
-
-                                            <ArrowLeft
-                                                className="
-                            relative z-10
-                            size-4
-                            transition-all
-                            duration-300
-                            group-hover:-translate-x-1
-                        "
-                                            />
-                                        </Button>
-
-                                        {/* Next — primary */}
-                                        <Button
-                                            type="button"
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => carouselApi?.scrollNext()}
-                                            disabled={!carouselApi || activeServices.length <= 1}
-                                            aria-label="Next service"
+                                        <span
                                             className="
-                        group relative
-                        size-12
-                        overflow-hidden
+                        absolute inset-px
                         rounded-full
-                        border border-[#6d65fe]/30
-                        bg-gradient-to-br
-                        from-[#6d65fe]/15
-                        via-[#9e45b1]/10
-                        to-[#00afb7]/10
-                        text-white
-                        backdrop-blur-xl
-                        transition-all duration-500
-                        hover:border-[#00afb7]/50
-                        hover:shadow-[0_0_35px_rgba(0,175,183,0.18)]
-                        disabled:pointer-events-none
-                        disabled:opacity-20
+                        bg-[#050516]
                     "
-                                        >
-                                            {/* Animated ring */}
-                                            <span
-                                                className="
-                            pointer-events-none
-                            absolute inset-0
-                            rounded-full
-                            bg-[conic-gradient(
-                                from_180deg,
-                                transparent,
-                                rgba(109,101,254,0.5),
-                                transparent,
-                                rgba(0,175,183,0.5),
-                                transparent
-                            )]
-                            opacity-0
-                            transition-opacity
-                            duration-500
-                            group-hover:opacity-100
-                        "
-                                            />
+                                        />
 
-                                            {/* Inner surface */}
-                                            <span
-                                                className="
-                            absolute inset-px
-                            rounded-full
-                            bg-[#070719]
-                        "
-                                            />
+                                        <ArrowLeft
+                                            className="
+                        relative z-10
+                        size-4
+                        transition-all
+                        duration-300
+                        group-hover:-translate-x-1
+                    "
+                                        />
+                                    </Button>
 
-                                            <ArrowRight
-                                                className="
-                            relative z-10
-                            size-4
-                            transition-all
-                            duration-300
-                            group-hover:translate-x-1
-                        "
-                                            />
-                                        </Button>
-                                    </div>
+                                    {/* Next */}
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => carouselApi?.scrollNext()}
+                                        disabled={!carouselApi || activeServices.length <= 1}
+                                        aria-label="Next service"
+                                        className="
+                    group relative
+                    size-12
+                    overflow-hidden
+                    rounded-full
+                    border border-[#6d65fe]/30
+                    bg-[#020210]/75
+                    text-white
+                    backdrop-blur-md
+                    transition-all duration-500
+                    hover:border-[#00afb7]/50
+                    hover:shadow-[0_0_35px_rgba(0,175,183,0.18)]
+                    disabled:pointer-events-none
+                    disabled:opacity-20
+                "
+                                    >
+                                        <span
+                                            className="
+                        pointer-events-none
+                        absolute inset-0
+                        rounded-full
+                        bg-[conic-gradient(
+                            from_180deg,
+                            transparent,
+                            rgba(109,101,254,0.5),
+                            transparent,
+                            rgba(0,175,183,0.5),
+                            transparent
+                        )]
+                        opacity-0
+                        transition-opacity
+                        duration-500
+                        group-hover:opacity-100
+                    "
+                                        />
+
+                                        <span
+                                            className="
+                        absolute inset-px
+                        rounded-full
+                        bg-[#070719]
+                    "
+                                        />
+
+                                        <ArrowRight
+                                            className="
+                        relative z-10
+                        size-4
+                        transition-all
+                        duration-300
+                        group-hover:translate-x-1
+                    "
+                                        />
+                                    </Button>
+
                                 </div>
                             </div>
                         </div>
@@ -458,7 +484,7 @@ const ServicesSection = () => {
                             <Link
                                 href="/services"
                                 className="
-            custom-btn-outline
+            custom-btn
             inline-flex items-center gap-2
             px-5 py-3
             text-sm
