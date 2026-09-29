@@ -1718,51 +1718,51 @@ export default function ProjectForm({
                                 <SelectTrigger
                                     id="project-media-type"
                                     className="
-                    h-8
-                    w-full
-                    min-w-0
-                    rounded
-                    border
-                    border-border
-                    bg-transparent
-                    px-2.5
-                    py-1
-                    text-sm
-                    font-medium
-                    text-foreground
-                    shadow-none
-                    transition-colors
-                    focus:border-primary
-                    focus:ring-0
-                "
+                !h-10
+                w-full
+                min-w-0
+                rounded
+                border
+                border-border
+                bg-transparent
+                px-3
+                py-2
+                text-sm
+                font-medium
+                text-foreground
+                shadow-none
+                transition-colors
+                focus:border-primary
+                focus:ring-0
+            "
                                 >
                                     <SelectValue />
                                 </SelectTrigger>
 
                                 <SelectContent
                                     className="
-                    min-w-[var(--radix-select-trigger-width)]
-                    rounded-md
-                    border-border
-                    bg-popover
-                    p-1
-                    shadow-lg
-                "
+                min-w-[var(--radix-select-trigger-width)]
+                rounded-md
+                border-border
+                bg-popover
+                p-1
+                shadow-lg
+            "
                                 >
                                     <SelectItem
                                         value="IMAGE"
                                         className="
-                        cursor-pointer
-                        rounded-sm
-                        px-3
-                        py-2
-                        text-sm
-                        font-medium
-                        outline-none
-                        hover:text-primary
-                        data-[state=checked]:bg-primary/10
-                        data-[state=checked]:text-primary
-                    "
+                    cursor-pointer
+                    rounded-sm
+                    px-3
+                    py-2
+                    text-sm
+                    font-medium
+                    outline-none
+                    hover:text-primary
+                    data-[state=checked]:bg-primary/10
+                    data-[state=checked]:text-primary
+                "
                                     >
                                         <span className="flex items-center gap-2">
                                             <ImagePlus className="size-4" />
@@ -1773,17 +1773,17 @@ export default function ProjectForm({
                                     <SelectItem
                                         value="VIDEO"
                                         className="
-                        cursor-pointer
-                        rounded-sm
-                        px-3
-                        py-2
-                        text-sm
-                        font-medium
-                        outline-none
-                        hover:text-primary
-                        data-[state=checked]:bg-primary/10
-                        data-[state=checked]:text-primary
-                    "
+                    cursor-pointer
+                    rounded-sm
+                    px-3
+                    py-2
+                    text-sm
+                    font-medium
+                    outline-none
+                    hover:text-primary
+                    data-[state=checked]:bg-primary/10
+                    data-[state=checked]:text-primary
+                "
                                     >
                                         <span className="flex items-center gap-2">
                                             <Video className="size-4" />
