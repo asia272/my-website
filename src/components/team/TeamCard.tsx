@@ -343,13 +343,13 @@ hover:shadow-[0_24px_70px_rgba(0,0,0,0.32)]
         hover:text-white
     "
                     >
-                        <span className="relative">
+                        <span >
                             View member
                         </span>
 
                         <span
                             className="
-            relative
+      
             flex
             size-6
             items-center
