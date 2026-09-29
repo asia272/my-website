@@ -68,7 +68,20 @@ export default function TeamForm({
         useState(
             teamMember?.description ?? "",
         );
+    const [githubUrl, setGithubUrl] =
+        useState(
+            teamMember?.githubUrl ?? "",
+        );
 
+    const [linkedinUrl, setLinkedinUrl] =
+        useState(
+            teamMember?.linkedinUrl ?? "",
+        );
+
+    const [portfolioUrl, setPortfolioUrl] =
+        useState(
+            teamMember?.portfolioUrl ?? "",
+        );
     const [isActive, setIsActive] =
         useState(
             teamMember?.isActive ?? true,
@@ -106,6 +119,9 @@ export default function TeamForm({
         setName(teamMember.name);
         setRole(teamMember.role);
         setDescription(teamMember.description);
+        setGithubUrl(teamMember.githubUrl ?? "");
+        setLinkedinUrl(teamMember.linkedinUrl ?? "");
+        setPortfolioUrl(teamMember.portfolioUrl ?? "");
         setIsActive(teamMember.isActive);
 
         setImageStorageId(
@@ -291,12 +307,21 @@ export default function TeamForm({
                 isEditMode &&
                 teamMember
             ) {
+                console.log("SOCIAL LINKS:", {
+                    githubUrl,
+                    linkedinUrl,
+                    portfolioUrl,
+                });
                 await updateTeamMember({
                     id: teamMember._id,
                     name: trimmedName,
                     role: trimmedRole,
                     description:
                         trimmedDescription,
+                    githubUrl,
+                    linkedinUrl,
+                    portfolioUrl,
+
                     imageStorageId:
                         finalImageStorageId,
                     isActive,
@@ -311,6 +336,10 @@ export default function TeamForm({
                     role: trimmedRole,
                     description:
                         trimmedDescription,
+                    githubUrl,
+                    linkedinUrl,
+                    portfolioUrl,
+
                     imageStorageId:
                         finalImageStorageId,
                     isActive,
@@ -430,7 +459,75 @@ export default function TeamForm({
                             className="rounded"
                         />
                     </div>
+                    {/* Social / Professional Links */}
+                    <div className="space-y-5">
+                        <div>
+                            <Label className="text-sm font-medium">
+                                Social & Professional Links
+                            </Label>
 
+                            <p className="mt-1 text-xs text-muted-foreground">
+                                All links are optional. Add only the profiles
+                                you want to show publicly.
+                            </p>
+                        </div>
+
+                        <div className="grid gap-5 md:grid-cols-2">
+                            <div className="space-y-2">
+                                <Label htmlFor="team-member-github">
+                                    GitHub
+                                </Label>
+
+                                <Input
+                                    id="team-member-github"
+                                    type="url"
+                                    value={githubUrl}
+                                    onChange={(event) =>
+                                        setGithubUrl(event.target.value)
+                                    }
+                                    placeholder="https://github.com/username"
+                                    disabled={isSubmitting}
+                                    className="rounded"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="team-member-linkedin">
+                                    LinkedIn
+                                </Label>
+
+                                <Input
+                                    id="team-member-linkedin"
+                                    type="url"
+                                    value={linkedinUrl}
+                                    onChange={(event) =>
+                                        setLinkedinUrl(event.target.value)
+                                    }
+                                    placeholder="https://www.linkedin.com/in/username"
+                                    disabled={isSubmitting}
+                                    className="rounded"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="team-member-portfolio">
+                                Portfolio
+                            </Label>
+
+                            <Input
+                                id="team-member-portfolio"
+                                type="url"
+                                value={portfolioUrl}
+                                onChange={(event) =>
+                                    setPortfolioUrl(event.target.value)
+                                }
+                                placeholder="https://yourportfolio.com"
+                                disabled={isSubmitting}
+                                className="rounded"
+                            />
+                        </div>
+                    </div>
                     {/* Image */}
                     <div className="space-y-2">
                         <Label htmlFor="team-member-image">

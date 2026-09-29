@@ -140,7 +140,9 @@ export const create = mutation({
         name: v.string(),
         role: v.string(),
         description: v.string(),
-
+        githubUrl: v.optional(v.string()),
+        linkedinUrl: v.optional(v.string()),
+        portfolioUrl: v.optional(v.string()),
         imageStorageId:
             v.id("_storage"),
 
@@ -184,6 +186,14 @@ export const create = mutation({
                     name,
                     role,
                     description,
+
+                    githubUrl:
+                        args.githubUrl?.trim() || undefined,
+                    linkedinUrl:
+                        args.linkedinUrl?.trim() || undefined,
+                    portfolioUrl:
+                        args.portfolioUrl?.trim() || undefined,
+
                     imageStorageId:
                         args.imageStorageId,
                     isActive:
@@ -208,6 +218,10 @@ export const update = mutation({
         name: v.string(),
         role: v.string(),
         description: v.string(),
+
+        githubUrl: v.optional(v.string()),
+        linkedinUrl: v.optional(v.string()),
+        portfolioUrl: v.optional(v.string()),
 
         imageStorageId:
             v.id("_storage"),
@@ -251,13 +265,20 @@ export const update = mutation({
                 "Team member description is required.",
             );
         }
-
         await ctx.db.patch(
             args.id,
             {
                 name,
                 role,
                 description,
+
+                githubUrl:
+                    args.githubUrl?.trim() || undefined,
+                linkedinUrl:
+                    args.linkedinUrl?.trim() || undefined,
+                portfolioUrl:
+                    args.portfolioUrl?.trim() || undefined,
+
                 imageStorageId:
                     args.imageStorageId,
                 isActive:

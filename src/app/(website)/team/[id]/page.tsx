@@ -1,3 +1,4 @@
+
 "use client";
 
 import { use } from "react";
@@ -7,14 +8,17 @@ import {
     ArrowLeft,
     ArrowUpRight,
     CheckCircle2,
-    Mail,
+    ExternalLink,
+
     Sparkles,
     UserRound,
     Users,
 } from "lucide-react";
+
 import { useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Id } from "../../../../../convex/_generated/dataModel";
+
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,7 +43,9 @@ export default function TeamMemberDetailPage({
     );
 
     /*
-     * Loading state
+     * ============================================================
+     * LOADING STATE
+     * ============================================================
      */
     if (teamMember === undefined) {
         return (
@@ -52,13 +58,15 @@ export default function TeamMemberDetailPage({
                     description="Loading the team member profile."
                 />
 
-                < DetailPageSkeleton />
+                <DetailPageSkeleton />
             </main>
         );
     }
 
     /*
-     * Team member not found
+     * ============================================================
+     * TEAM MEMBER NOT FOUND
+     * ============================================================
      */
     if (!teamMember) {
         return (
@@ -104,7 +112,11 @@ export default function TeamMemberDetailPage({
     }
 
     /*
-     * Do not expose inactive team members publicly.
+     * ============================================================
+     * INACTIVE TEAM MEMBER
+     *
+     * Do not expose inactive profiles publicly.
+     * ============================================================
      */
     if (!teamMember.isActive) {
         return (
@@ -149,6 +161,11 @@ export default function TeamMemberDetailPage({
         );
     }
 
+    /*
+     * ============================================================
+     * MAIN TEAM MEMBER DETAIL PAGE
+     * ============================================================
+     */
     return (
         <main>
             {/* =====================================================
@@ -164,116 +181,46 @@ export default function TeamMemberDetailPage({
 
             {/* =====================================================
                MEMBER DETAIL
+               
+               LEFT  = Information
+               RIGHT = Smaller Image
             ===================================================== */}
             <section className="section relative isolate overflow-hidden">
                 <OrbitDecorations />
 
                 <div className="container relative z-10">
                     <div className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
-                        {/* =================================================
-                           MEMBER IMAGE
-                        ================================================= */}
-                        <div
-                            className="
-                                group
-                                relative
-                                overflow-hidden
-                                rounded-2xl
-                                border
-                                border-border/70
-                                bg-card/70
-                                shadow-[0_20px_80px_rgba(0,0,0,0.25)]
-                            "
-                            data-aos="zoom-in"
-                        >
-                            <div className="relative aspect-[4/3] overflow-hidden bg-secondary sm:aspect-[4/3]">
-                                {teamMember.imageUrl ? (
-                                    <Image
-                                        src={teamMember.imageUrl}
-                                        alt={teamMember.name}
-                                        fill
-                                        priority
-                                        sizes="(max-width: 1024px) 100vw, 65vw"
-                                        className="
-                                            object-cover
-                                            object-center
-                                            transition-transform
-                                            duration-700
-                                            ease-out
-                                            group-hover:scale-[1.02]
-                                        "
-                                    />
-                                ) : (
-                                    <div className="flex h-full items-center justify-center">
-                                        <Sparkles className="size-10 text-primary/40" />
-                                    </div>
-                                )}
-
-                                <div
-                                    aria-hidden="true"
-                                    className="
-                                        absolute
-                                        inset-0
-                                        bg-gradient-to-t
-                                        from-background/70
-                                        via-transparent
-                                        to-transparent
-                                    "
-                                />
-
-                                {/* Role badge */}
-                                <div
-                                    className="
-                                        absolute
-                                        left-5
-                                        top-5
-                                        inline-flex
-                                        items-center
-                                        gap-2
-                                        rounded-full
-                                        border
-                                        border-primary/30
-                                        bg-background/80
-                                        px-3.5
-                                        py-2
-                                        text-[10px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[0.16em]
-                                        text-primary
-                                        backdrop-blur-md
-                                    "
-                                >
-                                    <Sparkles className="size-3" />
-                                    {teamMember.role}
-                                </div>
-                            </div>
-                        </div>
 
                         {/* =================================================
-                           MEMBER INFORMATION
+                           MEMBER INFORMATION — LEFT
                         ================================================= */}
                         <aside
                             className="lg:sticky lg:top-[calc(var(--nav-height)+32px)]"
                             data-aos="zoom-in"
                         >
                             <Card className="border-border/70 bg-card/70 py-0 shadow-none backdrop-blur-sm">
-                                <CardContent className="p-6 sm:p-7">
-                                    <div className="mb-6">
+                                <CardContent className="p-6 sm:p-8">
+
+                                    {/* Heading */}
+                                    <div className="mb-7">
                                         <p className="section-label">
                                             Team member
                                         </p>
 
-                                        <h2 className="mt-4 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
+                                        <h2 className="mt-4 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
                                             {teamMember.name}
                                         </h2>
 
-                                        <p className="mt-2 text-sm font-medium text-primary">
+                                        <p className="mt-2 text-sm font-medium text-primary sm:text-base">
                                             {teamMember.role}
                                         </p>
                                     </div>
 
+                                    {/* =================================================
+                                       MEMBER DETAILS
+                                    ================================================= */}
                                     <div className="space-y-5">
+
                                         {/* Role */}
                                         <div className="border-b border-border/60 pb-5">
                                             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -303,29 +250,264 @@ export default function TeamMemberDetailPage({
                                                 </span>
                                             </div>
                                         </div>
+
+                                        {/* =================================================
+                                           SOCIAL / PROFESSIONAL LINKS
+                                        ================================================= */}
+                                        {(teamMember.githubUrl ||
+                                            teamMember.linkedinUrl ||
+                                            teamMember.portfolioUrl) && (
+                                                <div className="pt-1">
+                                                    <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                                        Connect
+                                                    </p>
+
+                                                    <div className="flex flex-wrap gap-2.5">
+
+                                                        {/* GitHub */}
+                                                        {teamMember.githubUrl && (
+                                                            <a
+                                                                href={
+                                                                    teamMember.githubUrl
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label={`${teamMember.name} on GitHub`}
+                                                                className="
+                                                                group
+                                                                inline-flex
+                                                                items-center
+                                                                gap-2
+                                                                rounded-xl
+                                                                border
+                                                                border-border/70
+                                                                bg-secondary/50
+                                                                px-3.5
+                                                                py-2.5
+                                                                text-sm
+                                                                font-medium
+                                                                text-muted-foreground
+                                                                transition-all
+                                                                duration-300
+                                                                hover:-translate-y-0.5
+                                                                hover:border-primary/40
+                                                                hover:bg-primary/10
+                                                                hover:text-primary
+                                                            "
+                                                            >
+                                                                {/* <Github className="size-4 transition-transform duration-300 group-hover:scale-110" /> */}
+
+                                                                <span>
+                                                                    GitHub
+                                                                </span>
+
+                                                                <ExternalLink className="size-3 opacity-50 transition-opacity group-hover:opacity-100" />
+                                                            </a>
+                                                        )}
+
+                                                        {/* LinkedIn */}
+                                                        {teamMember.linkedinUrl && (
+                                                            <a
+                                                                href={
+                                                                    teamMember.linkedinUrl
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label={`${teamMember.name} on LinkedIn`}
+                                                                className="
+                                                                group
+                                                                inline-flex
+                                                                items-center
+                                                                gap-2
+                                                                rounded-xl
+                                                                border
+                                                                border-border/70
+                                                                bg-secondary/50
+                                                                px-3.5
+                                                                py-2.5
+                                                                text-sm
+                                                                font-medium
+                                                                text-muted-foreground
+                                                                transition-all
+                                                                duration-300
+                                                                hover:-translate-y-0.5
+                                                                hover:border-primary/40
+                                                                hover:bg-primary/10
+                                                                hover:text-primary
+                                                            "
+                                                            >
+                                                                {/* <Linkedin className="size-4 transition-transform duration-300 group-hover:scale-110" /> */}
+
+                                                                <span>
+                                                                    LinkedIn
+                                                                </span>
+
+                                                                <ExternalLink className="size-3 opacity-50 transition-opacity group-hover:opacity-100" />
+                                                            </a>
+                                                        )}
+
+                                                        {/* Portfolio */}
+                                                        {teamMember.portfolioUrl && (
+                                                            <a
+                                                                href={
+                                                                    teamMember.portfolioUrl
+                                                                }
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label={`${teamMember.name}'s portfolio`}
+                                                                className="
+                                                                group
+                                                                inline-flex
+                                                                items-center
+                                                                gap-2
+                                                                rounded-xl
+                                                                border
+                                                                border-border/70
+                                                                bg-secondary/50
+                                                                px-3.5
+                                                                py-2.5
+                                                                text-sm
+                                                                font-medium
+                                                                text-muted-foreground
+                                                                transition-all
+                                                                duration-300
+                                                                hover:-translate-y-0.5
+                                                                hover:border-primary/40
+                                                                hover:bg-primary/10
+                                                                hover:text-primary
+                                                            "
+                                                            >
+                                                                <ExternalLink className="size-4 transition-transform duration-300 group-hover:scale-110" />
+
+                                                                <span>
+                                                                    Portfolio
+                                                                </span>
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
                                     </div>
 
-                                    {/* CTA */}
-                                    <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col">
+                                    {/* =================================================
+                                       CTA
+                                    ================================================= */}
+                                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                                         <Link
                                             href="/contact"
                                             className="custom-btn inline-flex w-full justify-center"
                                         >
                                             Work with us
-                                            <ArrowUpRight className="size-4 ml-2" />
+                                            <ArrowUpRight className="ml-2 size-4" />
                                         </Link>
 
                                         <Link
                                             href="/team"
                                             className="custom-btn-outline inline-flex w-full justify-center"
                                         >
-                                            <Users className="size-4 mr-2" />
+                                            <Users className="mr-2 size-4" />
                                             View all members
                                         </Link>
                                     </div>
                                 </CardContent>
                             </Card>
                         </aside>
+
+                        {/* =================================================
+                           MEMBER IMAGE — RIGHT / SMALLER
+                        ================================================= */}
+                        <div
+                            className="
+                                group
+                                relative
+                                overflow-hidden
+                                rounded-2xl
+                                border
+                                border-border/70
+                                bg-card/70
+                                shadow-[0_20px_80px_rgba(0,0,0,0.25)]
+                            "
+                            data-aos="zoom-in"
+                        >
+                            <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
+                                {teamMember.imageUrl ? (
+                                    <Image
+                                        src={teamMember.imageUrl}
+                                        alt={teamMember.name}
+                                        fill
+                                        priority
+                                        sizes="(max-width: 1024px) 100vw, 35vw"
+                                        className="
+                                            object-cover
+                                            object-center
+                                            transition-transform
+                                            duration-700
+                                            ease-out
+                                            group-hover:scale-[1.025]
+                                        "
+                                    />
+                                ) : (
+                                    <div className="flex h-full items-center justify-center">
+                                        <Sparkles className="size-10 text-primary/40" />
+                                    </div>
+                                )}
+
+                                {/* Image overlay */}
+                                <div
+                                    aria-hidden="true"
+                                    className="
+                                        absolute
+                                        inset-0
+                                        bg-gradient-to-t
+                                        from-background/75
+                                        via-transparent
+                                        to-transparent
+                                    "
+                                />
+
+                                {/* Role badge */}
+                                <div
+                                    className="
+                                        absolute
+                                        left-4
+                                        top-4
+                                        inline-flex
+                                        max-w-[calc(100%-2rem)]
+                                        items-center
+                                        gap-2
+                                        rounded-full
+                                        border
+                                        border-primary/30
+                                        bg-background/80
+                                        px-3
+                                        py-2
+                                        text-[10px]
+                                        font-semibold
+                                        uppercase
+                                        tracking-[0.14em]
+                                        text-primary
+                                        backdrop-blur-md
+                                    "
+                                >
+                                    <Sparkles className="size-3 shrink-0" />
+
+                                    <span className="truncate">
+                                        {teamMember.role}
+                                    </span>
+                                </div>
+
+                                {/* Name at bottom of image */}
+                                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                                    <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary/90">
+                                        Team member
+                                    </p>
+
+                                    <p className="mt-1 text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                                        {teamMember.name}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* =====================================================
@@ -362,3 +544,4 @@ export default function TeamMemberDetailPage({
         </main>
     );
 }
+

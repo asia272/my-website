@@ -67,6 +67,11 @@ export default defineSchema({
         role: v.string(),
         description: v.string(),
 
+        // Optional social / professional links
+        githubUrl: v.optional(v.string()),
+        linkedinUrl: v.optional(v.string()),
+        portfolioUrl: v.optional(v.string()),
+
         imageStorageId: v.id("_storage"),
 
         isActive: v.boolean(),
