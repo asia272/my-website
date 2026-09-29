@@ -105,12 +105,38 @@ export default defineSchema({
     /**
      * Completed/showcase projects.
      */
+    /**
+  * Completed/showcase projects.
+  */
     projects: defineTable({
         name: v.string(),
         description: v.string(),
 
-        imageStorageId: v.id("_storage"),
+        /**
+         * Source code / repository URL.
+         */
+        githubUrl: v.optional(v.string()),
 
+        /**
+         * Public live demo URL.
+         */
+        liveDemoUrl: v.optional(v.string()),
+
+        /**
+         * Determines which media type is used
+         * for the project showcase.
+         */
+        mediaType: v.union(
+            v.literal("IMAGE"),
+            v.literal("VIDEO"),
+        ),
+
+        /**
+         * Only one of these should be used at a time,
+         * according to mediaType.
+         */
+        imageStorageId: v.optional(v.id("_storage")),
+        videoStorageId: v.optional(v.id("_storage")),
 
         type: v.union(
             v.literal("GEN_AI"),

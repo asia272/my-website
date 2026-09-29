@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
     ArrowUpRight,
     Sparkles,
+    Video,
 } from "lucide-react";
 
 import {
@@ -20,8 +21,12 @@ type ProjectCardProps = {
         name: string;
         description: string;
         imageUrl: string | null;
+        videoUrl: string | null;
+        mediaType: "IMAGE" | "VIDEO";
         type: string;
         isFeatured: boolean;
+        githubUrl?: string;
+        liveDemoUrl?: string;
     };
 };
 
@@ -58,6 +63,8 @@ export default function ProjectCard({
         `/projects/${categoryRoute}/${project._id}`;
 
     const imageUrl = project.imageUrl;
+    const videoUrl = project.videoUrl;
+    const isVideo = project.mediaType === "VIDEO";
 
     return (
         <Card
@@ -125,7 +132,28 @@ export default function ProjectCard({
                         lg:h-[250px]
                     "
                 >
-                    {imageUrl ? (
+                    {isVideo && videoUrl ? (
+                        <video
+                            src={videoUrl}
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                            preload="metadata"
+                            aria-label={project.name}
+                            className="
+            block
+            h-full
+            w-full
+            object-cover
+            object-center
+            transition-transform
+            duration-700
+            ease-out
+            group-hover:scale-[1.03]
+        "
+                        />
+                    ) : imageUrl ? (
                         <Lens
                             zoomFactor={1.5}
                             lensSize={140}
@@ -134,50 +162,57 @@ export default function ProjectCard({
                         >
                             <div
                                 className="
-                                    relative
-                                    h-[220px]
-                                    w-full
-                                    rounded-none
-                                    sm:h-[240px]
-                                    lg:h-[250px]
-                                "
+                relative
+                h-[220px]
+                w-full
+                rounded-none
+                sm:h-[240px]
+                lg:h-[250px]
+            "
                             >
                                 <img
                                     src={imageUrl}
                                     alt={project.name}
                                     className="
-                                        block
-                                        h-full
-                                        w-full
-                                        rounded-none
-                                        object-cover
-                                        object-center
-                                        transition-transform
-                                        duration-700
-                                        ease-out
-                                        group-hover:scale-[1.03]
-                                    "
+                    block
+                    h-full
+                    w-full
+                    rounded-none
+                    object-cover
+                    object-center
+                    transition-transform
+                    duration-700
+                    ease-out
+                    group-hover:scale-[1.03]
+                "
                                 />
                             </div>
                         </Lens>
                     ) : (
                         <div
                             className="
-                                flex
-                                h-full
-                                w-full
-                                items-center
-                                justify-center
-                            "
+            flex
+            h-full
+            w-full
+            items-center
+            justify-center
+        "
                         >
-                            <Sparkles
-                                aria-hidden="true"
-                                className="size-8 text-primary/40"
-                            />
+                            {isVideo ? (
+                                <Video
+                                    aria-hidden="true"
+                                    className="size-8 text-primary/40"
+                                />
+                            ) : (
+                                <Sparkles
+                                    aria-hidden="true"
+                                    className="size-8 text-primary/40"
+                                />
+                            )}
                         </div>
                     )}
 
-                    {/* Image overlay */}
+                    {/* Media overlay */}
                     <div
                         aria-hidden="true"
                         className="

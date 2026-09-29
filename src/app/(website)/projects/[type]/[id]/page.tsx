@@ -10,6 +10,7 @@ import {
     ExternalLink,
     FolderOpen,
     Sparkles,
+    Video,
 } from "lucide-react";
 import { useQuery } from "convex/react";
 
@@ -203,13 +204,28 @@ export default function ProjectDetailPage({
 
                 <div className="container relative z-10">
                     <div className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
-                        {/* Project image */}
+
+                        {/* Project media */}
                         <div
                             className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/70 shadow-[0_20px_80px_rgba(0,0,0,0.25)]"
                             data-aos="zoom-in"
                         >
                             <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
-                                {project.imageUrl ? (
+                                {project.mediaType === "VIDEO" &&
+                                    project.videoUrl ? (
+                                    <video
+                                        src={project.videoUrl}
+                                        controls
+                                        playsInline
+                                        preload="metadata"
+                                        aria-label={project.name}
+                                        className="
+                    h-full
+                    w-full
+                    object-cover
+                "
+                                    />
+                                ) : project.imageUrl ? (
                                     <Image
                                         src={project.imageUrl}
                                         alt={project.name}
@@ -217,43 +233,47 @@ export default function ProjectDetailPage({
                                         priority
                                         sizes="(max-width: 1024px) 100vw, 65vw"
                                         className="
-                                            object-cover
-                                            transition-transform
-                                            duration-700
-                                            ease-out
-                                            group-hover:scale-[1.02]
-                                        "
+                    object-cover
+                    transition-transform
+                    duration-700
+                    ease-out
+                    group-hover:scale-[1.02]
+                "
                                     />
                                 ) : (
                                     <div className="flex h-full items-center justify-center">
-                                        <Sparkles className="size-10 text-primary/40" />
+                                        {project.mediaType === "VIDEO" ? (
+                                            <Video className="size-10 text-primary/40" />
+                                        ) : (
+                                            <Sparkles className="size-10 text-primary/40" />
+                                        )}
                                     </div>
                                 )}
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
 
                                 {project.isFeatured && (
                                     <div
                                         className="
-                                            absolute
-                                            left-5
-                                            top-5
-                                            inline-flex
-                                            items-center
-                                            gap-2
-                                            rounded-full
-                                            border
-                                            border-primary/30
-                                            bg-background/80
-                                            px-3.5
-                                            py-2
-                                            text-[10px]
-                                            font-semibold
-                                            uppercase
-                                            tracking-[0.16em]
-                                            text-primary
-                                            backdrop-blur-md
-                                        "
+                    absolute
+                    left-5
+                    top-5
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-primary/30
+                    bg-background/80
+                    px-3.5
+                    py-2
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.16em]
+                    text-primary
+                    backdrop-blur-md
+                "
                                     >
                                         <Sparkles className="size-3" />
                                         Featured
@@ -309,6 +329,45 @@ export default function ProjectDetailPage({
                                                 </span>
                                             </div>
                                         </div>
+
+
+                                        {/* Project links */}
+                                        {(project.githubUrl ||
+                                            project.liveDemoUrl) && (
+                                                <div className="pt-1">
+                                                    <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                                        Project links
+                                                    </p>
+
+                                                    <div className="flex flex-col gap-2.5">
+                                                        {project.githubUrl && (
+                                                            <a
+                                                                href={project.githubUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="custom-btn-outline inline-flex w-full justify-center"
+                                                            >
+                                                                {/* <Github className="size-4" /> */}
+                                                                View Code
+                                                                <ExternalLink className="ml-1.5 size-3.5" />
+                                                            </a>
+                                                        )}
+
+                                                        {project.liveDemoUrl && (
+                                                            <a
+                                                                href={project.liveDemoUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="custom-btn inline-flex w-full justify-center"
+                                                            >
+                                                                Live Demo
+                                                                <ArrowUpRight className="size-4" />
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+
                                     </div>
 
                                     <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col">
