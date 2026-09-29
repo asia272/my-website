@@ -12,6 +12,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -48,15 +49,20 @@ const Navbar = () => {
                     {/* =================================================
                         LOGO
                     ================================================== */}
-
                     <Link
                         href="/"
                         onClick={closeMenu}
-                        className="text-primary text-xl font-bold tracking-tight transition-colors duration-300 hover:text-accent"
+                        className="group flex items-center shrink-0"
                     >
-                        Kamal Group of Developer
+                        <Image
+                            src="/images/general/logo.png"
+                            alt="Kamal Group of Developer"
+                            width={180}
+                            height={55}
+                            priority
+                            className="h-auto w-[150px] object-contain transition-transform duration-300 group-hover:scale-[1.03] sm:w-[165px] md:w-[180px]"
+                        />
                     </Link>
-
                     {/* =================================================
                         DESKTOP NAVIGATION
                     ================================================== */}

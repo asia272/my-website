@@ -13,6 +13,7 @@ import {
     FaLinkedinIn,
     FaFacebookF,
 } from "react-icons/fa";
+import Image from "next/image";
 
 const socialLinks = [
     {
@@ -276,32 +277,18 @@ const Footer = () => {
                                 text-[var(--foreground)]
                             "
                         >
-                            <span
-                                className="
-                                    flex
-                                    h-9
-                                    w-9
-                                    items-center
-                                    justify-center
-                                    rounded-lg
-                                "
-                                style={{
-                                    background:
-                                        "var(--gradient-primary)",
-                                    color:
-                                        "var(--primary-foreground)",
-                                }}
-                            >
-                                <Sparkles
-                                    className="h-4 w-4"
-                                    strokeWidth={2}
-                                    aria-hidden="true"
-                                />
-                            </span>
 
-                            <span>
-                                KmalGroupOf <span className="text-[var(--primary)]">Dvelopers</span>
-                            </span>
+                            <Link
+                                href="/"     >
+                                <Image
+                                    src="/images/general/logo.png"
+                                    alt="Kamal Group of Developer"
+                                    width={180}
+                                    height={55}
+                                    priority
+                                    className="h-autoobject-contain transition-transform duration-300 group-hover:scale-[1.03] sm:w-[165px] md:w-[180px]"
+                                />
+                            </Link>
                         </Link>
 
                         <p
