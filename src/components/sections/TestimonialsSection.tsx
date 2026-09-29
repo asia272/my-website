@@ -121,14 +121,25 @@ const TestimonialsSection = () => {
 
     return (
         <section
-            className="section relative mx-auto max-w-350 overflow-hidden"
+            className="section relative mx-auto max-w-350"
             id="testimonials"
         >
+            {/* Background Decoration */}
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+                className="
+        pointer-events-none
+        absolute
+        left-1/2
+        top-0
+        z-0
+        h-full
+        w-screen
+        -translate-x-1/2
+        overflow-hidden
+    "
             >
-                {/* Backgroud Decoration */}
+                {/* Center glow */}
                 <div
                     className="
             absolute
@@ -143,10 +154,11 @@ const TestimonialsSection = () => {
         "
                 />
 
+                {/* Right glow */}
                 <div
                     className="
             absolute
-            -right-20
+            right-[-80px]
             top-10
             h-[300px]
             w-[300px]
@@ -156,11 +168,12 @@ const TestimonialsSection = () => {
         "
                 />
 
+                {/* Left glow */}
                 <div
                     className="
             absolute
-            -left-20
-            bottom-0
+            bottom-[-80px]
+            left-[-80px]
             h-[300px]
             w-[300px]
             rounded-full
@@ -168,7 +181,6 @@ const TestimonialsSection = () => {
             blur-[110px]
         "
                 />
-
             </div>
             {/* Heading */}
             <PageHeading
