@@ -461,18 +461,7 @@ export default function TeamForm({
                     </div>
                     {/* Social / Professional Links */}
                     <div className="space-y-5">
-                        <div>
-                            <Label className="text-sm font-medium">
-                                Social & Professional Links
-                            </Label>
-
-                            <p className="mt-1 text-xs text-muted-foreground">
-                                All links are optional. Add only the profiles
-                                you want to show publicly.
-                            </p>
-                        </div>
-
-                        <div className="grid gap-5 md:grid-cols-2">
+                        <div className="grid gap-5 md:grid-cols-3">
                             <div className="space-y-2">
                                 <Label htmlFor="team-member-github">
                                     GitHub
@@ -508,25 +497,26 @@ export default function TeamForm({
                                     className="rounded"
                                 />
                             </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="team-member-portfolio">
+                                    Portfolio
+                                </Label>
+
+                                <Input
+                                    id="team-member-portfolio"
+                                    type="url"
+                                    value={portfolioUrl}
+                                    onChange={(event) =>
+                                        setPortfolioUrl(event.target.value)
+                                    }
+                                    placeholder="https://yourportfolio.com"
+                                    disabled={isSubmitting}
+                                    className="rounded"
+                                />
+                            </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <Label htmlFor="team-member-portfolio">
-                                Portfolio
-                            </Label>
 
-                            <Input
-                                id="team-member-portfolio"
-                                type="url"
-                                value={portfolioUrl}
-                                onChange={(event) =>
-                                    setPortfolioUrl(event.target.value)
-                                }
-                                placeholder="https://yourportfolio.com"
-                                disabled={isSubmitting}
-                                className="rounded"
-                            />
-                        </div>
                     </div>
                     {/* Image */}
                     <div className="space-y-2">

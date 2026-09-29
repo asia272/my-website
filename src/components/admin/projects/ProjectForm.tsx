@@ -1468,13 +1468,6 @@ export default function ProjectForm({
         isSubmitting ||
         isUploadingMedia;
 
-    const selectedTypeLabel =
-        projectTypes.find(
-            (item) =>
-                item.value === type,
-        )?.label ??
-        "Select type";
-
     const mediaLabel =
         mediaType === "IMAGE"
             ? "Project Image"
