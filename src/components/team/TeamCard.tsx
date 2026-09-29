@@ -190,7 +190,7 @@
 // export default TeamCard;
 
 
-import { Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 import {
     Card,
     CardContent,
@@ -215,7 +215,7 @@ const TeamCard = ({
     imageUrl,
 }: TeamCardProps) => {
     return (
-        <div className="relative h-full overflow-hidden rounded-2xl">
+        <div className="relative h-full rounded-2xl">
             {/* CARD */}
             <Card
                 className="
@@ -233,11 +233,11 @@ const TeamCard = ({
                     p-0
                     shadow-none
                     backdrop-blur-sm
-                    transition-all
-                    duration-500
-                    hover:-translate-y-1
-                    hover:border-primary/30
-                    hover:shadow-[0_24px_70px_rgba(0,0,0,0.32)]
+                 transition-[border-color,box-shadow,background-color]
+duration-500
+hover:border-chart-2/35
+hover:bg-card
+hover:shadow-[0_24px_70px_rgba(0,0,0,0.32)]
                 "
             >
                 {/* IMAGE */}
@@ -330,20 +330,76 @@ const TeamCard = ({
                     <Link
                         href={`/team/${id}`}
                         className="
-                            mt-auto
-                            inline-flex
-                            w-fit
-                            text-sm
-                            font-medium
-                            !text-blue-400
-                            !underline
-                            underline-offset-4
-                            transition-colors
-                            duration-300
-                            hover:text-blue/80
-                        "
+        group/member
+        mt-auto
+        inline-flex
+        items-center
+        gap-2
+        text-xs
+        font-medium
+        text-white/55
+        transition-colors
+        duration-300
+        hover:text-white
+    "
                     >
-                        View member
+                        <span className="relative">
+                            View member
+                        </span>
+
+                        <span
+                            className="
+            relative
+            flex
+            size-6
+            items-center
+            justify-center
+            overflow-hidden
+            rounded-full
+            border
+            border-white/10
+            bg-white/[0.035]
+            transition-all
+            duration-500
+            group-hover/member:border-chart-2/50
+            group-hover/member:bg-chart-2/10
+            group-hover/member:shadow-[0_0_14px_color-mix(in_srgb,var(--chart-2)_22%,transparent)]
+            group-hover/member:translate-x-0.5
+        "
+                        >
+                            {/* Hover light */}
+                            <span
+                                className="
+                absolute
+                -left-3
+                h-8
+                w-2
+                rotate-12
+                bg-white/20
+                blur-sm
+                opacity-0
+                transition-all
+                duration-500
+                group-hover/member:left-7
+                group-hover/member:opacity-100
+            "
+                            />
+
+                            <ArrowUpRight
+                                className="
+                relative
+                z-10
+                size-3
+                text-chart-2
+                transition-all
+                duration-300
+                group-hover/member:translate-x-0.5
+                group-hover/member:-translate-y-0.5
+                group-hover/member:text-primary
+            "
+                                strokeWidth={1.8}
+                            />
+                        </span>
                     </Link>
                 </CardContent>
             </Card>
@@ -360,7 +416,7 @@ const TeamCard = ({
             pointer-events-none
             absolute
             inset-0
-            z-50
+            z-30
             rounded-2xl
             from-transparent
             via-chart-2
