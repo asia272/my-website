@@ -21,6 +21,7 @@ import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
 import ProjectDetailSkeleton from "@/components/skeleton/DetailPageSkeleton";
+import { FaGithub } from "react-icons/fa";
 
 type ProjectType =
     | "GEN_AI"
@@ -340,30 +341,93 @@ export default function ProjectDetailPage({
                                                     </p>
 
                                                     <div className="flex flex-col gap-2.5">
-                                                        {project.githubUrl && (
-                                                            <a
-                                                                href={project.githubUrl}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="custom-btn-outline inline-flex w-full justify-center"
-                                                            >
-                                                                {/* <Github className="size-4" /> */}
-                                                                View Code
-                                                                <ExternalLink className="ml-1.5 size-3.5" />
-                                                            </a>
-                                                        )}
 
-                                                        {project.liveDemoUrl && (
-                                                            <a
-                                                                href={project.liveDemoUrl}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="custom-btn inline-flex w-full justify-center"
-                                                            >
-                                                                Live Demo
-                                                                <ArrowUpRight className="size-4" />
-                                                            </a>
-                                                        )}
+
+                                                        <div className="mt-5 flex flex-wrap gap-2.5">
+                                                            {/* Live Demo */}
+                                                            {project.liveDemoUrl && (
+                                                                <a
+                                                                    href={project.liveDemoUrl}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    onClick={(event) =>
+                                                                        event.stopPropagation()
+                                                                    }
+                                                                    className="
+                                                                                               group/link
+                                                                                               inline-flex
+                                                                                               items-center
+                                                                                               gap-2
+                                                                                               rounded-lg
+                                                                                               border
+                                                                                               border-primary/30
+                                                                                                 bg-[#6d65fe]/15
+                                                                                               px-3
+                                                                                               py-2
+                                                                                               text-xs
+                                                                                               font-semibold
+                                                                                               text-primary
+                                                                                               transition-all
+                                                                                               duration-300
+                                                                                               hover:-translate-y-0.5
+                                                                                           hover:bg-[#6d65fe]/25
+                                                                                               
+                                                                                           "
+                                                                    aria-label={`Open live demo for ${project.name}`}
+                                                                >
+                                                                    <span>Live Demo</span>
+
+                                                                    <ExternalLink className="size-3 opacity-60" />
+                                                                </a>
+                                                            )}
+
+                                                            {/* GitHub */}
+                                                            {project.githubUrl && (
+                                                                <a
+                                                                    href={project.githubUrl}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    onClick={(event) =>
+                                                                        event.stopPropagation()
+                                                                    }
+                                                                    className="
+                                                                                               group/link
+                                                                                               inline-flex
+                                                                                               items-center
+                                                                                               gap-2
+                                                                                               rounded-lg
+                                                                                               border
+                                                                                                 border-[#30363d]
+                                                                               bg-[#181717]
+                                                                                               px-3
+                                                                                               py-2
+                                                                                               text-xs
+                                                                                               font-semibold
+                                                                                               text-muted-foreground
+                                                                                               transition-all
+                                                                                               duration-300
+                                                                                               hover:-translate-y-0.5
+                                                                                              hover:border-[#8b949e]
+                                                                               hover:bg-[#24292f]
+                                                                                           "
+                                                                    aria-label={`Open GitHub repository for ${project.name}`}
+                                                                >
+                                                                    <FaGithub
+                                                                        className="
+                                                                                                   size-3.5
+                                                                                                   transition-transform
+                                                                                                   duration-300
+                                                                                                   group-hover/link:scale-110
+                                                                                               "
+                                                                    />
+
+                                                                    <span>GitHub</span>
+
+                                                                    <ExternalLink className="size-3 opacity-60" />
+                                                                </a>
+                                                            )}
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             )}
