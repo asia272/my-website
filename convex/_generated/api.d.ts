@@ -15,6 +15,7 @@ import type * as clientRequests from "../clientRequests.js";
 import type * as projects from "../projects.js";
 import type * as services from "../services.js";
 import type * as teamMembers from "../teamMembers.js";
+import type * as testimonials from "../testimonials.js";
 
 import type {
   ApiFromModules,
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   projects: typeof projects;
   services: typeof services;
   teamMembers: typeof teamMembers;
+  testimonials: typeof testimonials;
 }>;
 
 /**

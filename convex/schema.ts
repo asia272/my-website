@@ -59,9 +59,7 @@ export default defineSchema({
         lastUsedAt: v.number(),
     }).index("by_token_hash", ["tokenHash"]),
 
-    /**
-     * Website team members.
-     */
+    //TeamMember
     teamMembers: defineTable({
         name: v.string(),
         role: v.string(),
@@ -81,9 +79,7 @@ export default defineSchema({
     })
         .index("by_active", ["isActive"]),
 
-    /**
-     * Services displayed on the public website.
-     */
+    //    Services
     services: defineTable({
         title: v.string(),
 
@@ -101,13 +97,7 @@ export default defineSchema({
         .index("by_active", ["isActive"])
         .index("by_created_at", ["createdAt"]),
 
-
-    /**
-     * Completed/showcase projects.
-     */
-    /**
-  * Completed/showcase projects.
-  */
+    // Projects
     projects: defineTable({
         name: v.string(),
         description: v.string(),
@@ -158,11 +148,7 @@ export default defineSchema({
         .index("by_active", ["isActive"])
         .index("by_featured", ["isFeatured"]),
 
-    /**
-     * Client project/service requests.
-     *
-     * This is NOT the same thing as a completed project.
-     */
+    // Client Reqest 
     clientRequests: defineTable({
         clientName: v.string(),
         email: v.string(),
@@ -191,4 +177,21 @@ export default defineSchema({
     })
         .index("by_status", ["status"])
         .index("by_created_at", ["createdAt"]),
+
+
+    //   Testimonial
+    testimonials: defineTable({
+        name: v.string(),
+        role: v.optional(v.string()),
+        company: v.optional(v.string()),
+        message: v.string(),
+        rating: v.number(),
+        imageStorageId: v.optional(
+            v.id("_storage"),
+        ),
+        isActive: v.boolean(),
+
+        createdAt: v.number(),
+        updatedAt: v.number(),
+    }),
 });

@@ -9,6 +9,7 @@ import {
     LayoutDashboard,
     LogOut,
     Menu,
+    MessageSquareQuote,
     Settings,
     Users,
     X,
@@ -41,6 +42,12 @@ const navigation = [
         href: "/admin/team",
         icon: Users,
         iconColor: "text-chart-2",
+    },
+    {
+        label: "Testimonials",
+        href: "/admin/testimonials",
+        icon: MessageSquareQuote,
+        iconColor: "text-chart-3",
     },
     {
         label: "Client Requests",

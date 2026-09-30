@@ -397,7 +397,7 @@ export default function TeamForm({
                                         event.target.value,
                                     )
                                 }
-                                placeholder="Asia Ashraf"
+                                placeholder="Member name"
                                 disabled={
                                     isSubmitting
                                 }
