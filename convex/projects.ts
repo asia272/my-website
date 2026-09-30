@@ -350,6 +350,55 @@ function normalizeOptionalUrl(
     }
 }
 
+//  * Get all active projects.
+//  *
+//  * Used by the public /projects page.
+//  *
+//  * Only active projects are returned.
+//  * Media storage IDs are converted into usable URLs.
+//  */
+export const getAllActive = query({
+    args: {},
+
+    handler: async (ctx) => {
+        const projects = await ctx.db
+            .query("projects")
+            .filter((q) =>
+                q.eq(
+                    q.field("isActive"),
+                    true,
+                ),
+            )
+            .order("desc")
+            .collect();
+
+        return await Promise.all(
+            projects.map(async (project) => {
+                const imageUrl =
+                    project.imageStorageId
+                        ? await ctx.storage.getUrl(
+                            project.imageStorageId,
+                        )
+                        : null;
+
+                const videoUrl =
+                    project.videoStorageId
+                        ? await ctx.storage.getUrl(
+                            project.videoStorageId,
+                        )
+                        : null;
+
+                return {
+                    ...project,
+                    imageUrl,
+                    videoUrl,
+                };
+            }),
+        );
+    },
+});
+
+
 /**
  * Validate that the correct storage ID exists
  * for the selected media type.

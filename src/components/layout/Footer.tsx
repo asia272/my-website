@@ -13,8 +13,6 @@ import {
     FaLinkedinIn,
     FaFacebookF,
 } from "react-icons/fa";
-
-
 import Image from "next/image";
 
 const socialLinks = [
@@ -280,17 +278,16 @@ const Footer = () => {
                             "
                         >
 
-                            <Link
-                                href="/"     >
-                                <Image
-                                    src="/images/general/logo.png"
-                                    alt="Kamal Group of Developer"
-                                    width={180}
-                                    height={55}
-                                    priority
-                                    className="h-autoobject-contain transition-transform duration-300 group-hover:scale-[1.03] sm:w-[165px] md:w-[180px]"
-                                />
-                            </Link>
+
+                            <Image
+                                src="/images/general/logo.png"
+                                alt="Kamal Group of Developer"
+                                width={180}
+                                height={55}
+                                priority
+                                className="h-autoobject-contain transition-transform duration-300 group-hover:scale-[1.03] sm:w-[165px] md:w-[180px]"
+                            />
+
                         </Link>
 
                         <p

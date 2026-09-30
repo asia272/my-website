@@ -90,7 +90,10 @@ export default function ProjectCard({
                     className="
                     isolate
                     group
-                    relative
+                      relative
+                    flex
+                    h-full
+                    min-h-[350px]
                     overflow-hidden
                     rounded-2xl
                     border-border/60
@@ -337,11 +340,9 @@ export default function ProjectCard({
                     {/* Content */}
                     <CardContent
                         className="
-                        px-5
-                        pb-5
-                        pt-5
-                        sm:px-6
-                        sm:pb-6
+                        flex
+                        flex-1
+                      flex-col justify-start space-y-3 p-5
                     "
                     >
                         {/* Project Type */}

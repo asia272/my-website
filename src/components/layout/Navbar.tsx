@@ -26,7 +26,40 @@ const Navbar = () => {
         setIsMenuOpen(false);
     };
     // Path handling
-
+    const projectMenuItems = [
+        {
+            label: "All",
+            href: "/projects",
+        },
+        {
+            label: "Generative AI",
+            href: "/projects/generative-ai",
+        },
+        {
+            label: "Web Development",
+            href: "/projects/web-development",
+        },
+        {
+            label: "Mobile Apps",
+            href: "/projects/mobile-app",
+        },
+        {
+            label: "Full Stack",
+            href: "/projects/full-stack",
+        },
+        {
+            label: "E-Commerce",
+            href: "/projects/e-commerce",
+        },
+        {
+            label: "SaaS",
+            href: "/projects/saas",
+        },
+        {
+            label: "Other Projects",
+            href: "/projects/other",
+        },
+    ];
 
     useEffect(() => {
         const wasOnAnotherRoute = previousPathname.current !== pathname;
@@ -192,68 +225,20 @@ const Navbar = () => {
                                         sideOffset={12}
                                         className="min-w-52 border-border bg-background/95 p-2 shadow-xl shadow-purple-500/10 backdrop-blur-xl"
                                     >
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/generative-ai"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
+                                        {projectMenuItems.map((item) => (
+                                            <DropdownMenuItem
+                                                key={item.href}
+                                                asChild
+                                                className=" focus:text-white"
                                             >
-                                                Generative AI
-                                            </Link>
-                                        </DropdownMenuItem>
-
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/web-development"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
-                                            >
-                                                Web Development
-                                            </Link>
-                                        </DropdownMenuItem>
-
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/mobile-app"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
-                                            >
-                                                Mobile Apps
-                                            </Link>
-                                        </DropdownMenuItem>
-
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/full-stack"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
-                                            >
-                                                Full Stack
-                                            </Link>
-                                        </DropdownMenuItem>
-
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/e-commerce"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
-                                            >
-                                                E-Commerce
-                                            </Link>
-                                        </DropdownMenuItem>
-
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/saas"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
-                                            >
-                                                SaaS
-                                            </Link>
-                                        </DropdownMenuItem>
-
-                                        <DropdownMenuItem asChild>
-                                            <Link
-                                                href="/projects/other"
-                                                className="cursor-pointer rounded-md p-1 text-sm text-foreground"
-                                            >
-                                                Other Projects
-                                            </Link>
-                                        </DropdownMenuItem>
+                                                <Link
+                                                    href={item.href}
+                                                    className="cursor-pointer rounded-md p-1 text-sm text-foreground hover:!text-black"
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        ))}
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </li>
