@@ -10,6 +10,10 @@ import {
     CheckCircle2,
     ExternalLink,
 
+    Globe,
+
+    Globe2,
+
     Sparkles,
     UserRound,
     Users,
@@ -18,6 +22,8 @@ import {
 import { useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Id } from "../../../../../convex/_generated/dataModel";
+
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
@@ -254,6 +260,7 @@ export default function TeamMemberDetailPage({
                                         {/* =================================================
                                            SOCIAL / PROFESSIONAL LINKS
                                         ================================================= */}
+
                                         {(teamMember.githubUrl ||
                                             teamMember.linkedinUrl ||
                                             teamMember.portfolioUrl) && (
@@ -263,130 +270,132 @@ export default function TeamMemberDetailPage({
                                                     </p>
 
                                                     <div className="flex flex-wrap gap-2.5">
-
                                                         {/* GitHub */}
                                                         {teamMember.githubUrl && (
                                                             <a
-                                                                href={
-                                                                    teamMember.githubUrl
-                                                                }
+                                                                href={teamMember.githubUrl}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                                 aria-label={`${teamMember.name} on GitHub`}
                                                                 className="
-                                                                group
-                                                                inline-flex
-                                                                items-center
-                                                                gap-2
-                                                                rounded-xl
-                                                                border
-                                                                border-border/70
-                                                                bg-secondary/50
-                                                                px-3.5
-                                                                py-2.5
-                                                                text-sm
-                                                                font-medium
-                                                                text-muted-foreground
-                                                                transition-all
-                                                                duration-300
-                                                                hover:-translate-y-0.5
-                                                                hover:border-primary/40
-                                                                hover:bg-primary/10
-                                                                hover:text-primary
-                                                            "
+                        group
+                        inline-flex
+                        items-center
+                        gap-2
+                        rounded-xl
+                        border
+                        border-[#30363d]
+                        bg-[#181717]
+                        px-3.5
+                        py-2.5
+                        text-sm
+                        font-medium
+                        text-white
+                        shadow-sm
+                        shadow-black/20
+                        transition-all
+                        duration-300
+                        hover:-translate-y-0.5
+                        hover:border-[#8b949e]
+                        hover:bg-[#24292f]
+                        hover:shadow-md
+                        hover:shadow-black/30
+                    "
                                                             >
-                                                                {/* <Github className="size-4 transition-transform duration-300 group-hover:scale-110" /> */}
+                                                                <FaGithub className="size-4 text-white transition-transform duration-300 group-hover:scale-110" />
 
-                                                                <span>
-                                                                    GitHub
-                                                                </span>
+                                                                <span>GitHub</span>
 
-                                                                <ExternalLink className="size-3 opacity-50 transition-opacity group-hover:opacity-100" />
+                                                                <ExternalLink className="size-3 text-white/60 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white" />
                                                             </a>
                                                         )}
 
                                                         {/* LinkedIn */}
                                                         {teamMember.linkedinUrl && (
                                                             <a
-                                                                href={
-                                                                    teamMember.linkedinUrl
-                                                                }
+                                                                href={teamMember.linkedinUrl}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                                 aria-label={`${teamMember.name} on LinkedIn`}
                                                                 className="
-                                                                group
-                                                                inline-flex
-                                                                items-center
-                                                                gap-2
-                                                                rounded-xl
-                                                                border
-                                                                border-border/70
-                                                                bg-secondary/50
-                                                                px-3.5
-                                                                py-2.5
-                                                                text-sm
-                                                                font-medium
-                                                                text-muted-foreground
-                                                                transition-all
-                                                                duration-300
-                                                                hover:-translate-y-0.5
-                                                                hover:border-primary/40
-                                                                hover:bg-primary/10
-                                                                hover:text-primary
-                                                            "
+                        group
+                        inline-flex
+                        items-center
+                        gap-2
+                        rounded-xl
+                        border
+                        border-[#0A66C2]
+                        
+                        bg-[#004182]
+                        px-3.5
+                        py-2.5
+                        text-sm
+                        font-medium
+                        text-white
+                        shadow-sm
+                        shadow-[#0A66C2]/20
+                        transition-all
+                        duration-300
+                        hover:-translate-y-0.5
+                        hover:border-[#004182]
+                        hover:bg-[#0A66C2]
+                        hover:shadow-md
+                        hover:shadow-[#0A66C2]/30
+                    "
                                                             >
-                                                                {/* <Linkedin className="size-4 transition-transform duration-300 group-hover:scale-110" /> */}
+                                                                <FaLinkedinIn className="size-4 text-white transition-transform duration-300 group-hover:scale-110" />
 
-                                                                <span>
-                                                                    LinkedIn
-                                                                </span>
+                                                                <span>LinkedIn</span>
 
-                                                                <ExternalLink className="size-3 opacity-50 transition-opacity group-hover:opacity-100" />
+                                                                <ExternalLink className="size-3 text-white/60 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white" />
                                                             </a>
                                                         )}
 
                                                         {/* Portfolio */}
                                                         {teamMember.portfolioUrl && (
                                                             <a
-                                                                href={
-                                                                    teamMember.portfolioUrl
-                                                                }
+                                                                href={teamMember.portfolioUrl}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
                                                                 aria-label={`${teamMember.name}'s portfolio`}
                                                                 className="
-                                                                group
-                                                                inline-flex
-                                                                items-center
-                                                                gap-2
-                                                                rounded-xl
-                                                                border
-                                                                border-border/70
-                                                                bg-secondary/50
-                                                                px-3.5
-                                                                py-2.5
-                                                                text-sm
-                                                                font-medium
-                                                                text-muted-foreground
-                                                                transition-all
-                                                                duration-300
-                                                                hover:-translate-y-0.5
-                                                                hover:border-primary/40
-                                                                hover:bg-primary/10
-                                                                hover:text-primary
-                                                            "
+                        group
+                        inline-flex
+                        items-center
+                        gap-2
+                        rounded-xl
+                        border
+                        border-[#6d65fe]
+                        bg-[#6d65fe]/15
+                        px-3.5
+                        py-2.5
+                        text-sm
+                        font-medium
+                        text-[#b8b3ff]
+                        shadow-sm
+                        shadow-[#6d65fe]/10
+                        transition-all
+                        duration-300
+                        hover:-translate-y-0.5
+                        hover:border-[#8b85ff]
+                        hover:bg-[#6d65fe]/25
+                        hover:text-white
+                        hover:shadow-md
+                        hover:shadow-[#6d65fe]/20
+                    "
                                                             >
-                                                                <ExternalLink className="size-4 transition-transform duration-300 group-hover:scale-110" />
+                                                                <Globe className="size-4 transition-transform duration-300 group-hover:scale-110" />
 
-                                                                <span>
-                                                                    Portfolio
-                                                                </span>
+                                                                <span>Portfolio</span>
+
+                                                                <ExternalLink className="size-3 opacity-60 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100" />
                                                             </a>
                                                         )}
                                                     </div>
                                                 </div>
                                             )}
+
+
                                     </div>
 
                                     {/* =================================================
