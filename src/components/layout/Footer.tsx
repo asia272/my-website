@@ -183,13 +183,10 @@ const Footer = () => {
                                 id="footer-heading"
                                 className="
                                     max-w-xl
-                                    text-2xl
-                                    font-bold
                                     leading-tight
                                     tracking-[-0.035em]
                                     text-[var(--foreground)]
-                                    sm:text-3xl
-                                    lg:text-5xl
+                                  
                                 "
                             >
                                 Have an idea?

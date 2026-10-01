@@ -94,6 +94,7 @@ const ServicesSection = () => {
                     description="From modern websites to full-stack applications, we provide reliable digital solutions designed around your business goals."
                     isCenter
                     fontSize="clamp(1.7rem,3vw,2.11rem)"
+                    letterSpacing="0.2px"
                 />
 
                 {/* Loading */}

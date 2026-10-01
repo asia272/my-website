@@ -10,8 +10,8 @@ import { BorderBeam } from "./ui/border-beam";
 export type Testimonial = {
     id: string;
     name: string;
-    role: string;
-    company: string;
+    role?: string;
+    company?: string;
     message: string;
     rating: number;
     image?: string;
@@ -77,16 +77,21 @@ const TestimonialCard = ({
                         </div>
                     )}
 
+
                     <figcaption className="min-w-0">
                         <div className="truncate text-sm font-semibold text-foreground">
                             {name}
                         </div>
 
-                        <div className="mt-0.5 truncate text-xs text-muted-foreground">
-                            {role}
-                            {company && ` · ${company} `}
-                        </div>
+                        {(role || company) && (
+                            <div className="mt-0.5 truncate text-xs text-muted-foreground">
+                                {role}
+                                {role && company && " · "}
+                                {company}
+                            </div>
+                        )}
                     </figcaption>
+
 
                     {/* Quote Icon */}
                     <div className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/10 bg-primary/5">

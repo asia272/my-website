@@ -120,20 +120,7 @@ function createIndividualSlidePlugin(
                 let distance =
                     slideDetails.distance;
 
-                /*
-                 * Normalize the distance so every real
-                 * member uses the nearest position around
-                 * the active member.
-                 *
-                 * The carousel geometry ALWAYS uses:
-                 *
-                 * -2 = back-left
-                 * -1 = left
-                 *  0 = front
-                 * +1 = right
-                 * +2 = back-right
-                 * +3 = absolute-back
-                 */
+
                 while (
                     distance >
                     totalSlides / 2
@@ -360,7 +347,6 @@ const TeamSection = () => {
                             label="Our Team"
                             fontSize="clamp(1.7rem,3vw,2.11rem)"
                             letterSpacing="0.2px"
-                            lineHeight="1.5"
                             title="Meet the people"
                             highlightedText="behind the work."
                             description="A dedicated team focused on building thoughtful digital experiences, scalable applications, and solutions that create real value."

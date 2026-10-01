@@ -460,6 +460,7 @@ const TestimonialsSection = () => {
                 fontSize="clamp(1.7rem,3vw,2.11rem)"
                 description="Hear from clients and collaborators about their experience working with us to build modern, reliable, and impactful digital products."
                 isCenter
+                letterSpacing="0.2px"
             />
 
             {/* Testimonials Carousel */}
@@ -504,8 +505,8 @@ const TestimonialsSection = () => {
                                         <TestimonialCard
                                             id={testimonial._id}
                                             name={testimonial.name}
-                                            role={testimonial.role}
-                                            company={testimonial.company}
+                                            role={testimonial?.role}
+                                            company={testimonial?.company}
                                             message={testimonial.message}
                                             rating={testimonial.rating}
                                             image={
