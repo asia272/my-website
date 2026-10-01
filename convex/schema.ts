@@ -193,5 +193,8 @@ export default defineSchema({
 
         createdAt: v.number(),
         updatedAt: v.number(),
-    }),
+    }).index(
+        "by_active",
+        ["isActive"],
+    ),
 });

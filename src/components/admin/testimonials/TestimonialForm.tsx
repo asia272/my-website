@@ -460,7 +460,7 @@ export default function TestimonialForm({
             }
 
             router.push(
-                "/admin/dashboard/testimonials",
+                "/admin/testimonials",
             );
         } catch (error) {
             console.error(
@@ -839,7 +839,7 @@ export default function TestimonialForm({
                         variant="outline"
                         onClick={() =>
                             router.push(
-                                "/admin/dashboard/testimonials",
+                                "/admin/testimonials",
                             )
                         }
                         disabled={isBusy}

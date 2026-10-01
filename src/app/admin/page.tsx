@@ -6,6 +6,7 @@ import {
     BriefcaseBusiness,
     ClipboardList,
     FolderKanban,
+    MessageSquareQuote,
     Users,
 } from "lucide-react";
 
@@ -74,15 +75,11 @@ export default function AdminDashboardPage() {
 
             {/* Stats */}
             <div
-                className="
-        grid
-        gap-4
-        sm:grid-cols-2
-        xl:grid-cols-4
-    "
+                className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
             >
                 {stats === undefined ? (
                     <>
+                        <DashboardCardSkeleton />
                         <DashboardCardSkeleton />
                         <DashboardCardSkeleton />
                         <DashboardCardSkeleton />
@@ -124,6 +121,14 @@ export default function AdminDashboardPage() {
                             icon={ClipboardList}
                             iconColor="text-chart-5"
                             iconBg="bg-chart-5/10"
+                        />
+                        <DashboardCard
+                            title="Testimonials"
+                            description="Active testimonials."
+                            icon={MessageSquareQuote}
+                            iconColor="text-chart-3"
+                            value={stats?.testimonialsCount ?? 0}
+                            iconBg="bg-chart-3/10"
                         />
                     </>
                 )}
@@ -298,7 +303,7 @@ export default function AdminDashboardPage() {
                         Quickly add new content to your website.
                     </p>
 
-                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                         <Link
                             href="/admin/projects/new"
                             className="custom-btn text-center"
@@ -319,7 +324,12 @@ export default function AdminDashboardPage() {
                         >
                             Add Team Member
                         </Link>
-
+                        <Link
+                            href="/admin/testimonials/new"
+                            className="custom-btn text-center"
+                        >
+                            Add Testimonial
+                        </Link>
                         <Link
                             href="/admin/requests"
                             className=" custom-btn-outline  "  >

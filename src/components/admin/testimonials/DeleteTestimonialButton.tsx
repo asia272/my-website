@@ -135,7 +135,7 @@ export default function DeleteTestimonialButton({
 
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>
+                    <AlertDialogTitle className="!text-[22px]">
                         Delete testimonial?
                     </AlertDialogTitle>
 

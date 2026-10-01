@@ -8,11 +8,12 @@ import { cn } from "@/lib/utils";
 import { BorderBeam } from "./ui/border-beam";
 
 export type Testimonial = {
-    id: number;
+    id: string;
     name: string;
     role: string;
     company: string;
     message: string;
+    rating: number;
     image?: string;
 };
 
@@ -21,6 +22,7 @@ const TestimonialCard = ({
     role,
     company,
     message,
+    rating,
     image,
 }: Testimonial) => {
     const initials = name
@@ -82,7 +84,7 @@ const TestimonialCard = ({
 
                         <div className="mt-0.5 truncate text-xs text-muted-foreground">
                             {role}
-                            {company && ` · ${company}`}
+                            {company && ` · ${company} `}
                         </div>
                     </figcaption>
 
@@ -97,14 +99,14 @@ const TestimonialCard = ({
                 </div>
 
                 {/* Testimonial */}
-                <blockquote className="mt-6 min-h-[112px] text-sm leading-7 text-muted-foreground">
+                <blockquote className="mt-6 min-h-[112px] break-words whitespace-normal text-sm leading-7 text-muted-foreground">
                     “{message}”
                 </blockquote>
 
                 {/* Rating */}
                 <div
                     className="mt-6 flex items-center justify-center gap-1.5"
-                    aria-label="5 out of 5 stars"
+                    aria-label={`${rating} out of 5 stars`}
                 >
                     {Array.from({ length: 5 }).map((_, index) => (
                         <Star
@@ -121,4 +123,3 @@ const TestimonialCard = ({
 };
 
 export default TestimonialCard;
-
