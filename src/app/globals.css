@@ -1350,26 +1350,645 @@ textarea::placeholder {
 /* ============================================================
    REDUCED MOTION
 ============================================================ */
+/* ============================================================
+    ADVANCED HERO TECHNOLOGY VISUAL
+============================================================ */
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-grid {
-    animation: none;
-    transform: none;
+.hero-tech-visual {
+  isolation: isolate;
+}
+
+
+/* ============================================================
+   TECH RADIAL FIELD
+============================================================ */
+
+.hero-tech-radial {
+  background:
+    radial-gradient(circle at center,
+      rgba(109, 101, 254, 0.08) 0%,
+      transparent 52%);
+}
+
+
+/* ============================================================
+   TECH GRID
+============================================================ */
+
+.hero-tech-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px);
+
+  background-size:
+    26px 26px;
+
+  mask-image:
+    radial-gradient(circle at center,
+      black 15%,
+      transparent 72%);
+
+  animation:
+    heroGridFloat 16s linear infinite;
+}
+
+@keyframes heroGridFloat {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(26px, 26px, 0);
   }
 }
 
-@keyframes heroShine {
+
+/* ============================================================
+   IMAGE
+============================================================ */
+
+.hero-image-pan {
+  animation:
+    heroImagePanAdvanced 10s ease-in-out infinite;
+}
+
+@keyframes heroImagePanAdvanced {
+
+  0%,
+  100% {
+    transform:
+      scale(1.025) translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform:
+      scale(1.06) translate3d(-1.2%, -0.8%, 0);
+  }
+}
+
+
+/* ============================================================
+   IMAGE FOUR-SIDE BREATHING GLOW
+============================================================ */
+
+.hero-image-breathing-glow {
+  animation:
+    heroImageBreathing 5s ease-in-out infinite;
+}
+
+@keyframes heroImageBreathing {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 18px rgba(109, 101, 254, 0.09),
+      0 0 40px rgba(158, 69, 177, 0.05),
+      0 20px 55px rgba(0, 0, 0, 0.25);
+  }
+
+  50% {
+    box-shadow:
+      0 0 34px rgba(109, 101, 254, 0.23),
+      0 0 70px rgba(158, 69, 177, 0.13),
+      0 28px 70px rgba(0, 0, 0, 0.36);
+  }
+}
+
+
+/* ============================================================
+   NETWORK CONNECTIONS
+============================================================ */
+
+.hero-connection {
+  border-color:
+    rgba(255, 255, 255, 0.11);
+
+  border-style: dashed;
+}
+
+.hero-connection-light {
+  position: absolute;
+
+  width: 26px;
+  height: 1px;
+
+  opacity: 0;
+
+  background:
+    linear-gradient(90deg,
+      transparent,
+      rgba(109, 101, 254, 0.85),
+      transparent);
+
+  filter:
+    drop-shadow(0 0 6px rgba(109, 101, 254, 0.55));
+
+  animation:
+    heroConnectionTravel 4s linear infinite;
+}
+
+.hero-connection:nth-child(2) .hero-connection-light,
+.hero-connection:nth-child(4) .hero-connection-light {
+  animation-delay: -2s;
+}
+
+
+/* Horizontal */
+.hero-connection:not(.hero-connection:nth-child(2)):not(.hero-connection:nth-child(4)) .hero-connection-light {
+  left: 0;
+  top: -1px;
+}
+
+
+/* ============================================================
+   CONNECTION LIGHT
+============================================================ */
+
+@keyframes heroConnectionTravel {
   0% {
-    transform: translate(-50%, -100%);
+    transform: translateX(-30px);
     opacity: 0;
   }
 
+  12% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 0.8;
+  }
+
   100% {
-    transform: translate(-50%, 2000%);
-    /* opacity: 0; */
+    transform: translateX(100%);
+    opacity: 0;
   }
 }
 
+
+/* ============================================================
+   NODES
+============================================================ */
+
+.hero-small-network-node {
+  width: 7px;
+  height: 7px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 9999px;
+
+  background:
+    radial-gradient(circle,
+      rgba(109, 101, 254, 1) 0%,
+      rgba(109, 101, 254, 0.7) 25%,
+      rgba(109, 101, 254, 0.12) 55%,
+      transparent 75%);
+
+  box-shadow:
+    0 0 8px rgba(109, 101, 254, 0.55),
+    0 0 20px rgba(109, 101, 254, 0.20);
+
+  animation:
+    heroNodeAdvanced 3s ease-in-out infinite;
+}
+
+@keyframes heroNodeAdvanced {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%) scale(0.65);
+
+    opacity: 0.35;
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%) scale(1.35);
+
+    opacity: 1;
+  }
+}
+
+
+/* ============================================================
+   TECH CARD
+============================================================ */
+
+.hero-tech-card {
+  width: 168px;
+  height: 62px;
+
+  pointer-events: auto;
+}
+
+.hero-tech-card-inner {
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.34),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  transition:
+    transform 400ms ease,
+    border-color 400ms ease,
+    box-shadow 400ms ease;
+}
+
+.hero-tech-card-inner:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 20px 42px rgba(0, 0, 0, 0.40),
+    0 0 28px rgba(109, 101, 254, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+
+/* ============================================================
+   VIOLET
+============================================================ */
+
+.hero-accent-violet {
+  border-color:
+    rgba(139, 92, 246, 0.20);
+
+  background:
+    rgba(9, 7, 25, 0.72);
+}
+
+.hero-accent-violet .hero-tech-icon {
+  color: rgb(167, 139, 250);
+
+  background:
+    rgba(139, 92, 246, 0.12);
+
+  border:
+    1px solid rgba(139, 92, 246, 0.26);
+
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+.hero-accent-violet .hero-card-color-field {
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(139, 92, 246, 0.11),
+      transparent 58%);
+}
+
+
+/* ============================================================
+   BLUE
+============================================================ */
+
+.hero-accent-blue {
+  border-color:
+    rgba(59, 130, 246, 0.20);
+
+  background:
+    rgba(5, 10, 25, 0.72);
+}
+
+.hero-accent-blue .hero-tech-icon {
+  color: rgb(96, 165, 250);
+
+  background:
+    rgba(59, 130, 246, 0.12);
+
+  border:
+    1px solid rgba(59, 130, 246, 0.26);
+
+  box-shadow:
+    0 0 20px rgba(59, 130, 246, 0.12);
+}
+
+.hero-accent-blue .hero-card-color-field {
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(59, 130, 246, 0.11),
+      transparent 58%);
+}
+
+
+/* ============================================================
+   CYAN
+============================================================ */
+
+.hero-accent-cyan {
+  border-color:
+    rgba(6, 182, 212, 0.20);
+
+  background:
+    rgba(4, 14, 21, 0.72);
+}
+
+.hero-accent-cyan .hero-tech-icon {
+  color: rgb(34, 211, 238);
+
+  background:
+    rgba(6, 182, 212, 0.12);
+
+  border:
+    1px solid rgba(6, 182, 212, 0.26);
+
+  box-shadow:
+    0 0 20px rgba(6, 182, 212, 0.12);
+}
+
+.hero-accent-cyan .hero-card-color-field {
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(6, 182, 212, 0.11),
+      transparent 58%);
+}
+
+
+/* ============================================================
+   PINK
+============================================================ */
+
+.hero-accent-pink {
+  border-color:
+    rgba(236, 72, 153, 0.20);
+
+  background:
+    rgba(22, 6, 17, 0.72);
+}
+
+.hero-accent-pink .hero-tech-icon {
+  color: rgb(244, 114, 182);
+
+  background:
+    rgba(236, 72, 153, 0.12);
+
+  border:
+    1px solid rgba(236, 72, 153, 0.26);
+
+  box-shadow:
+    0 0 20px rgba(236, 72, 153, 0.12);
+}
+
+.hero-accent-pink .hero-card-color-field {
+  background:
+    radial-gradient(circle at 0% 50%,
+      rgba(236, 72, 153, 0.11),
+      transparent 58%);
+}
+
+
+/* ============================================================
+   ICON CONTAINER
+============================================================ */
+
+.hero-tech-icon {
+  position: relative;
+
+  display: flex;
+
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+}
+
+
+/* ============================================================
+   LIVE DOT
+============================================================ */
+
+.hero-card-live {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 9999px;
+
+  background:
+    rgba(255, 255, 255, 0.55);
+
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.22);
+
+  animation:
+    heroLivePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes heroLivePulse {
+
+  0%,
+  100% {
+    transform: scale(0.7);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+
+/* ============================================================
+   CLOCKWISE CARD MOVEMENT
+============================================================ */
+
+.hero-orbit-1,
+.hero-orbit-2,
+.hero-orbit-3,
+.hero-orbit-4 {
+  animation:
+    heroAdvancedOrbit 12s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.hero-orbit-2 {
+  animation-delay: -3s;
+}
+
+.hero-orbit-3 {
+  animation-delay: -6s;
+}
+
+.hero-orbit-4 {
+  animation-delay: -9s;
+}
+
+
+/* ============================================================
+   CARD PATH
+
+   TOP RIGHT
+        ↓
+   TOP LEFT
+        ↓
+   BOTTOM LEFT
+        ↓
+   BOTTOM RIGHT
+        ↓
+   TOP RIGHT
+============================================================ */
+
+@keyframes heroAdvancedOrbit {
+
+  0%,
+  5% {
+    left: calc(100% - 168px);
+    top: 2%;
+  }
+
+  20%,
+  30% {
+    left: 0%;
+    top: 2%;
+  }
+
+  45%,
+  55% {
+    left: 0%;
+    top: calc(100% - 62px - 2%);
+  }
+
+  70%,
+  80% {
+    left: calc(100% - 168px);
+    top: calc(100% - 62px - 2%);
+  }
+
+  95%,
+  100% {
+    left: calc(100% - 168px);
+    top: 2%;
+  }
+}
+
+
+/* ============================================================
+   CENTER CORE
+============================================================ */
+
+.hero-center-core {
+  animation:
+    heroCorePulse 4s ease-in-out infinite;
+}
+
+@keyframes heroCorePulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 28px rgba(109, 101, 254, 0.14);
+  }
+
+  50% {
+    box-shadow:
+      0 0 55px rgba(109, 101, 254, 0.28);
+  }
+}
+
+
+/* ============================================================
+   CENTER BEAM
+============================================================ */
+
+.hero-center-beam {
+  animation:
+    heroBeamTravel 5s linear infinite;
+}
+
+.hero-center-beam-glow {
+  animation:
+    heroBeamTravelGlow 5s linear infinite;
+}
+
+@keyframes heroBeamTravel {
+  0% {
+    transform:
+      translate3d(-50%, -12%, 0);
+
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.85;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 0.75;
+  }
+
+  100% {
+    transform:
+      translate3d(-50%, 78%, 0);
+
+    opacity: 0;
+  }
+}
+
+@keyframes heroBeamTravelGlow {
+  0% {
+    transform:
+      translate3d(-50%, -12%, 0);
+
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 0.65;
+  }
+
+  90% {
+    opacity: 0.25;
+  }
+
+  100% {
+    transform:
+      translate3d(-50%, 78%, 0);
+
+    opacity: 0;
+  }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-tech-grid,
+  .hero-image-pan,
+  .hero-image-breathing-glow,
+  .hero-connection-light,
+  .hero-small-network-node,
+  .hero-tech-card,
+  .hero-card-live,
+  .hero-center-core,
+  .hero-center-beam,
+  .hero-center-beam-glow {
+    animation: none !important;
+  }
+}
+
+/* Contact Section */
 @keyframes contact-float {
 
   0%,
