@@ -279,50 +279,6 @@ export default function ImageLeftSide() {
                     />
 
                     {/* =================================================
-                        CENTER VERTICAL ENERGY BEAM
-                    ================================================= */}
-
-                    <div
-                        aria-hidden="true"
-                        className="
-                            hero-center-beam
-                            pointer-events-none
-                            absolute
-                            left-1/2
-                            top-[-35%]
-                            z-30
-                            h-[170%]
-                            w-[2px]
-                            -translate-x-1/2
-                            rounded-full
-                            bg-gradient-to-b
-                            from-transparent
-                            via-[var(--chart-2)]
-                            to-transparent
-                        "
-                    />
-
-                    <div
-                        aria-hidden="true"
-                        className="
-                            hero-center-beam-glow
-                            pointer-events-none
-                            absolute
-                            left-1/2
-                            top-[-35%]
-                            z-30
-                            h-[170%]
-                            w-[38px]
-                            -translate-x-1/2
-                            bg-gradient-to-b
-                            from-transparent
-                            via-[var(--chart-2)]/[0.12]
-                            to-transparent
-                            blur-[15px]
-                        "
-                    />
-
-                    {/* =================================================
                         CENTER CORE
                     ================================================= */}
 
@@ -374,7 +330,7 @@ export default function ImageLeftSide() {
 
                 <TechCard
                     className="hero-orbit-1"
-                    color="violet"
+                    color="chart-1"
                     icon={<Code2 />}
                     title="Full-Stack"
                     subtitle="Web Development"
@@ -382,7 +338,7 @@ export default function ImageLeftSide() {
 
                 <TechCard
                     className="hero-orbit-2"
-                    color="blue"
+                    color="chart-2"
                     icon={<Globe2 />}
                     title="Modern Web"
                     subtitle="Next.js & React"
@@ -390,7 +346,7 @@ export default function ImageLeftSide() {
 
                 <TechCard
                     className="hero-orbit-3"
-                    color="cyan"
+                    color="chart-4"
                     icon={<Database />}
                     title="Scalable"
                     subtitle="Backend Systems"
@@ -398,7 +354,7 @@ export default function ImageLeftSide() {
 
                 <TechCard
                     className="hero-orbit-4"
-                    color="pink"
+                    color="chart-3"
                     icon={<Bot />}
                     title="AI Solutions"
                     subtitle="Smart Experiences"
@@ -462,7 +418,7 @@ function SmallNode({
 
 type TechCardProps = {
     className: string;
-    color: "violet" | "blue" | "cyan" | "pink";
+    color: "chart-1" | "chart-2" | "chart-3" | "chart-4";
     icon: React.ReactNode;
     title: string;
     subtitle: string;
@@ -526,8 +482,8 @@ function TechCard({
                 />
 
                 {/* Icon */}
-                <div className="hero-tech-icon relative z-10">
-                    <span className="size-[17px]">
+                <div className="hero-tech-icon p-2 rounded-full">
+                    <span className="size-3">
                         {icon}
                     </span>
                 </div>
@@ -537,7 +493,7 @@ function TechCard({
                     <p
                         className="
                             truncate
-                            text-[10px]
+                            text-[13px]
                             font-semibold
                             tracking-[0.01em]
                             text-white/[0.92]
@@ -548,9 +504,8 @@ function TechCard({
 
                     <p
                         className="
-                            mt-[3px]
                             truncate
-                            text-[8px]
+                            text-[10px]
                             font-medium
                             tracking-[0.025em]
                             text-white/[0.42]
