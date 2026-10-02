@@ -1,0 +1,163 @@
+.services-section-bg {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #020210;
+}
+
+/* -----------------------------------------
+   Moving background image
+----------------------------------------- */
+
+.services-wave-bg__image {
+    background-image: url("../../../public/images/general/service-bg.png");
+    background-repeat: no-repeat;
+    background-position: center 58%;
+    background-size: cover;
+
+    transform: translate3d(-1.2%, 0, 0) scale(1.06);
+    transform-origin: center center;
+
+    animation: services-wave-drift 32s ease-in-out infinite alternate;
+
+    will-change: transform;
+
+    /* Blend the image naturally into the dark website */
+    filter: saturate(0.82) brightness(0.72) contrast(1.05);
+}
+
+/* -----------------------------------------
+   Website color integration
+----------------------------------------- */
+
+.services-wave-bg__overlay {
+    background:
+        /* Top dark website tone */
+        linear-gradient(180deg,
+            rgba(2, 2, 16, 0.52) 0%,
+            rgba(2, 2, 16, 0.30) 30%,
+            rgba(2, 2, 16, 0.46) 58%,
+            rgba(2, 2, 16, 0.82) 82%,
+            rgba(2, 2, 16, 0.97) 100%),
+
+        /* Very subtle purple integration */
+        radial-gradient(ellipse at 22% 65%,
+            rgba(109, 101, 254, 0.12),
+            transparent 48%),
+
+        /* Very subtle cyan integration */
+        radial-gradient(ellipse at 78% 58%,
+            rgba(0, 175, 183, 0.09),
+            transparent 46%);
+}
+
+/* -----------------------------------------
+   Ambient glow
+----------------------------------------- */
+
+.services-wave-bg__glow {
+    background:
+        radial-gradient(ellipse at 18% 72%,
+            rgba(109, 101, 254, 0.10),
+            transparent 46%),
+        radial-gradient(ellipse at 82% 58%,
+            rgba(0, 175, 183, 0.08),
+            transparent 44%),
+        radial-gradient(ellipse at 50% 100%,
+            rgba(158, 69, 177, 0.06),
+            transparent 48%);
+
+    opacity: 0.75;
+
+    animation: services-glow-breathe 12s ease-in-out infinite alternate;
+
+    mix-blend-mode: screen;
+}
+
+/* -----------------------------------------
+   Slow image movement
+----------------------------------------- */
+
+@keyframes services-wave-drift {
+    0% {
+        transform: translate3d(-1.2%, 0, 0) scale(1.06);
+    }
+
+    50% {
+        transform: translate3d(0.4%, -0.5%, 0) scale(1.09);
+    }
+
+    100% {
+        transform: translate3d(1.2%, -1%, 0) scale(1.12);
+    }
+}
+
+/* -----------------------------------------
+   Gentle ambient movement
+----------------------------------------- */
+
+@keyframes services-glow-breathe {
+    0% {
+        opacity: 0.45;
+    }
+
+    100% {
+        opacity: 0.85;
+    }
+}
+
+/* -----------------------------------------
+   Tablet
+----------------------------------------- */
+
+@media (max-width: 1024px) {
+    .services-wave-bg__image {
+        background-position: center 60%;
+    }
+}
+
+/* -----------------------------------------
+   Mobile
+----------------------------------------- */
+
+@media (max-width: 640px) {
+    .services-wave-bg__image {
+        background-position: center 58%;
+        transform: scale(1.1);
+        animation-duration: 38s;
+
+        filter: saturate(0.78) brightness(0.68) contrast(1.05);
+    }
+
+    .services-wave-bg__overlay {
+        background:
+            linear-gradient(180deg,
+                rgba(2, 2, 16, 0.58) 0%,
+                rgba(2, 2, 16, 0.40) 30%,
+                rgba(2, 2, 16, 0.62) 58%,
+                rgba(2, 2, 16, 0.90) 82%,
+                rgba(2, 2, 16, 0.98) 100%),
+
+            radial-gradient(ellipse at 20% 65%,
+                rgba(109, 101, 254, 0.10),
+                transparent 50%),
+
+            radial-gradient(ellipse at 80% 60%,
+                rgba(0, 175, 183, 0.07),
+                transparent 48%);
+    }
+}
+
+/* -----------------------------------------
+   Reduced motion
+----------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .services-wave-bg__image,
+    .services-wave-bg__glow {
+        animation: none;
+        transform: scale(1.06);
+        will-change: auto;
+    }
+}

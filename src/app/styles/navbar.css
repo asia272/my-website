@@ -1,0 +1,65 @@
+.nav-link {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    color: var(--text-secondary);
+
+    font-size: 0.95rem;
+    font-weight: var(--weight-medium);
+
+    cursor: pointer;
+
+    transition:
+        color var(--duration-normal) var(--ease-standard);
+}
+
+/* =========================================================
+   NAV LINK GOLD UNDERLINE
+   ========================================================= */
+
+.nav-link::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -7px;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: var(--radius-full);
+
+    background: var(--primary);
+
+    transform: translateX(-50%);
+
+    transition:
+        width var(--duration-normal) var(--ease-smooth);
+}
+
+/* =========================================================
+   NAV LINK HOVER
+   ========================================================= */
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.nav-link:hover::after {
+    width: 70%;
+}
+
+/* =========================================================
+   NAV LINK FOCUS
+   ========================================================= */
+
+.nav-link:focus-visible {
+    outline: 2px solid var(--primary);
+
+    outline-offset: 6px;
+
+    border-radius: 4px;
+}
