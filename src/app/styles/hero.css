@@ -288,12 +288,12 @@
 .hero-accent-chart-3,
 .hero-accent-chart-4 {
     box-shadow:
-        0 0 45px rgba(0, 0, 0, 0.60),
-        0 0 85px color-mix(in srgb,
-            var(--card-accent) 20%,
+        0 0 28px rgba(0, 0, 0, 0.45),
+        0 0 55px color-mix(in srgb,
+            var(--card-accent) 14%,
             transparent),
-        0 0 140px color-mix(in srgb,
-            var(--card-accent) 10%,
+        0 0 80px color-mix(in srgb,
+            var(--card-accent) 7%,
             transparent);
 }
 
