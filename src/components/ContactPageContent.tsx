@@ -20,7 +20,7 @@ const ContactPageContent = () => {
                         description="Have a project, website, or digital idea in mind? Share what you’re looking to build, and let’s turn your requirements into a modern, reliable, and production-ready digital experience."
                         fontSize="clamp(1.9rem,3vw,3.1rem)"
                         letterSpacing="0.2px"
-                        lineHeight="1.5"
+                        lineHeight="1.3"
                     />
 
                 </div>

@@ -13,3 +13,36 @@
 .animate-contact-float {
     animation: contact-float 6s ease-in-out infinite;
 }
+
+
+
+/* contact page stylling */
+
+.contact-page-bg {
+    background-image: url("../../../public//images/general/contact\ page\ bg.png");
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 424px;
+    opacity: .20;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    animation: leftRight 4s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes leftRight {
+    0% {
+        transform: translateX(0px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}

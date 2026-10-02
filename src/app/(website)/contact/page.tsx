@@ -19,7 +19,7 @@ const Page = () => {
             <section className="section relative isolate overflow-hidden">
 
                 <OrbitDecorations />
-
+                <div className="contact-page-bg"></div>
                 <div className="container  z-10">
                     <div
                         className="
