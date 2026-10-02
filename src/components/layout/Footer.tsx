@@ -1,10 +1,6 @@
-
 import Link from "next/link";
 import {
     ArrowUpRight,
-    Mail,
-    MapPin,
-    Phone,
     Sparkles,
 } from "lucide-react";
 
@@ -13,7 +9,17 @@ import {
     FaLinkedinIn,
     FaFacebookF,
 } from "react-icons/fa";
+
+import {
+    SiUpwork,
+    SiFiverr,
+} from "react-icons/si";
+
 import Image from "next/image";
+
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
 
 const socialLinks = [
     {
@@ -21,45 +27,79 @@ const socialLinks = [
         href: "https://github.com/",
         icon: FaGithub,
         bgColor: "bg-[#181717]",
+        borderColor: "border-[#181717]",
     },
     {
         label: "LinkedIn",
         href: "https://www.linkedin.com/",
         icon: FaLinkedinIn,
         bgColor: "bg-[#0A66C2]",
+        borderColor: "border-[#0A66C2]",
     },
     {
         label: "Facebook",
         href: "https://www.facebook.com/",
         icon: FaFacebookF,
         bgColor: "bg-[#1877F2]",
+        borderColor: "border-[#1877F2]",
+    },
+    {
+        label: "Upwork",
+        href: "https://www.upwork.com/",
+        icon: SiUpwork,
+        bgColor: "bg-[#14A800]",
+        borderColor: "border-[#14A800]",
+    },
+    {
+        label: "Fiverr",
+        href: "https://www.fiverr.com/",
+        icon: SiFiverr,
+        bgColor: "bg-[#1DBF73]",
+        borderColor: "border-[#1DBF73]",
     },
 ];
 
 /* =========================================================
    FOOTER DATA
    ========================================================= */
+
 const footerNavigation = [
     {
         title: "Company",
         links: [
-            { label: "About Us", href: "/#about" },
             { label: "Services", href: "/services" },
             { label: "Projects", href: "/projects" },
+            { label: "Team", href: "/Team" },
             { label: "Contact", href: "/contact" },
         ],
     },
     {
         title: "Services",
         links: [
-            { label: "Web Development", href: "/services/web-development" },
-            { label: "Generative AI", href: "/services/generative-ai" },
-            { label: "Full-Stack Development", href: "/services/full-stack-development" },
-            { label: "UI/UX Design", href: "/services/ui-ux-design" },
+            {
+                label: "Web Development",
+                href: "/services/web-development",
+            },
+            {
+                label: "App Development",
+                href: "/services/app-developmetn",
+            },
+            {
+                label: "Generative AI",
+                href: "/services/generative-ai",
+            },
+            {
+                label: "Full-Stack Development",
+                href: "/services/full-stack-development",
+            },
+            {
+                label: "UI/UX Design",
+                href: "/services/ui-ux-design",
+            },
+
         ],
     },
 ];
-
 
 /* =========================================================
    FOOTER
@@ -80,8 +120,6 @@ const Footer = () => {
             {/* =================================================
                 BACKGROUND DECORATION
                ================================================= */}
-
-
 
             <div
                 aria-hidden="true"
@@ -186,7 +224,6 @@ const Footer = () => {
                                     leading-tight
                                     tracking-[-0.035em]
                                     text-[var(--foreground)]
-                                  
                                 "
                             >
                                 Have an idea?
@@ -263,7 +300,7 @@ const Footer = () => {
                     <div className="max-w-sm">
                         <Link
                             href="/"
-                            aria-label="kamalGroupOFDeveloper home"
+                            aria-label="Kamal Group of Developer home"
                             className="
                                 inline-flex
                                 items-center
@@ -274,17 +311,22 @@ const Footer = () => {
                                 text-[var(--foreground)]
                             "
                         >
-
-
                             <Image
                                 src="/images/general/logo.png"
                                 alt="Kamal Group of Developer"
                                 width={180}
                                 height={55}
                                 priority
-                                className="h-autoobject-contain transition-transform duration-300 group-hover:scale-[1.03] sm:w-[165px] md:w-[180px]"
+                                className="
+                                    h-auto
+                                    object-contain
+                                    transition-transform
+                                    duration-300
+                                    group-hover:scale-[1.03]
+                                    sm:w-[165px]
+                                    md:w-[180px]
+                                "
                             />
-
                         </Link>
 
                         <p
@@ -300,52 +342,6 @@ const Footer = () => {
                             grow faster, and turn ambitious ideas into
                             meaningful products.
                         </p>
-                        {/* Social links */}
-                        <div className="mt-6 flex items-center gap-2">
-                            {socialLinks.map((social) => {
-                                const Icon = social.icon;
-
-                                return (
-                                    <a
-                                        key={social.label}
-                                        href={social.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label={`Visit BuitinSoft on ${social.label}`}
-                                        className={`
-                    group
-                    flex
-                    h-9
-                    w-9
-                    items-center
-                    justify-center
-                    rounded
-                    border
-                    border-transparent
-                    ${social.bgColor}
-                    text-white
-                    shadow-sm
-                    transition-all
-                    duration-300
-                    ease-out
-                    hover:scale-90
-                    hover:shadow-none
-                `}
-                                    >
-                                        <Icon
-                                            className="
-                        h-4
-                        w-4
-                        transition-transform
-                        duration-300
-                        group-hover:scale-90
-                    "
-                                            aria-hidden="true"
-                                        />
-                                    </a>
-                                );
-                            })}
-                        </div>
                     </div>
 
                     {/* =================================================
@@ -371,7 +367,7 @@ const Footer = () => {
                                 "
                             >
                                 {section.links.map((link) => (
-                                    <li key={link.label}>
+                                    <li key={link.label} className="mb-[4px]">
                                         <Link
                                             href={link.href}
                                             className="
@@ -381,17 +377,20 @@ const Footer = () => {
                                                 gap-1
                                                 text-sm
                                                 leading-6
-                                              
+                                                text-[var(--muted-foreground)]
                                                 transition-colors
                                                 duration-200
                                                 hover:text-[var(--foreground)]
-                                                 text-[var(--muted-foreground)]
                                             "
                                         >
-                                            <span className=" text-[var(--muted-foreground)]
-                                        transition-colors
-                                        duration-200
-                                        group-hover:text-[var(--foreground)]">
+                                            <span
+                                                className="
+                                                    text-[var(--muted-foreground)]
+                                                    transition-colors
+                                                    duration-200
+                                                    group-hover:text-[var(--foreground)]
+                                                "
+                                            >
                                                 {link.label}
                                             </span>
 
@@ -416,122 +415,67 @@ const Footer = () => {
                         </div>
                     ))}
 
+
                     {/* =================================================
-                        CONTACT
-                       ================================================= */}
+    GET IN TOUCH
+   ================================================= */}
 
                     <div>
                         <h5
                             className="
-                                text-sm
-                                font-semibold
-                                text-[var(--foreground)]
-                            "
+            text-sm
+            font-semibold
+            text-[var(--foreground)]
+        "
                         >
                             Get In Touch
                         </h5>
 
-                        <div className="mt-5 space-y-4">
-                            <a
-                                href="#"
-                                className="
-                                    group
-                                    flex
-                                    items-start
-                                    gap-3
-                                "
-                            >
-                                <Mail
-                                    className="
-                                        mt-0.5
-                                        h-4
-                                        w-4
-                                        shrink-0
-                                        text-[var(--primary)]
-                                    "
-                                    strokeWidth={1.8}
-                                    aria-hidden="true"
-                                />
 
-                                <span
-                                    className="
-                                        break-all
-                                        text-sm
-                                        leading-6
-                                        text-[var(--muted-foreground)]
-                                        transition-colors
-                                        duration-200
-                                        group-hover:text-[var(--foreground)]
-                                    "
-                                >
-                                    examle@gmail.com
-                                </span>
-                            </a>
+                        <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                            {socialLinks.map((social) => {
+                                const Icon = social.icon;
 
-                            <a
-                                href="tel:+923022094272"
-                                className="
-                                    group
-                                    flex
-                                    items-start
-                                    gap-3
-                                "
-                            >
-                                <Phone
-                                    className="
-                                        mt-0.5
-                                        h-4
-                                        w-4
-                                        shrink-0
-                                        text-[var(--primary)]
-                                    "
-                                    strokeWidth={1.8}
-                                    aria-hidden="true"
-                                />
-
-                                <span
-                                    className="
-                                        text-sm
-                                        leading-6
-                                        text-[var(--muted-foreground)]
-                                        transition-colors
-                                        duration-200
-                                        group-hover:text-[var(--foreground)]
-                                    "
-                                >
-                                    +92 (302) 2094272
-                                </span>
-                            </a>
-
-                            <div
-                                className="
-                                    flex
-                                    items-start
-                                    gap-3
-                                "
-                            >
-                                <MapPin
-                                    className="
-                                        mt-0.5
-                                        h-4
-                                        w-4
-                                        shrink-0
-                                        text-[var(--primary)]
-                                    "
-                                    strokeWidth={1.8}
-                                    aria-hidden="true"
-                                />
-
-                                <span
-                                    className="
-                                        text-sm
-                                        leading-6
-                                        text-[var(--muted-foreground)]
-                                    "
-                                >
-                                    Punjab, Pakistan
-                                </span>
-                            </div>
+                                return (
+                                    <a
+                                        key={social.label}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={`Visit us on ${social.label}`}
+                                        className={`
+                    group
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-sm
+                    border
+                    ${social.borderColor}
+                    ${social.bgColor}
+                    text-white
+                    shadow-sm
+                    transition-all
+                    duration-300
+                    ease-out
+                    hover:scale-110
+                    hover:shadow-lg
+                `}
+                                    >
+                                        <Icon
+                                            className="
+                        h-4
+                        w-4
+                        transition-transform
+                        duration-300
+                        group-hover:scale-105
+                    "
+                                            aria-hidden="true"
+                                        />
+                                    </a>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
@@ -561,7 +505,7 @@ const Footer = () => {
                             sm:text-sm
                         "
                     >
-                        © {new Date().getFullYear()} BuitinSoft. All rights
+                        © {new Date().getFullYear()} KmalGorupOfDeveloper. All rights
                         reserved.
                     </p>
 
@@ -607,4 +551,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
