@@ -359,7 +359,7 @@ export default function AboutSection() {
                     bg-[var(--secondary)]
                 "
                                     >
-                                        {/* Animated progress */}
+
                                         <div
                                             className="
                         absolute
@@ -517,74 +517,6 @@ export default function AboutSection() {
                                     aria-hidden="true"
                                 />
                             </Link>
-
-                            {/* Phone */}
-                            <a
-                                href="tel:+923022094272"
-                                aria-label="Call us at +92 302 2094272"
-                                className="
-                                    group
-                                    flex
-                                    items-center
-                                    gap-3
-                                    rounded-md
-                                    transition-opacity
-                                    duration-200
-                                    hover:opacity-90
-                                "
-                                data-aos="fade-up"
-                            >
-                                <span
-                                    className="
-                                        flex
-                                        h-12
-                                        w-12
-                                        shrink-0
-                                        items-center
-                                        justify-center
-                                        rounded-md
-                                        border
-                                        border-[var(--border)]
-                                        bg-[var(--surface)]
-                                        text-[var(--foreground)]
-                                        transition-all
-                                        duration-300
-                                        group-hover:border-[var(--primary)]
-                                        group-hover:text-[var(--primary)]
-                                    "
-                                >
-                                    <Headphones
-                                        className="h-5 w-5 sm:h-6 sm:w-6"
-                                        strokeWidth={1.8}
-                                        aria-hidden="true"
-                                    />
-                                </span>
-
-                                <span className="flex flex-col">
-                                    <span
-                                        className="
-                                            text-xs
-                                            font-medium
-                                            text-[var(--muted-foreground)]
-                                        "
-                                    >
-                                        Call Any Time
-                                    </span>
-
-                                    <span
-                                        className="
-                                            mt-0.5
-                                            text-lg
-                                            font-bold
-                                            tracking-[-0.02em]
-                                            text-[var(--foreground)]
-                                            sm:text-xl
-                                        "
-                                    >
-                                        +92 (302) 2094272
-                                    </span>
-                                </span>
-                            </a>
                         </div>
                     </div>
                 </div>
