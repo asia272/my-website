@@ -1,8 +1,8 @@
 "use client";
 import PageHero from "@/components/shared/PageHero";
 import ContactForm from "@/components/ContactForm";
-import ContactRightSide from "@/components/ContactRightSide";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
+import ContactPageContent from "@/components/ContactPageContent";
 
 const Page = () => {
     return (
@@ -20,24 +20,40 @@ const Page = () => {
 
                 <OrbitDecorations />
 
+                <div className="container  z-10">
+                    <div
+                        className="
+                        grid
+                        grid-cols-1
+                        items-start
+                        gap-12
+                        lg:grid-cols-[0.9fr_1.1fr]
+                        lg:gap-16
+                        xl:gap-24
+                    "
+                    >
+                        {/* LEFT */}
 
-                <div
-                    className="
-            container
-            relative
-            z-10
-            grid
-            gap-14
-            lg:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.88fr)]
-            lg:gap-20
-            xl:gap-28
-        "
-                >
-                    {/* LEFT — FORM */}
-                    <ContactForm />
+                        <ContactPageContent />
 
-                    {/* RIGHT — CONTACT INFORMATION */}
-                    <ContactRightSide />
+                        {/* RIGHT */}
+                        <div
+                            data-aos="fade-left"
+                            id="contact-form"
+                            className="
+                            glass
+                            rounded-2xl
+                            border
+                            border-border
+                            p-5
+                            sm:p-7
+                            lg:p-8
+                            xl:p-10
+                        "
+                        >
+                            <ContactForm />
+                        </div>
+                    </div>
                 </div>
             </section>
 
