@@ -96,6 +96,7 @@ const ServicesPage = () => {
                         >
                             {activeServices.map((service) => (
                                 <ServiceCard
+                                    id={service._id}
                                     key={service._id}
                                     title={service.title}
                                     icon={service.icon}

@@ -165,6 +165,8 @@ const ServicesSection = () => {
                         >
                             <CarouselContent className="-ml-4">
                                 {activeServices.map((service, index) => (
+
+
                                     <CarouselItem
                                         key={service._id}
 
@@ -179,6 +181,7 @@ const ServicesSection = () => {
                                             data-aos-delay={index * 100}
                                             data-aos-duration="700">
                                             <ServiceCard
+                                                id={service._id!}
                                                 title={service.title}
                                                 icon={service.icon}
                                                 description={service.description}

@@ -20,7 +20,7 @@ import type { Id } from "../../../../../../convex/_generated/dataModel";
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
-import ProjectDetailSkeleton from "@/components/skeleton/DetailPageSkeleton";
+import ProjectDetailSkeleton from "@/components/skeleton/ProjectDetailPageSkeleton";
 import { FaGithub } from "react-icons/fa";
 
 type ProjectType =

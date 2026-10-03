@@ -28,7 +28,8 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import PageHero from "@/components/shared/PageHero";
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
-import DetailPageSkeleton from "@/components/skeleton/DetailPageSkeleton";
+import DetailPageSkeleton from "@/components/skeleton/ProjectDetailPageSkeleton";
+import TeamMemberDetailPageSkeleton from "@/components/skeleton/TeamMemberDetailPageSkeleton";
 
 type TeamMemberDetailPageProps = {
     params: Promise<{
@@ -64,7 +65,7 @@ export default function TeamMemberDetailPage({
                     description="Loading the team member profile."
                 />
 
-                <DetailPageSkeleton />
+                <TeamMemberDetailPageSkeleton />
             </main>
         );
     }
