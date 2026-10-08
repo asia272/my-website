@@ -689,7 +689,7 @@ export default function TeamForm({
                         variant="outline"
                         onClick={() =>
                             router.push(
-                                "/admin/dashboard/team",
+                                "/admin/team",
                             )
                         }
                         disabled={

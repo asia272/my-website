@@ -2025,7 +2025,7 @@ export default function ProjectForm({
                         variant="outline"
                         onClick={() =>
                             router.push(
-                                "/admin/dashboard/projects",
+                                "/admin/projects",
                             )
                         }
                         disabled={isBusy}
