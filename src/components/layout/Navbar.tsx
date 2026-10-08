@@ -18,6 +18,7 @@ const Navbar = () => {
     const pathname = usePathname();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const isHome = pathname === "/";
     const previousPathname = useRef(pathname);
@@ -25,6 +26,20 @@ const Navbar = () => {
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
+    //scroll handling
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
     // Path handling
     const projectMenuItems = [
         {
@@ -75,7 +90,20 @@ const Navbar = () => {
     }, [pathname]);
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/90 backdrop-blur-xl border-b border-border shadow-lg shadow-purple-500/5">
+        <header
+            className={`
+        fixed
+        inset-x-0
+        top-0
+        z-50
+        transition-[background-color,border-color,box-shadow,backdrop-filter]
+        duration-300
+        ${isScrolled
+                    ? "border-b border-border/60 bg-background/80 shadow-lg shadow-purple-500/5 backdrop-blur-2xl"
+                    : "border-none bg-transparent shadow-none backdrop-blur-0"
+                }
+    `}
+        >
             <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-20 items-center justify-between">
 
