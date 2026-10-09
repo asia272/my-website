@@ -543,7 +543,9 @@ const WhyChooseUsSection = () => {
             id="why-choose-us"
             className="section relative isolate overflow-hidden"
         >
-
+            {/* <AnimatedBackground />
+<AnimatedBackground palette="teal" density={1.3} /> */}
+            <AnimatedBackground opacity={0.6} pulses={false} glow={false} />
             <div className="container">
                 {/* Heading (aligned start) */}
                 <Reveal>
