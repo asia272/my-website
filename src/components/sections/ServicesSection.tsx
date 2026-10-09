@@ -24,6 +24,7 @@ import {
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import ServiceCardSkeleton from "../skeleton/ServiceCardSkeleton";
+import OurProcess from "./OurProcess";
 
 const ServicesSection = () => {
     const services = useQuery(api.services.getAll);
@@ -501,6 +502,7 @@ const ServicesSection = () => {
                         </div>
                     </div>
                 )}
+                <OurProcess />
             </div>
         </section>
     );
