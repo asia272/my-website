@@ -5,6 +5,7 @@ import "./globals.css";
 import ConvexClientProvider from "@/components/providers/ConvexClientProvider";
 import { Toaster } from "react-hot-toast";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Preloader from "@/components/Preloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Preloader />
         <ConvexClientProvider>
           {children}
           <WhatsAppButton />
