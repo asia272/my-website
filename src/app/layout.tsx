@@ -6,6 +6,7 @@ import ConvexClientProvider from "@/components/providers/ConvexClientProvider";
 import { Toaster } from "react-hot-toast";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Preloader from "@/components/Preloader";
+import { PreloaderProvider } from "@/components/providers/PreloaderContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,17 +37,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Preloader />
-        <ConvexClientProvider>
-          {children}
-          <WhatsAppButton />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-            }}
-          />
-        </ConvexClientProvider>
+        <PreloaderProvider>
+          <Preloader />
+          <ConvexClientProvider>
+            {children}
+            <WhatsAppButton />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+              }}
+            />
+          </ConvexClientProvider>
+        </PreloaderProvider>
+
 
       </body>
     </html>

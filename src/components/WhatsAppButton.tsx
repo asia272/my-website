@@ -1,9 +1,15 @@
 "use client";
 
+import { usePreloader } from "@/components/providers/PreloaderContext"; // ADDED
+
 const WHATSAPP_URL =
     "https://api.whatsapp.com/send/?phone=923022094272&text&type=phone_number&app_absent=0";
 
 export default function WhatsAppButton() {
+    const { done } = usePreloader(); // ADDED
+
+    if (!done) return null; // ADDED: hide button until preloader is finished
+
     return (
         <a
             href={WHATSAPP_URL}

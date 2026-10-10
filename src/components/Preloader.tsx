@@ -8,6 +8,7 @@ import {
     useReducedMotion,
     useTransform,
 } from "motion/react";
+import { usePreloader } from "@/components/providers/PreloaderContext"; // ADDED
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -25,12 +26,18 @@ const circ = (r: number) => 2 * Math.PI * r;
 export default function Preloader() {
     const reduce = !!useReducedMotion();
     const [phase, setPhase] = useState<"loading" | "exit" | "gone">("loading");
+    const { setDone } = usePreloader(); // ADDED
 
     const progress = useMotionValue(0);
     const counter = useTransform(progress, (v) =>
         String(Math.round(v)).padStart(3, "0")
     );
     const barScale = useTransform(progress, [0, 100], [0, 1]);
+
+    // ADDED: tell the rest of the app when the preloader is completely finished
+    useEffect(() => {
+        if (phase === "gone") setDone(true);
+    }, [phase, setDone]);
 
     // Lock page scroll while the preloader is visible
     useEffect(() => {
