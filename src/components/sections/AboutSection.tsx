@@ -10,6 +10,7 @@ import {
 import PageHeading from "../shared/PageHeading";
 import { Lens } from "../ui/lens";
 
+
 /* =========================================================
    ABOUT SECTION DATA
    ========================================================= */
@@ -45,6 +46,7 @@ export default function AboutSection() {
             aria-labelledby="about-heading"
             className="
                 relative
+                isolate
                 overflow-hidden
                 py-20
                 sm:py-24

@@ -15,6 +15,7 @@ import {
 import PageHeading from "../shared/PageHeading";
 import Reveal from "../animations/Reveal";
 import AnimatedBackground from "../animations/AnimatedBackground";
+import OrbitDecorations from "../shared/OrbitDecorations";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -543,11 +544,9 @@ const WhyChooseUsSection = () => {
             id="why-choose-us"
             className="section relative isolate overflow-hidden"
         >
-            {/* <AnimatedBackground />
-<AnimatedBackground palette="teal" density={1.3} /> */}
-            <AnimatedBackground opacity={0.6} pulses={false} glow={false} />
+            <OrbitDecorations />
             <div className="container">
-                {/* Heading (aligned start) */}
+                {/* Heading*/}
                 <Reveal>
                     <PageHeading
                         label="Why Choose Us"

@@ -211,6 +211,17 @@ const Navbar = () => {
                                     </a>
                                 </li>
                             )}
+                            {/* whyChoose us */}
+                            {isHome && (
+                                <li>
+                                    <a
+                                        href="#why-choose-us"
+                                        className="nav-link"
+                                    >
+                                        whyChooseUs
+                                    </a>
+                                </li>
+                            )}
 
                             {/* Contact */}
                             <li>
@@ -400,7 +411,17 @@ const Navbar = () => {
                                         </a>
                                     </li>
                                 )}
-
+                                {isHome && (
+                                    <li>
+                                        <a
+                                            href="#why-choose-us"
+                                            onClick={closeMenu}
+                                            className="nav-link block py-3"
+                                        >
+                                            whyChooseUS
+                                        </a>
+                                    </li>
+                                )}
                                 {/* Contact */}
                                 <li>
                                     {isHome ? (
