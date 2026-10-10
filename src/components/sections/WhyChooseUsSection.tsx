@@ -14,7 +14,7 @@ import {
 
 import PageHeading from "../shared/PageHeading";
 import Reveal from "../animations/Reveal";
-import AnimatedBackground from "../animations/AnimatedBackground";
+
 import OrbitDecorations from "../shared/OrbitDecorations";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
