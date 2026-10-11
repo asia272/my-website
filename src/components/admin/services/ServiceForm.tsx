@@ -9,7 +9,6 @@ import {
     Trash2,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
-// import * as Icons from "lucide-react";
 
 import { api } from "../../../../convex/_generated/api";
 import type { Id } from "../../../../convex/_generated/dataModel";

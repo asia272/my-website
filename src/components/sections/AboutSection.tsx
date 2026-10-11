@@ -1,30 +1,37 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import Image from "next/image";
 
 import Link from "next/link";
 
-import { motion, MotionConfig, useInView } from "motion/react";
-
+import {
+    animate,
+    motion,
+    MotionConfig,
+    useInView,
+    useMotionValue,
+    useTransform,
+} from "motion/react";
 import {
     ArrowRight,
+    Bot,
     Clock,
     Cloud,
     Code,
+    Database,
     Layers,
-    Lightbulb,
-    Lock,
-    Megaphone,
+    MonitorSmartphone,
     PenTool,
     ShieldCheck,
+    ShoppingCart,
+    Smartphone,
     Sparkles,
     Users,
     Wrench,
 } from "lucide-react";
 
-import Counter from "../animations/Counter";
 import DrawCheck from "../animations/DrawCheck";
 import Magnetic from "../animations/Magnetic";
 import SpotlightCard from "../animations/SpotlightCard";
@@ -63,12 +70,14 @@ const miniStats = [
 
 /* Marquee skills — each has its own icon, icon color and icon bg color */
 const marqueeItems = [
+    { label: "Generative AI", icon: Bot, color: "var(--chart-3)" }, // purple
     { label: "Web Development", icon: Code, color: "var(--chart-1)" }, // gold
-    { label: "Cloud Solutions", icon: Cloud, color: "var(--blue)" }, // blue
-    { label: "Cyber Security", icon: Lock, color: "var(--chart-4)" }, // teal
-    { label: "Digital Marketing", icon: Megaphone, color: "var(--chart-3)" }, // purple
-    { label: "UI / UX Design", icon: PenTool, color: "var(--chart-2)" }, // violet-blue
-    { label: "IT Consulting", icon: Lightbulb, color: "var(--chart-5)" }, // amber-brown
+    { label: "Mobile Apps", icon: Smartphone, color: "var(--chart-4)" }, // teal
+    { label: "Full Stack", icon: Database, color: "var(--chart-2)" }, // violet-blue
+    { label: "E-commerce", icon: ShoppingCart, color: "var(--chart-5)" }, // amber-brown
+    { label: "SaaS", icon: Cloud, color: "var(--blue)" }, // blue
+    { label: "Responsive Applications", icon: MonitorSmartphone, color: "var(--chart-1)" }, // gold
+    { label: "Graphic Design", icon: PenTool, color: "var(--chart-4)" }, // teal
 ];
 
 /* =========================================================
@@ -88,6 +97,18 @@ function RingStat({
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const inView = useInView(ref, { once: false, margin: "-60px" });
+
+    /* Built-in Motion counter */
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, (latest) => Math.round(latest));
+
+    useEffect(() => {
+        const controls = animate(count, inView ? value : 0, {
+            duration: 1.2,
+            ease: "easeInOut",
+        });
+        return () => controls.stop();
+    }, [inView, value, count]);
 
     return (
         <SpotlightCard>
@@ -110,19 +131,16 @@ function RingStat({
                             cy="50"
                             r="42"
                             fill="none"
-                            stroke="var(--chart-4)"
+                            stroke="var(--chart-3)"
                             strokeWidth="6"
                             strokeLinecap="round"
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: inView ? value / 100 : 0 }}
-
                             transition={{
-                                type: "spring",
-                                stiffness: 45,
-                                damping: 20,
-                                mass: 0.8,
+                                duration: 1.2,
+                                ease: "easeInOut",
+                                delay: 0,
                             }}
-
                         />
                     </svg>
                     <motion.span
@@ -132,7 +150,7 @@ function RingStat({
                         transition={{ duration: 3.5, ease: "easeInOut", repeat: Infinity }}
                     />
                     <span className="absolute inset-0 grid place-items-center text-2xl font-semibold tabular-nums text-[var(--foreground)] sm:text-3xl">
-                        <Counter value={value} active={inView} />
+                        <motion.span>{rounded}</motion.span>
                     </span>
                 </div>
                 <div>
@@ -163,6 +181,18 @@ function MiniStat({
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const inView = useInView(ref, { once: false, margin: "-40px" });
+
+    /* Built-in Motion counter */
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, (latest) => Math.round(latest));
+
+    useEffect(() => {
+        const controls = animate(count, inView ? value : 0, {
+            duration: 1.2,
+            ease: "easeInOut",
+        });
+        return () => controls.stop();
+    }, [inView, value, count]);
 
     return (
         <SpotlightCard>
@@ -198,7 +228,7 @@ function MiniStat({
                     className="relative flex items-baseline text-xl font-semibold tabular-nums sm:text-2xl"
                     style={{ color }}
                 >
-                    <Counter value={value} active={inView} />
+                    <motion.span>{rounded}</motion.span>
                     <span>{suffix}</span>
                 </div>
                 <p className="relative text-xs text-[var(--muted-foreground)] sm:text-sm">{label}</p>
@@ -225,33 +255,21 @@ function SkillsMarquee() {
             {/* Magic UI marquee: pauses when the mouse is over it */}
             <Marquee
                 pauseOnHover
-                className="py-2 [--duration:36s] [--gap:0.75rem] sm:[--gap:1rem]"
+                className="py-2 [--duration:36s] [--gap:1.25rem] sm:[--gap:2rem]"
             >
                 {marqueeItems.map((item) => {
                     const Icon = item.icon;
                     return (
                         <div
                             key={item.label}
-                            className="group/pill flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-full border border-[var(--border)] bg-[var(--card)]/70 py-1.5 pl-1.5 pr-4 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 sm:gap-3 sm:pr-5"
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = `color-mix(in srgb, ${item.color} 55%, transparent)`;
-                                e.currentTarget.style.boxShadow = `0 8px 24px color-mix(in srgb, ${item.color} 18%, transparent)`;
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.borderColor = "";
-                                e.currentTarget.style.boxShadow = "";
-                            }}
+                            className="group/pill flex shrink-0 items-center gap-1.5 whitespace-nowrap py-1.5 transition-all duration-300 hover:-translate-y-0.5 sm:gap-2"
                         >
-                            <span
-                                className="flex size-8 shrink-0 items-center justify-center rounded-full sm:size-9"
-                                style={{
-                                    background: `color-mix(in srgb, ${item.color} 18%, transparent)`,
-                                    border: `1px solid color-mix(in srgb, ${item.color} 35%, transparent)`,
-                                    color: item.color,
-                                }}
-                            >
-                                <Icon className="size-4" strokeWidth={1.8} aria-hidden="true" />
-                            </span>
+                            <Icon
+                                className="size-5 shrink-0 sm:size-6"
+                                strokeWidth={1.8}
+                                style={{ color: item.color }}
+                                aria-hidden="true"
+                            />
                             <span className="text-sm font-medium text-[var(--foreground)]/85 transition-colors duration-300 group-hover/pill:text-[var(--foreground)] sm:text-base">
                                 {item.label}
                             </span>
