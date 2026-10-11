@@ -189,7 +189,7 @@ function EmptyProjects({
                 </h3>
 
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    I&apos;m continuing to build and showcase projects related
+                    We&apos;re continuing to build and showcase projects related
                     to{" "}
                     <span className="font-medium text-foreground">
                         {title}
@@ -478,7 +478,7 @@ export default function ServiceDetailPage() {
                                                             key={`${item}-${index}`}
                                                             className="flex items-start gap-3 rounded-xl border border-border/60 bg-background/30 p-4 transition-all duration-300 hover:border-chart-2/30 hover:bg-chart-2/[0.04]"
                                                         >
-                                                            <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-chart-2/25 bg-chart-2/10 text-chart-2">
+                                                            <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-green-500/25 bg-green-500/10 text-green-500">
                                                                 <Check className="size-3.5 stroke-[2.5]" />
                                                             </span>
 
