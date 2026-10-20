@@ -60,6 +60,9 @@ const ServicesSection = () => {
 
     const isLoading = services === undefined;
 
+    // Progress bar + navigation controls only when more than 3 services
+    const showControls = activeServices.length > 3;
+
     return (
         <section className="services-section-bg section relative isolate overflow-hidden" id="services">
 
@@ -78,13 +81,6 @@ const ServicesSection = () => {
                 {/* Subtle ambient glow */}
                 <div className="services-wave-bg__glow absolute inset-0" />
             </div>
-
-
-
-
-
-
-
 
             <div className="container">
                 {/* Heading */}
@@ -166,11 +162,8 @@ const ServicesSection = () => {
                         >
                             <CarouselContent className="-ml-4">
                                 {activeServices.map((service, index) => (
-
-
                                     <CarouselItem
                                         key={service._id}
-
                                         className="
             basis-full
             pl-4
@@ -178,9 +171,13 @@ const ServicesSection = () => {
             lg:basis-1/3
         "
                                     >
-                                        <div data-aos="fade-up"
+                                        {/* FIX: h-full so every card stretches to the tallest one */}
+                                        <div
+                                            className="h-full"
+                                            data-aos="fade-up"
                                             data-aos-delay={index * 100}
-                                            data-aos-duration="700">
+                                            data-aos-duration="700"
+                                        >
                                             <ServiceCard
                                                 id={service._id!}
                                                 title={service.title}
@@ -189,23 +186,20 @@ const ServicesSection = () => {
                                                 listItems={service.listItems}
                                                 className="h-full min-h-[400px]"
                                             />
-
                                         </div>
-
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
                         </Carousel>
 
+                        {/* Premium Services Navigator — only when more than 3 services */}
+                        {showControls && (
+                            <div className="relative mt-12">
 
-
-                        {/* Premium Services Navigator */}
-                        <div className="relative mt-12">
-
-                            {/* Orbit-style dark decoration */}
-                            <div
-                                aria-hidden="true"
-                                className="
+                                {/* Orbit-style dark decoration */}
+                                <div
+                                    aria-hidden="true"
+                                    className="
             pointer-events-none
             absolute left-1/2 top-1/2
             h-36 w-[75%]
@@ -216,12 +210,12 @@ const ServicesSection = () => {
             sm:h-40
             sm:w-[65%]
         "
-                            />
+                                />
 
-                            {/* Wider ambient shadow */}
-                            <div
-                                aria-hidden="true"
-                                className="
+                                {/* Wider ambient shadow */}
+                                <div
+                                    aria-hidden="true"
+                                    className="
             pointer-events-none
             absolute left-1/2 top-1/2
             h-40 w-[100%]
@@ -230,14 +224,11 @@ const ServicesSection = () => {
             bg-black/50
             blur-2xl
         "
-                            />
+                                />
 
-
-
-
-                            {/* Controls */}
-                            <div
-                                className="
+                                {/* Controls */}
+                                <div
+                                    className="
             relative
             z-10
             flex
@@ -247,34 +238,34 @@ const ServicesSection = () => {
             gap-7
             sm:gap-8
         "
-                            >
+                                >
 
-                                {/* CENTER — Advanced progress */}
-                                <div className="flex w-full max-w-md items-center gap-4">
-                                    {/* Start */}
-                                    <span
-                                        className="
+                                    {/* CENTER — Advanced progress */}
+                                    <div className="flex w-full max-w-md items-center gap-4">
+                                        {/* Start */}
+                                        <span
+                                            className="
                     text-[8px]
                     font-semibold
                     tracking-[0.2em]
                     text-white/30
                 "
-                                    >
-                                        01
-                                    </span>
+                                        >
+                                            01
+                                        </span>
 
-                                    {/* Track */}
-                                    <div className="relative flex h-5 flex-1 items-center">
-                                        <div
-                                            className="
+                                        {/* Track */}
+                                        <div className="relative flex h-5 flex-1 items-center">
+                                            <div
+                                                className="
                         absolute left-0 right-0
                         h-px
                         bg-white/[0.12]
                     "
-                                        />
+                                            />
 
-                                        <div
-                                            className="
+                                            <div
+                                                className="
                         absolute left-0
                         h-px
                         bg-gradient-to-r
@@ -286,83 +277,83 @@ const ServicesSection = () => {
                         duration-700
                         ease-[cubic-bezier(0.22,1,0.36,1)]
                     "
-                                            style={{
-                                                width: `${snapCount > 1
-                                                    ? (current / (snapCount - 1)) * 100
-                                                    : 100
-                                                    }%`,
-                                            }}
-                                        />
+                                                style={{
+                                                    width: `${snapCount > 1
+                                                        ? (current / (snapCount - 1)) * 100
+                                                        : 100
+                                                        }%`,
+                                                }}
+                                            />
 
-                                        {/* Nodes */}
-                                        <div className="absolute inset-x-0 flex items-center justify-between">
-                                            {Array.from({
-                                                length: Math.max(snapCount, 1),
-                                            }).map((_, index) => {
-                                                const isActive = index === current;
-                                                const isPassed = index <= current;
+                                            {/* Nodes */}
+                                            <div className="absolute inset-x-0 flex items-center justify-between">
+                                                {Array.from({
+                                                    length: Math.max(snapCount, 1),
+                                                }).map((_, index) => {
+                                                    const isActive = index === current;
+                                                    const isPassed = index <= current;
 
-                                                return (
-                                                    <span
-                                                        key={index}
-                                                        className={cn(
-                                                            "relative flex items-center justify-center transition-all duration-500",
-                                                            isActive ? "size-3" : "size-1.5"
-                                                        )}
-                                                    >
-                                                        {isActive && (
-                                                            <span
-                                                                className="
+                                                    return (
+                                                        <span
+                                                            key={index}
+                                                            className={cn(
+                                                                "relative flex items-center justify-center transition-all duration-500",
+                                                                isActive ? "size-3" : "size-1.5"
+                                                            )}
+                                                        >
+                                                            {isActive && (
+                                                                <span
+                                                                    className="
                                             absolute
                                             size-7
                                             rounded-full
                                             bg-[#6d65fe]/15
                                             blur-md
                                         "
-                                                            />
-                                                        )}
-
-                                                        <span
-                                                            className={cn(
-                                                                "relative rounded-full transition-all duration-500",
-                                                                isActive
-                                                                    ? "size-2.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]"
-                                                                    : isPassed
-                                                                        ? "size-1.5 bg-[#9e45b1]"
-                                                                        : "size-1.5 bg-white/15"
+                                                                />
                                                             )}
-                                                        />
-                                                    </span>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
 
-                                    {/* End */}
-                                    <span
-                                        className="
+                                                            <span
+                                                                className={cn(
+                                                                    "relative rounded-full transition-all duration-500",
+                                                                    isActive
+                                                                        ? "size-2.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]"
+                                                                        : isPassed
+                                                                            ? "size-1.5 bg-[#9e45b1]"
+                                                                            : "size-1.5 bg-white/15"
+                                                                )}
+                                                            />
+                                                        </span>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+
+                                        {/* End */}
+                                        <span
+                                            className="
                     text-[8px]
                     font-semibold
                     tracking-[0.2em]
                     text-white/30
                 "
-                                    >
-                                        {String(Math.max(snapCount, 1)).padStart(2, "0")}
-                                    </span>
-                                </div>
+                                        >
+                                            {String(Math.max(snapCount, 1)).padStart(2, "0")}
+                                        </span>
+                                    </div>
 
-                                {/* Navigation */}
-                                <div className="flex items-center justify-center gap-2">
+                                    {/* Navigation */}
+                                    <div className="flex items-center justify-center gap-2">
 
-                                    {/* Previous */}
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="icon"
-                                        onClick={() => carouselApi?.scrollPrev()}
-                                        disabled={!carouselApi || activeServices.length <= 1}
-                                        aria-label="Previous service"
-                                        className="
+                                        {/* Previous */}
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => carouselApi?.scrollPrev()}
+                                            disabled={!carouselApi || activeServices.length <= 1}
+                                            aria-label="Previous service"
+                                            className="
                     group relative
                     size-12
                     overflow-hidden
@@ -379,9 +370,9 @@ const ServicesSection = () => {
                     disabled:pointer-events-none
                     disabled:opacity-20
                 "
-                                    >
-                                        <span
-                                            className="
+                                        >
+                                            <span
+                                                className="
                         pointer-events-none
                         absolute inset-[-50%]
                         rounded-full
@@ -396,36 +387,36 @@ const ServicesSection = () => {
                         duration-500
                         group-hover:opacity-100
                     "
-                                        />
+                                            />
 
-                                        <span
-                                            className="
+                                            <span
+                                                className="
                         absolute inset-px
                         rounded-full
                         bg-[#050516]
                     "
-                                        />
+                                            />
 
-                                        <ArrowLeft
-                                            className="
+                                            <ArrowLeft
+                                                className="
                         relative z-10
                         size-4
                         transition-all
                         duration-300
                         group-hover:-translate-x-1
                     "
-                                        />
-                                    </Button>
+                                            />
+                                        </Button>
 
-                                    {/* Next */}
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="icon"
-                                        onClick={() => carouselApi?.scrollNext()}
-                                        disabled={!carouselApi || activeServices.length <= 1}
-                                        aria-label="Next service"
-                                        className="
+                                        {/* Next */}
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => carouselApi?.scrollNext()}
+                                            disabled={!carouselApi || activeServices.length <= 1}
+                                            aria-label="Next service"
+                                            className="
                     group relative
                     size-12
                     overflow-hidden
@@ -440,9 +431,9 @@ const ServicesSection = () => {
                     disabled:pointer-events-none
                     disabled:opacity-20
                 "
-                                    >
-                                        <span
-                                            className="
+                                        >
+                                            <span
+                                                className="
                         pointer-events-none
                         absolute inset-0
                         rounded-full
@@ -459,33 +450,39 @@ const ServicesSection = () => {
                         duration-500
                         group-hover:opacity-100
                     "
-                                        />
+                                            />
 
-                                        <span
-                                            className="
+                                            <span
+                                                className="
                         absolute inset-px
                         rounded-full
                         bg-[#070719]
                     "
-                                        />
+                                            />
 
-                                        <ArrowRight
-                                            className="
+                                            <ArrowRight
+                                                className="
                         relative z-10
                         size-4
                         transition-all
                         duration-300
                         group-hover:translate-x-1
                     "
-                                        />
-                                    </Button>
+                                            />
+                                        </Button>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Bottom CTA */}
-                        <div className="mt-8 flex justify-start lg:mt-0">
+                        <div
+                            className={cn(
+                                "mt-8 flex justify-start",
+                                showControls && "lg:mt-0"
+                            )}
+                        >
                             <Link
                                 href="/services"
                                 className="
