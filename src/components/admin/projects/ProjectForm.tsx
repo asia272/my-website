@@ -197,6 +197,19 @@ export default function ProjectForm({
     }, [services, project?.serviceId]);
 
     /*
+     * Title of the selected service, so the Select
+     * input shows the name instead of the raw id.
+     * Undefined when nothing is selected, so the
+     * placeholder is shown.
+     */
+    const selectedServiceLabel = serviceId
+        ? services?.find(
+            (service) =>
+                service._id === serviceId,
+        )?.title ?? "Loading..."
+        : undefined;
+
+    /*
      * Keep the form synchronized when the
      * project data changes.
      */
@@ -808,7 +821,9 @@ export default function ProjectForm({
                                                 ? "Select project type"
                                                 : "Loading..."
                                         }
-                                    />
+                                    >
+                                        {selectedServiceLabel}
+                                    </SelectValue>
                                 </SelectTrigger>
 
                                 <SelectContent
