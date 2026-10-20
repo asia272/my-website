@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -59,9 +58,12 @@ const ServiceCard = ({
     const ServiceIcon = getServiceIcon(icon);
 
     return (
-        <article
+        // Whole card is now the link
+        <Link
+            href={`/services/${id}`}
+            aria-label={`View details of ${title}`}
             className={cn(
-                "group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#0a0922] p-6 transition-all duration-500 hover:border-[#6d65fe]/40",
+                "group relative block h-full cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#0a0922] p-6 transition-all duration-500 hover:border-[#6d65fe]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6d65fe]/60",
                 className,
             )}
         >
@@ -185,12 +187,10 @@ const ServiceCard = ({
                     </div>
                 )}
 
-                {/* View details */}
+                {/* View details (visual only — the whole card is the link) */}
                 <div className="mt-auto pt-6">
-                    <Link
-                        href={`/services/${id}`}
+                    <span
                         className="
-                            group/link
                             inline-flex
                             items-center
                             gap-2
@@ -199,7 +199,7 @@ const ServiceCard = ({
                             text-[#8b85ff]
                             transition-colors
                             duration-300
-                            hover:text-white
+                            group-hover:text-white
                         "
                     >
                         View details
@@ -208,15 +208,15 @@ const ServiceCard = ({
                             className="
                                 transition-transform
                                 duration-300
-                                group-hover/link:translate-x-1
+                                group-hover:translate-x-1
                             "
                         >
                             →
                         </span>
-                    </Link>
+                    </span>
                 </div>
             </div>
-        </article>
+        </Link>
     );
 };
 
