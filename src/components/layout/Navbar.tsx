@@ -150,17 +150,7 @@ const Navbar = () => {
                                 )}
                             </li>
 
-                            {/* About */}
-                            {isHome && (
-                                <li>
-                                    <a
-                                        href="#about"
-                                        className="nav-link"
-                                    >
-                                        About
-                                    </a>
-                                </li>
-                            )}
+
 
                             {/* Services */}
                             <li>
@@ -200,28 +190,7 @@ const Navbar = () => {
                                     </Link>
                                 )}
                             </li>
-                            {/* Testimonials */}
-                            {isHome && (
-                                <li>
-                                    <a
-                                        href="#testimonials"
-                                        className="nav-link"
-                                    >
-                                        Testimonials
-                                    </a>
-                                </li>
-                            )}
-                            {/* whyChoose us */}
-                            {isHome && (
-                                <li>
-                                    <a
-                                        href="#why-choose-us"
-                                        className="nav-link"
-                                    >
-                                        whyChooseUs
-                                    </a>
-                                </li>
-                            )}
+
 
                             {/* Contact */}
                             <li>
@@ -345,19 +314,6 @@ const Navbar = () => {
                                     )}
                                 </li>
 
-                                {/* About */}
-                                {isHome && (
-                                    <li>
-                                        <a
-                                            href="#about"
-                                            onClick={closeMenu}
-                                            className="nav-link block py-3"
-                                        >
-                                            About
-                                        </a>
-                                    </li>
-                                )}
-
                                 {/* Services */}
                                 <li>
                                     {isHome ? (
@@ -399,29 +355,8 @@ const Navbar = () => {
                                         </Link>
                                     )}
                                 </li>
-                                {/* Testimonials */}
-                                {isHome && (
-                                    <li>
-                                        <a
-                                            href="#testimonials"
-                                            onClick={closeMenu}
-                                            className="nav-link block py-3"
-                                        >
-                                            Testimonials
-                                        </a>
-                                    </li>
-                                )}
-                                {isHome && (
-                                    <li>
-                                        <a
-                                            href="#why-choose-us"
-                                            onClick={closeMenu}
-                                            className="nav-link block py-3"
-                                        >
-                                            whyChooseUS
-                                        </a>
-                                    </li>
-                                )}
+
+
                                 {/* Contact */}
                                 <li>
                                     {isHome ? (
