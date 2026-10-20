@@ -31,6 +31,9 @@ import {
     Users,
     Wrench,
 } from "lucide-react";
+import { useQuery } from "convex/react";
+
+import { api } from "../../../convex/_generated/api"; // <-- adjust if your path differs
 
 import DrawCheck from "../animations/DrawCheck";
 import Magnetic from "../animations/Magnetic";
@@ -60,9 +63,11 @@ const aboutStats = [
     { label: "Campaign Launches", value: 80, caption: "Launched with impact" },
 ];
 
-/* Small boxes (right side) — value + suffix are shown with a counter */
+/* Small boxes (right side) — value + suffix are shown with a counter.
+   "Core Services" uses the real number of active services from the database
+   (isServiceCount), so its value below is only a placeholder. */
 const miniStats = [
-    { icon: Layers, value: 6, suffix: "", label: "Core Services", color: "var(--chart-1)" }, // gold
+    { icon: Layers, value: 0, suffix: "", label: "Core Services", color: "var(--chart-1)", isServiceCount: true }, // gold
     { icon: Wrench, value: 100, suffix: "%", label: "Custom-Built", color: "var(--chart-2)" }, // violet-blue
     { icon: Clock, value: 24, suffix: "h", label: "Reply Time", color: "var(--chart-4)" }, // teal
     { icon: ShieldCheck, value: 0, suffix: "", label: "Hidden Costs", color: "var(--chart-3)" }, // purple
@@ -286,6 +291,13 @@ function SkillsMarquee() {
    ========================================================= */
 
 export default function AboutSection() {
+    /* Real number of active services from the database */
+    const services = useQuery(api.services.getAll);
+
+    const serviceCount = services
+        ? services.filter((service) => service.isActive).length
+        : 0;
+
     return (
         <MotionConfig reducedMotion="user">
             <section
@@ -496,7 +508,11 @@ export default function AboutSection() {
                                     <MiniStat
                                         key={item.label}
                                         icon={item.icon}
-                                        value={item.value}
+                                        value={
+                                            item.isServiceCount
+                                                ? serviceCount
+                                                : item.value
+                                        }
                                         suffix={item.suffix}
                                         label={item.label}
                                         color={item.color}
