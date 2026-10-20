@@ -22,35 +22,7 @@ import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import { Card, CardContent } from "@/components/ui/card";
 import ProjectDetailSkeleton from "@/components/skeleton/ProjectDetailPageSkeleton";
 import { FaGithub } from "react-icons/fa";
-
-type ProjectType =
-    | "GEN_AI"
-    | "WEB_DEVELOPMENT"
-    | "MOBILE_APP"
-    | "FULL_STACK"
-    | "E_COMMERCE"
-    | "SAAS"
-    | "OTHER";
-
-const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
-    GEN_AI: "Generative AI",
-    WEB_DEVELOPMENT: "Web Development",
-    MOBILE_APP: "Mobile App",
-    FULL_STACK: "Full Stack",
-    E_COMMERCE: "E-Commerce",
-    SAAS: "SaaS",
-    OTHER: "Other",
-};
-
-const PROJECT_TYPE_ROUTES: Record<ProjectType, string> = {
-    GEN_AI: "generative-ai",
-    WEB_DEVELOPMENT: "web-development",
-    MOBILE_APP: "mobile-app",
-    FULL_STACK: "full-stack",
-    E_COMMERCE: "e-commerce",
-    SAAS: "saas",
-    OTHER: "other",
-};
+import { slugify } from "@/lib/slug";
 
 type ProjectDetailPageProps = {
     params: Promise<{
@@ -182,13 +154,14 @@ export default function ProjectDetailPage({
         );
     }
 
-    const projectType = project.type as ProjectType;
+    /*
+     * Project type = service title (from the backend).
+     * The route is the slug of that title, the same
+     * slug the Navbar uses for its project links.
+     */
+    const typeLabel = project.typeLabel;
 
-    const typeLabel =
-        PROJECT_TYPE_LABELS[projectType] ?? project.type;
-
-    const categoryRoute =
-        PROJECT_TYPE_ROUTES[projectType] ?? "other";
+    const categoryRoute = slugify(project.typeLabel);
 
     return (
         <main>

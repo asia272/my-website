@@ -1,11 +1,12 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useQuery } from "convex/react";
 
+import { api } from "../../../convex/_generated/api";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import { slugify } from "@/lib/slug";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -22,6 +24,10 @@ const Navbar = () => {
 
     const isHome = pathname === "/";
     const previousPathname = useRef(pathname);
+
+    // Services = project types (dynamic)
+    const services = useQuery(api.services.getAll);
+
     // Menu Toggle
     const closeMenu = () => {
         setIsMenuOpen(false);
@@ -40,41 +46,30 @@ const Navbar = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-    // Path handling
-    const projectMenuItems = [
-        {
-            label: "All",
-            href: "/projects",
-        },
-        {
-            label: "Generative AI",
-            href: "/projects/generative-ai",
-        },
-        {
-            label: "Web Development",
-            href: "/projects/web-development",
-        },
-        {
-            label: "Mobile Apps",
-            href: "/projects/mobile-app",
-        },
-        {
-            label: "Full Stack",
-            href: "/projects/full-stack",
-        },
-        {
-            label: "E-Commerce",
-            href: "/projects/e-commerce",
-        },
-        {
-            label: "SaaS",
-            href: "/projects/saas",
-        },
-        {
-            label: "Other Projects",
-            href: "/projects/other",
-        },
-    ];
+
+    // Dynamic service-based project links
+    const serviceMenuItems = useMemo(() => {
+        if (!services) return [];
+
+        return services
+            .filter((service) => service.isActive)
+            .map((service) => ({
+                label: service.title,
+                href: `/projects/${slugify(service.title)}`,
+            }));
+    }, [services]);
+
+    // Desktop dropdown: "All" + one item per service
+    const projectMenuItems = useMemo(
+        () => [
+            {
+                label: "All",
+                href: "/projects",
+            },
+            ...serviceMenuItems,
+        ],
+        [serviceMenuItems],
+    );
 
     useEffect(() => {
         const wasOnAnotherRoute = previousPathname.current !== pathname;
@@ -390,61 +385,16 @@ const Navbar = () => {
                                         </span>
 
                                         <div className="ml-4 flex flex-col border-l border-border pl-4">
-                                            <Link
-                                                href="/projects/generative-ai"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                Generative AI
-                                            </Link>
-
-                                            <Link
-                                                href="/projects/web-development"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                Web Development
-                                            </Link>
-
-                                            <Link
-                                                href="/projects/mobile-app"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                Mobile Apps
-                                            </Link>
-
-                                            <Link
-                                                href="/projects/full-stack"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                Full Stack
-                                            </Link>
-
-                                            <Link
-                                                href="/projects/e-commerce"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                E-Commerce
-                                            </Link>
-
-                                            <Link
-                                                href="/projects/saas"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                SaaS
-                                            </Link>
-
-                                            <Link
-                                                href="/projects/other"
-                                                onClick={closeMenu}
-                                                className="nav-link block py-2.5 text-sm"
-                                            >
-                                                Other Projects
-                                            </Link>
+                                            {serviceMenuItems.map((item) => (
+                                                <Link
+                                                    key={item.href}
+                                                    href={item.href}
+                                                    onClick={closeMenu}
+                                                    className="nav-link block py-2.5 text-sm"
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
                                         </div>
                                     </div>
                                 </li>
@@ -460,4 +410,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

@@ -1,320 +1,18 @@
-// import { mutation, query } from "./_generated/server";
-// import { v } from "convex/values";
-
-// const projectType = v.union(
-//     v.literal("GEN_AI"),
-//     v.literal("WEB_DEVELOPMENT"),
-//     v.literal("MOBILE_APP"),
-//     v.literal("FULL_STACK"),
-//     v.literal("E_COMMERCE"),
-//     v.literal("SAAS"),
-//     v.literal("OTHER"),
-// );
-
-// /**
-//  * Generate a Convex Storage upload URL.
-//  *
-//  * The client uploads the selected image directly
-//  * to Convex Storage using this URL.
-//  */
-// export const generateUploadUrl = mutation({
-//     args: {},
-
-//     handler: async (ctx) => {
-//         return await ctx.storage.generateUploadUrl();
-//     },
-// });
-
-// /**
-//  * Get all projects for the admin dashboard.
-//  *
-//  * The imageStorageId is converted into an actual
-//  * usable image URL before returning the project.
-//  */
-// export const getAll = query({
-//     args: {},
-
-//     handler: async (ctx) => {
-//         const projects = await ctx.db
-//             .query("projects")
-//             .order("desc")
-//             .collect();
-
-//         return await Promise.all(
-//             projects.map(async (project) => {
-//                 const imageUrl =
-//                     await ctx.storage.getUrl(
-//                         project.imageStorageId,
-//                     );
-
-//                 return {
-//                     ...project,
-//                     imageUrl,
-//                 };
-//             }),
-//         );
-//     },
-// });
-
-
-// //  * Get all active projects by project type.
-// //  *
-// //  * Used by the public project category pages:
-// //  *
-
-// export const getByType = query({
-//     args: {
-//         type: projectType,
-//     },
-
-//     handler: async (ctx, args) => {
-//         const projects = await ctx.db
-//             .query("projects")
-//             .filter((q) =>
-//                 q.and(
-//                     q.eq(q.field("type"), args.type),
-//                     q.eq(q.field("isActive"), true),
-//                 ),
-//             )
-//             .order("desc")
-//             .collect();
-
-//         return await Promise.all(
-//             projects.map(async (project) => {
-//                 const imageUrl =
-//                     await ctx.storage.getUrl(
-//                         project.imageStorageId,
-//                     );
-
-//                 return {
-//                     ...project,
-//                     imageUrl,
-//                 };
-//             }),
-//         );
-//     },
-// });
-// /**
-//  * Get one project.
-//  *
-//  * Used by the Edit Project page.
-//  */
-// export const getById = query({
-//     args: {
-//         id: v.id("projects"),
-//     },
-
-//     handler: async (ctx, args) => {
-//         const project = await ctx.db.get(args.id);
-
-//         if (!project) {
-//             return null;
-//         }
-
-//         const imageUrl =
-//             await ctx.storage.getUrl(
-//                 project.imageStorageId,
-//             );
-
-//         return {
-//             ...project,
-//             imageUrl,
-//         };
-//     },
-// });
-
-// /**
-//  * Create project.
-//  */
-// export const create = mutation({
-//     args: {
-//         name: v.string(),
-//         description: v.string(),
-
-//         imageStorageId: v.id("_storage"),
-
-//         type: projectType,
-
-//         isFeatured: v.boolean(),
-//         isActive: v.boolean(),
-//     },
-
-//     handler: async (ctx, args) => {
-//         const name = args.name.trim();
-//         const description =
-//             args.description.trim();
-
-//         if (!name) {
-//             throw new Error(
-//                 "Project name is required.",
-//             );
-//         }
-
-//         if (!description) {
-//             throw new Error(
-//                 "Project description is required.",
-//             );
-//         }
-
-//         if (!args.imageStorageId) {
-//             throw new Error(
-//                 "Project image is required.",
-//             );
-//         }
-
-//         const now = Date.now();
-
-//         return await ctx.db.insert("projects", {
-//             name,
-//             description,
-
-//             imageStorageId:
-//                 args.imageStorageId,
-
-//             type: args.type,
-
-//             isFeatured: args.isFeatured,
-//             isActive: args.isActive,
-
-//             createdAt: now,
-//             updatedAt: now,
-//         });
-//     },
-// });
-
-// /**
-//  * Update project.
-//  */
-// export const update = mutation({
-//     args: {
-//         id: v.id("projects"),
-
-//         name: v.string(),
-//         description: v.string(),
-
-//         imageStorageId: v.id("_storage"),
-
-//         type: projectType,
-
-//         isFeatured: v.boolean(),
-//         isActive: v.boolean(),
-//     },
-
-//     handler: async (ctx, args) => {
-//         const name = args.name.trim();
-//         const description =
-//             args.description.trim();
-
-//         if (!name) {
-//             throw new Error(
-//                 "Project name is required.",
-//             );
-//         }
-
-//         if (!description) {
-//             throw new Error(
-//                 "Project description is required.",
-//             );
-//         }
-
-//         if (!args.imageStorageId) {
-//             throw new Error(
-//                 "Project image is required.",
-//             );
-//         }
-
-//         const existingProject =
-//             await ctx.db.get(args.id);
-
-//         if (!existingProject) {
-//             throw new Error(
-//                 "Project not found.",
-//             );
-//         }
-
-//         /*
-//          * If the image changed, remove the old image
-//          * from Convex Storage.
-//          */
-//         if (
-//             existingProject.imageStorageId !==
-//             args.imageStorageId
-//         ) {
-//             await ctx.storage.delete(
-//                 existingProject.imageStorageId,
-//             );
-//         }
-
-//         await ctx.db.patch(args.id, {
-//             name,
-//             description,
-
-//             imageStorageId:
-//                 args.imageStorageId,
-
-//             type: args.type,
-
-//             isFeatured: args.isFeatured,
-//             isActive: args.isActive,
-
-//             updatedAt: Date.now(),
-//         });
-
-//         return args.id;
-//     },
-// });
-
-// /**
-//  * Delete project.
-//  *
-//  * The associated Convex Storage image is also
-//  * deleted so unused files don't remain.
-//  */
-// export const remove = mutation({
-//     args: {
-//         id: v.id("projects"),
-//     },
-
-//     handler: async (ctx, args) => {
-//         const project = await ctx.db.get(args.id);
-
-//         if (!project) {
-//             throw new Error(
-//                 "Project not found.",
-//             );
-//         }
-
-//         await ctx.storage.delete(
-//             project.imageStorageId,
-//         );
-
-//         await ctx.db.delete(args.id);
-
-//         return {
-//             success: true,
-//         };
-//     },
-// });
-
-
-
-import { mutation, query } from "./_generated/server";
+import {
+    internalMutation,
+    mutation,
+    query,
+    type QueryCtx,
+} from "./_generated/server";
+import type { Doc, Id } from "./_generated/dataModel";
 import { v } from "convex/values";
-
-const projectType = v.union(
-    v.literal("GEN_AI"),
-    v.literal("WEB_DEVELOPMENT"),
-    v.literal("MOBILE_APP"),
-    v.literal("FULL_STACK"),
-    v.literal("E_COMMERCE"),
-    v.literal("SAAS"),
-    v.literal("OTHER"),
-);
 
 const mediaType = v.union(
     v.literal("IMAGE"),
     v.literal("VIDEO"),
 );
+
+const UNCATEGORIZED_LABEL = "Other";
 
 /**
  * Normalize and validate an optional URL.
@@ -350,73 +48,18 @@ function normalizeOptionalUrl(
     }
 }
 
-//  * Get all active projects.
-//  *
-//  * Used by the public /projects page.
-//  *
-//  * Only active projects are returned.
-//  * Media storage IDs are converted into usable URLs.
-//  */
-export const getAllActive = query({
-    args: {},
-
-    handler: async (ctx) => {
-        const projects = await ctx.db
-            .query("projects")
-            .filter((q) =>
-                q.eq(
-                    q.field("isActive"),
-                    true,
-                ),
-            )
-            .order("desc")
-            .collect();
-
-        return await Promise.all(
-            projects.map(async (project) => {
-                const imageUrl =
-                    project.imageStorageId
-                        ? await ctx.storage.getUrl(
-                            project.imageStorageId,
-                        )
-                        : null;
-
-                const videoUrl =
-                    project.videoStorageId
-                        ? await ctx.storage.getUrl(
-                            project.videoStorageId,
-                        )
-                        : null;
-
-                return {
-                    ...project,
-                    imageUrl,
-                    videoUrl,
-                };
-            }),
-        );
-    },
-});
-
-
 /**
  * Validate that the correct storage ID exists
  * for the selected media type.
  */
 function validateMedia(
     selectedMediaType: "IMAGE" | "VIDEO",
-    imageStorageId:
-        | string
-        | undefined,
-    videoStorageId:
-        | string
-        | undefined,
+    imageStorageId: string | undefined,
+    videoStorageId: string | undefined,
 ) {
     if (selectedMediaType === "IMAGE") {
         if (!imageStorageId) {
-            throw new Error(
-                "Project image is required.",
-            );
+            throw new Error("Project image is required.");
         }
 
         if (videoStorageId) {
@@ -428,9 +71,7 @@ function validateMedia(
 
     if (selectedMediaType === "VIDEO") {
         if (!videoStorageId) {
-            throw new Error(
-                "Project video is required.",
-            );
+            throw new Error("Project video is required.");
         }
 
         if (imageStorageId) {
@@ -442,10 +83,90 @@ function validateMedia(
 }
 
 /**
- * Generate a Convex Storage upload URL.
+ * Attach usable media URLs and the service-based
+ * project type to a project.
  *
- * The client uploads the selected image or video
- * directly to Convex Storage using this URL.
+ * `serviceTitles` is a cache so each service is
+ * only read once per query.
+ *
+ * Returned fields:
+ * - serviceId     -> the real reference
+ * - serviceTitle  -> title of the service
+ * - typeLabel     -> same as serviceTitle (display label)
+ * - type          -> LEGACY alias = service title, so existing
+ *                    frontend code reading `project.type` keeps working
+ */
+async function enrichProject(
+    ctx: QueryCtx,
+    project: Doc<"projects">,
+    serviceTitles: Map<Id<"services">, string | null>,
+) {
+    const imageUrl = project.imageStorageId
+        ? await ctx.storage.getUrl(project.imageStorageId)
+        : null;
+
+    const videoUrl = project.videoStorageId
+        ? await ctx.storage.getUrl(project.videoStorageId)
+        : null;
+
+    let serviceTitle: string | null = null;
+
+    if (project.serviceId) {
+        if (!serviceTitles.has(project.serviceId)) {
+            const service = await ctx.db.get(project.serviceId);
+            serviceTitles.set(
+                project.serviceId,
+                service?.title ?? null,
+            );
+        }
+
+        serviceTitle = serviceTitles.get(project.serviceId) ?? null;
+    }
+
+    const typeLabel = serviceTitle ?? UNCATEGORIZED_LABEL;
+
+    return {
+        ...project,
+        imageUrl,
+        videoUrl,
+        serviceTitle,
+        typeLabel,
+        type: typeLabel,
+    };
+}
+
+async function enrichProjects(
+    ctx: QueryCtx,
+    projects: Doc<"projects">[],
+) {
+    const serviceTitles = new Map<Id<"services">, string | null>();
+
+    return await Promise.all(
+        projects.map((project) =>
+            enrichProject(ctx, project, serviceTitles),
+        ),
+    );
+}
+
+//  * Get all active projects.
+//  *
+//  * Used by the public /projects page.
+export const getAllActive = query({
+    args: {},
+
+    handler: async (ctx) => {
+        const projects = await ctx.db
+            .query("projects")
+            .filter((q) => q.eq(q.field("isActive"), true))
+            .order("desc")
+            .collect();
+
+        return await enrichProjects(ctx, projects);
+    },
+});
+
+/**
+ * Generate a Convex Storage upload URL.
  */
 export const generateUploadUrl = mutation({
     args: {},
@@ -457,9 +178,6 @@ export const generateUploadUrl = mutation({
 
 /**
  * Get all projects for the admin dashboard.
- *
- * Returns the usable media URL based on the
- * project's selected media type.
  */
 export const getAll = query({
     args: {},
@@ -470,83 +188,32 @@ export const getAll = query({
             .order("desc")
             .collect();
 
-        return await Promise.all(
-            projects.map(async (project) => {
-                const imageUrl =
-                    project.imageStorageId
-                        ? await ctx.storage.getUrl(
-                            project.imageStorageId,
-                        )
-                        : null;
-
-                const videoUrl =
-                    project.videoStorageId
-                        ? await ctx.storage.getUrl(
-                            project.videoStorageId,
-                        )
-                        : null;
-
-                return {
-                    ...project,
-                    imageUrl,
-                    videoUrl,
-                };
-            }),
-        );
+        return await enrichProjects(ctx, projects);
     },
 });
 
 /**
- * Get all active projects by project type.
+ * Get all active projects of one service.
  *
- * Used by the public project category pages.
+ * Replaces the old getByType.
+ * The project type is now the service itself.
  */
-export const getByType = query({
+export const getByService = query({
     args: {
-        type: projectType,
+        serviceId: v.id("services"),
     },
 
     handler: async (ctx, args) => {
         const projects = await ctx.db
             .query("projects")
-            .filter((q) =>
-                q.and(
-                    q.eq(
-                        q.field("type"),
-                        args.type,
-                    ),
-                    q.eq(
-                        q.field("isActive"),
-                        true,
-                    ),
-                ),
+            .withIndex("by_service", (q) =>
+                q.eq("serviceId", args.serviceId),
             )
+            .filter((q) => q.eq(q.field("isActive"), true))
             .order("desc")
             .collect();
 
-        return await Promise.all(
-            projects.map(async (project) => {
-                const imageUrl =
-                    project.imageStorageId
-                        ? await ctx.storage.getUrl(
-                            project.imageStorageId,
-                        )
-                        : null;
-
-                const videoUrl =
-                    project.videoStorageId
-                        ? await ctx.storage.getUrl(
-                            project.videoStorageId,
-                        )
-                        : null;
-
-                return {
-                    ...project,
-                    imageUrl,
-                    videoUrl,
-                };
-            }),
-        );
+        return await enrichProjects(ctx, projects);
     },
 });
 
@@ -568,25 +235,9 @@ export const getById = query({
             return null;
         }
 
-        const imageUrl =
-            project.imageStorageId
-                ? await ctx.storage.getUrl(
-                    project.imageStorageId,
-                )
-                : null;
+        const [enriched] = await enrichProjects(ctx, [project]);
 
-        const videoUrl =
-            project.videoStorageId
-                ? await ctx.storage.getUrl(
-                    project.videoStorageId,
-                )
-                : null;
-
-        return {
-            ...project,
-            imageUrl,
-            videoUrl,
-        };
+        return enriched;
     },
 });
 
@@ -603,15 +254,11 @@ export const create = mutation({
 
         mediaType,
 
-        imageStorageId: v.optional(
-            v.id("_storage"),
-        ),
+        imageStorageId: v.optional(v.id("_storage")),
+        videoStorageId: v.optional(v.id("_storage")),
 
-        videoStorageId: v.optional(
-            v.id("_storage"),
-        ),
-
-        type: projectType,
+        // Project type = the service it belongs to
+        serviceId: v.id("services"),
 
         isFeatured: v.boolean(),
         isActive: v.boolean(),
@@ -619,20 +266,20 @@ export const create = mutation({
 
     handler: async (ctx, args) => {
         const name = args.name.trim();
-
-        const description =
-            args.description.trim();
+        const description = args.description.trim();
 
         if (!name) {
-            throw new Error(
-                "Project name is required.",
-            );
+            throw new Error("Project name is required.");
         }
 
         if (!description) {
-            throw new Error(
-                "Project description is required.",
-            );
+            throw new Error("Project description is required.");
+        }
+
+        const service = await ctx.db.get(args.serviceId);
+
+        if (!service) {
+            throw new Error("Selected service was not found.");
         }
 
         validateMedia(
@@ -641,55 +288,45 @@ export const create = mutation({
             args.videoStorageId,
         );
 
-        const githubUrl =
-            normalizeOptionalUrl(
-                args.githubUrl,
-                "GitHub URL",
-            );
+        const githubUrl = normalizeOptionalUrl(
+            args.githubUrl,
+            "GitHub URL",
+        );
 
-        const liveDemoUrl =
-            normalizeOptionalUrl(
-                args.liveDemoUrl,
-                "Live Demo URL",
-            );
+        const liveDemoUrl = normalizeOptionalUrl(
+            args.liveDemoUrl,
+            "Live Demo URL",
+        );
 
         const now = Date.now();
 
-        return await ctx.db.insert(
-            "projects",
-            {
-                name,
-                description,
+        return await ctx.db.insert("projects", {
+            name,
+            description,
 
-                githubUrl,
-                liveDemoUrl,
+            githubUrl,
+            liveDemoUrl,
 
-                mediaType:
+            mediaType: args.mediaType,
 
-                    args.mediaType,
+            imageStorageId:
+                args.mediaType === "IMAGE"
+                    ? args.imageStorageId
+                    : undefined,
 
-                imageStorageId:
-                    args.mediaType === "IMAGE"
-                        ? args.imageStorageId
-                        : undefined,
+            videoStorageId:
+                args.mediaType === "VIDEO"
+                    ? args.videoStorageId
+                    : undefined,
 
-                videoStorageId:
-                    args.mediaType === "VIDEO"
-                        ? args.videoStorageId
-                        : undefined,
+            serviceId: args.serviceId,
 
-                type: args.type,
+            isFeatured: args.isFeatured,
+            isActive: args.isActive,
 
-                isFeatured:
-                    args.isFeatured,
-
-                isActive:
-                    args.isActive,
-
-                createdAt: now,
-                updatedAt: now,
-            },
-        );
+            createdAt: now,
+            updatedAt: now,
+        });
     },
 });
 
@@ -701,6 +338,7 @@ export const create = mutation({
  * - image -> video changes
  * - video -> image changes
  * - old storage cleanup
+ * - service (project type) change
  */
 export const update = mutation({
     args: {
@@ -714,15 +352,10 @@ export const update = mutation({
 
         mediaType,
 
-        imageStorageId: v.optional(
-            v.id("_storage"),
-        ),
+        imageStorageId: v.optional(v.id("_storage")),
+        videoStorageId: v.optional(v.id("_storage")),
 
-        videoStorageId: v.optional(
-            v.id("_storage"),
-        ),
-
-        type: projectType,
+        serviceId: v.id("services"),
 
         isFeatured: v.boolean(),
         isActive: v.boolean(),
@@ -730,29 +363,26 @@ export const update = mutation({
 
     handler: async (ctx, args) => {
         const name = args.name.trim();
-
-        const description =
-            args.description.trim();
+        const description = args.description.trim();
 
         if (!name) {
-            throw new Error(
-                "Project name is required.",
-            );
+            throw new Error("Project name is required.");
         }
 
         if (!description) {
-            throw new Error(
-                "Project description is required.",
-            );
+            throw new Error("Project description is required.");
         }
 
-        const existingProject =
-            await ctx.db.get(args.id);
+        const existingProject = await ctx.db.get(args.id);
 
         if (!existingProject) {
-            throw new Error(
-                "Project not found.",
-            );
+            throw new Error("Project not found.");
+        }
+
+        const service = await ctx.db.get(args.serviceId);
+
+        if (!service) {
+            throw new Error("Selected service was not found.");
         }
 
         validateMedia(
@@ -761,31 +391,26 @@ export const update = mutation({
             args.videoStorageId,
         );
 
-        const githubUrl =
-            normalizeOptionalUrl(
-                args.githubUrl,
-                "GitHub URL",
-            );
+        const githubUrl = normalizeOptionalUrl(
+            args.githubUrl,
+            "GitHub URL",
+        );
 
-        const liveDemoUrl =
-            normalizeOptionalUrl(
-                args.liveDemoUrl,
-                "Live Demo URL",
-            );
+        const liveDemoUrl = normalizeOptionalUrl(
+            args.liveDemoUrl,
+            "Live Demo URL",
+        );
 
         /*
          * Delete the previous image when:
-         *
          * 1. Media changed from IMAGE -> VIDEO
          * 2. A new image was uploaded
          */
         if (
             existingProject.imageStorageId &&
-            (
-                args.mediaType === "VIDEO" ||
+            (args.mediaType === "VIDEO" ||
                 existingProject.imageStorageId !==
-                args.imageStorageId
-            )
+                args.imageStorageId)
         ) {
             await ctx.storage.delete(
                 existingProject.imageStorageId,
@@ -794,17 +419,14 @@ export const update = mutation({
 
         /*
          * Delete the previous video when:
-         *
          * 1. Media changed from VIDEO -> IMAGE
          * 2. A new video was uploaded
          */
         if (
             existingProject.videoStorageId &&
-            (
-                args.mediaType === "IMAGE" ||
+            (args.mediaType === "IMAGE" ||
                 existingProject.videoStorageId !==
-                args.videoStorageId
-            )
+                args.videoStorageId)
         ) {
             await ctx.storage.delete(
                 existingProject.videoStorageId,
@@ -818,9 +440,7 @@ export const update = mutation({
             githubUrl,
             liveDemoUrl,
 
-            mediaType:
-
-                args.mediaType,
+            mediaType: args.mediaType,
 
             imageStorageId:
                 args.mediaType === "IMAGE"
@@ -832,13 +452,13 @@ export const update = mutation({
                     ? args.videoStorageId
                     : undefined,
 
-            type: args.type,
+            serviceId: args.serviceId,
 
-            isFeatured:
-                args.isFeatured,
+            // Old hardcoded type is no longer used
+            type: undefined,
 
-            isActive:
-                args.isActive,
+            isFeatured: args.isFeatured,
+            isActive: args.isActive,
 
             updatedAt: Date.now(),
         });
@@ -862,27 +482,76 @@ export const remove = mutation({
         const project = await ctx.db.get(args.id);
 
         if (!project) {
-            throw new Error(
-                "Project not found.",
-            );
+            throw new Error("Project not found.");
         }
 
         if (project.imageStorageId) {
-            await ctx.storage.delete(
-                project.imageStorageId,
-            );
+            await ctx.storage.delete(project.imageStorageId);
         }
 
         if (project.videoStorageId) {
-            await ctx.storage.delete(
-                project.videoStorageId,
-            );
+            await ctx.storage.delete(project.videoStorageId);
         }
 
         await ctx.db.delete(args.id);
 
-        return {
-            success: true,
-        };
+        return { success: true };
+    },
+});
+
+/**
+ * ONE-TIME MIGRATION (run from the Convex dashboard).
+ *
+ * Links old projects to services by matching the legacy
+ * type to a service title, ignoring case and punctuation:
+ *   "GEN_AI" matches "Gen AI"
+ *   "WEB_DEVELOPMENT" matches "Web Development"
+ *
+ * Projects with no matching service are left untouched and
+ * listed in the result, so you can assign them from the
+ * admin edit form.
+ *
+ * Safe to run multiple times.
+ */
+const normalizeKey = (value: string) =>
+    value.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+export const migrateTypesToServices = internalMutation({
+    args: {},
+
+    handler: async (ctx) => {
+        const services = await ctx.db.query("services").collect();
+        const projects = await ctx.db.query("projects").collect();
+
+        const serviceByKey = new Map(
+            services.map((s) => [normalizeKey(s.title), s._id]),
+        );
+
+        let migrated = 0;
+        const unmatched: { id: string; name: string; type?: string }[] = [];
+
+        for (const project of projects) {
+            if (project.serviceId) continue;
+
+            const serviceId = project.type
+                ? serviceByKey.get(normalizeKey(project.type))
+                : undefined;
+
+            if (serviceId) {
+                await ctx.db.patch(project._id, {
+                    serviceId,
+                    type: undefined,
+                });
+                migrated++;
+            } else {
+                unmatched.push({
+                    id: project._id,
+                    name: project.name,
+                    type: project.type,
+                });
+            }
+        }
+
+        return { migrated, unmatched };
     },
 });

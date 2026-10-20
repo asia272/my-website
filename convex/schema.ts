@@ -128,15 +128,11 @@ export default defineSchema({
         imageStorageId: v.optional(v.id("_storage")),
         videoStorageId: v.optional(v.id("_storage")),
 
-        type: v.union(
-            v.literal("GEN_AI"),
-            v.literal("WEB_DEVELOPMENT"),
-            v.literal("MOBILE_APP"),
-            v.literal("FULL_STACK"),
-            v.literal("E_COMMERCE"),
-            v.literal("SAAS"),
-            v.literal("OTHER"),
-        ),
+        /** LEGACY: old hardcoded type. Will be removed after migration. */
+        type: v.optional(v.string()),
+
+        /** The service this project belongs to. Its title is the project type. */
+        serviceId: v.optional(v.id("services")),
 
         isFeatured: v.boolean(),
         isActive: v.boolean(),
@@ -144,7 +140,7 @@ export default defineSchema({
         createdAt: v.number(),
         updatedAt: v.number(),
     })
-        .index("by_type", ["type"])
+        .index("by_service", ["serviceId"])
         .index("by_active", ["isActive"])
         .index("by_featured", ["isFeatured"]),
 

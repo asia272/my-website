@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -25,6 +24,7 @@ import {
 import { ShineBorder } from "@/components/ui/shine-border";
 import { Lens } from "@/components/ui/lens";
 import { BorderBeam } from "../ui/border-beam";
+import { slugify } from "@/lib/slug";
 
 type ProjectCardProps = {
     project: {
@@ -34,31 +34,16 @@ type ProjectCardProps = {
         imageUrl: string | null;
         videoUrl: string | null;
         mediaType: "IMAGE" | "VIDEO";
+        // Service title (kept for older code that still reads `type`)
         type: string;
+        // Service title, provided by the backend
+        typeLabel?: string;
+        // URL-friendly service title, e.g. "e-commerce"
+        typeSlug?: string;
         isFeatured: boolean;
         githubUrl?: string;
         liveDemoUrl?: string;
     };
-};
-
-const PROJECT_TYPE_LABELS: Record<string, string> = {
-    GEN_AI: "Generative AI",
-    WEB_DEVELOPMENT: "Web Development",
-    MOBILE_APP: "Mobile App",
-    FULL_STACK: "Full Stack",
-    E_COMMERCE: "E-Commerce",
-    SAAS: "SaaS",
-    OTHER: "Other",
-};
-
-const PROJECT_TYPE_ROUTES: Record<string, string> = {
-    GEN_AI: "generative-ai",
-    WEB_DEVELOPMENT: "web-development",
-    MOBILE_APP: "mobile-app",
-    FULL_STACK: "full-stack",
-    E_COMMERCE: "e-commerce",
-    SAAS: "saas",
-    OTHER: "other",
 };
 
 export default function ProjectCard({
@@ -66,11 +51,12 @@ export default function ProjectCard({
 }: ProjectCardProps) {
     const [isVideoOpen, setIsVideoOpen] = useState(false);
 
-    const typeLabel =
-        PROJECT_TYPE_LABELS[project.type] ?? project.type;
+    // Project type = service title
+    const typeLabel = project.typeLabel ?? project.type;
 
+    // Route segment = service title as a slug, e.g. "e-commerce"
     const categoryRoute =
-        PROJECT_TYPE_ROUTES[project.type] ?? "other";
+        project.typeSlug ?? slugify(project.type);
 
     const projectRoute =
         `/projects/${categoryRoute}/${project._id}`;
@@ -639,4 +625,3 @@ group-hover/footer:-translate-y-0.5
         </>
     );
 }
-

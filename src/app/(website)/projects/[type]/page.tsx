@@ -1,102 +1,16 @@
 "use client";
 
 import { use } from "react";
-import { FolderOpen } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
+import { slugify } from "@/lib/slug";
 
 import ProjectCard from "@/components/projects/ProjectCard";
 import PageHero from "@/components/shared/PageHero";
 
-
 import OrbitDecorations from "@/components/shared/OrbitDecorations";
 import ProjectGridSkeleton from "@/components/skeleton/ProjectGridSkeleton";
 import EmptyProjects from "@/components/projects/EmtyProjects";
-
-type ProjectType =
-    | "GEN_AI"
-    | "WEB_DEVELOPMENT"
-    | "MOBILE_APP"
-    | "FULL_STACK"
-    | "E_COMMERCE"
-    | "SAAS"
-    | "OTHER";
-
-type ProjectTypeConfig = {
-    type: ProjectType;
-    label: string;
-    title: string;
-    highlightedText: string;
-    description: string;
-};
-
-const PROJECT_TYPES: Record<
-    string,
-    ProjectTypeConfig
-> = {
-    "generative-ai": {
-        type: "GEN_AI",
-        label: "Generative AI",
-        title: "AI-powered",
-        highlightedText: "projects.",
-        description:
-            "Explore intelligent applications and AI-powered experiences built with modern technologies, thoughtful interfaces, and practical real-world use cases.",
-    },
-
-    "web-development": {
-        type: "WEB_DEVELOPMENT",
-        label: "Web Development",
-        title: "Modern web",
-        highlightedText: "projects.",
-        description:
-            "Explore responsive and high-quality web experiences built with modern frontend technologies, clean architecture, and performance in mind.",
-    },
-
-    "mobile-app": {
-        type: "MOBILE_APP",
-        label: "Mobile Apps",
-        title: "Mobile",
-        highlightedText: "projects.",
-        description:
-            "Explore mobile application projects focused on intuitive experiences, reliable functionality, and modern application development.",
-    },
-
-    "full-stack": {
-        type: "FULL_STACK",
-        label: "Full Stack",
-        title: "Full-stack",
-        highlightedText: "projects.",
-        description:
-            "Explore complete digital products combining polished interfaces, robust backend systems, databases, authentication, APIs, and production-ready architecture.",
-    },
-
-    "e-commerce": {
-        type: "E_COMMERCE",
-        label: "E-Commerce",
-        title: "E-commerce",
-        highlightedText: "projects.",
-        description:
-            "Explore e-commerce experiences built around product discovery, smooth user journeys, secure functionality, and scalable full-stack architecture.",
-    },
-
-    saas: {
-        type: "SAAS",
-        label: "SaaS",
-        title: "SaaS",
-        highlightedText: "projects.",
-        description:
-            "Explore software-as-a-service products designed with scalable architecture, intuitive experiences, and practical business workflows.",
-    },
-
-    other: {
-        type: "OTHER",
-        label: "Other Projects",
-        title: "Other",
-        highlightedText: "projects.",
-        description:
-            "Explore additional projects covering different ideas, technologies, experiments, and digital experiences.",
-    },
-};
 
 type ProjectTypePageProps = {
     params: Promise<{
@@ -107,23 +21,59 @@ type ProjectTypePageProps = {
 export default function ProjectTypePage({
     params,
 }: ProjectTypePageProps) {
+    // URL segment, e.g. "web-development"
     const { type: slug } = use(params);
 
-    const projectType = PROJECT_TYPES[slug];
+    const services = useQuery(api.services.getAll);
+
+    /*
+     * Match the URL slug against the service titles.
+     * Falls back to the id so older id-based links still work.
+     */
+    const service = services?.find(
+        (s) =>
+            s.isActive &&
+            (slugify(s.title) === slug || s._id === slug),
+    );
 
     const projects = useQuery(
-        api.projects.getByType,
-        projectType
+        api.projects.getByService,
+        service
             ? {
-                type: projectType.type,
+                serviceId: service._id,
             }
             : "skip",
     );
 
     /*
+     * Services still loading
+     */
+    if (services === undefined) {
+        return (
+            <main>
+                <PageHero
+                    breadcrumb="Projects"
+                    label="Projects"
+                    title="Loading"
+                    highlightedText="projects."
+                    description="Please wait while we load this category."
+                />
+
+                <section className="section relative overflow-hidden">
+                    <OrbitDecorations />
+
+                    <div className="container relative z-10">
+                        <ProjectGridSkeleton />
+                    </div>
+                </section>
+            </main>
+        );
+    }
+
+    /*
      * Invalid project category
      */
-    if (!projectType) {
+    if (!service) {
         return (
             <main>
                 <PageHero
@@ -150,15 +100,11 @@ export default function ProjectTypePage({
         <main>
             {/* Hero */}
             <PageHero
-                breadcrumb={`Projects / ${projectType.label}`}
-                label={projectType.label}
-                title={projectType.title}
-                highlightedText={
-                    projectType.highlightedText
-                }
-                description={
-                    projectType.description
-                }
+                breadcrumb={`Projects / ${service.title}`}
+                label={service.title}
+                title={service.title}
+                highlightedText="projects."
+                description={service.description}
             />
 
             {/* Projects */}
@@ -175,7 +121,7 @@ export default function ProjectTypePage({
                     {/* Empty */}
                     {projects?.length === 0 && (
                         <EmptyProjects
-                            title={`No ${projectType.label.toLowerCase()} projects yet`}
+                            title={`No ${service.title.toLowerCase()} projects yet`}
                             description="Projects in this category will appear here once they are published."
                         />
                     )}
@@ -213,6 +159,3 @@ export default function ProjectTypePage({
         </main>
     );
 }
-
-
-
