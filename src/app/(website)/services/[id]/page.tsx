@@ -36,6 +36,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ShineBorder } from "@/components/ui/shine-border";
 import ServiceDetailPageSkeleton from "@/components/skeleton/ServiceDetailPageSkeleton";
 import PageHeading from "@/components/shared/PageHeading";
+import { slugify } from "@/lib/slug";
 
 /* ============================================================
    SERVICE ICONS
@@ -54,96 +55,6 @@ const iconMap: Record<string, LucideIcon> = {
 
 function getServiceIcon(icon?: string): LucideIcon {
     return icon ? iconMap[icon] ?? Code2 : Code2;
-}
-
-/* ============================================================
-   PROJECT TYPES
-============================================================ */
-
-type ProjectType =
-    | "GEN_AI"
-    | "WEB_DEVELOPMENT"
-    | "MOBILE_APP"
-    | "FULL_STACK"
-    | "E_COMMERCE"
-    | "SAAS"
-    | "OTHER";
-
-const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
-    GEN_AI: "Generative AI",
-    WEB_DEVELOPMENT: "Web Development",
-    MOBILE_APP: "Mobile App",
-    FULL_STACK: "Full Stack",
-    E_COMMERCE: "E-Commerce",
-    SAAS: "SaaS",
-    OTHER: "Other",
-};
-
-const PROJECT_TYPE_ROUTES: Record<ProjectType, string> = {
-    GEN_AI: "generative-ai",
-    WEB_DEVELOPMENT: "web-development",
-    MOBILE_APP: "mobile-app",
-    FULL_STACK: "full-stack",
-    E_COMMERCE: "e-commerce",
-    SAAS: "saas",
-    OTHER: "other",
-};
-
-/* ============================================================
-   RELATED PROJECT TYPE
-============================================================ */
-
-function getRelatedProjectType(title: string): ProjectType | null {
-    const normalized = title
-        .trim()
-        .toLowerCase()
-        .replace(/[-_]/g, " ")
-        .replace(/\s+/g, " ");
-
-    if (
-        /\b(generative ai|gen ai|artificial intelligence|ai development|ai solutions)\b/.test(
-            normalized,
-        )
-    ) {
-        return "GEN_AI";
-    }
-
-    if (
-        /\b(e commerce|ecommerce|online store|online shopping)\b/.test(
-            normalized,
-        )
-    ) {
-        return "E_COMMERCE";
-    }
-
-    if (/\b(saas|software as a service)\b/.test(normalized)) {
-        return "SAAS";
-    }
-
-    if (
-        /\b(mobile|android|ios)\b/.test(normalized) &&
-        /\b(app|application|development|developer)\b/.test(normalized)
-    ) {
-        return "MOBILE_APP";
-    }
-
-    if (
-        /\b(full stack|fullstack|backend|back end|api development)\b/.test(
-            normalized,
-        )
-    ) {
-        return "FULL_STACK";
-    }
-
-    if (
-        /\b(web|website|frontend|front end|ui|ux|web design|maintenance)\b/.test(
-            normalized,
-        )
-    ) {
-        return "WEB_DEVELOPMENT";
-    }
-
-    return null;
 }
 
 /* ============================================================
@@ -241,17 +152,16 @@ export default function ServiceDetailPage() {
     );
 
     /*
+     * Related projects are the projects linked to this
+     * service (project type = service title).
+     *
      * Keep this before conditional returns.
      */
-    const relatedProjectType = service
-        ? getRelatedProjectType(service.title)
-        : null;
-
     const relatedProjects = useQuery(
-        api.projects.getByType,
-        relatedProjectType
+        api.projects.getByService,
+        service
             ? {
-                type: relatedProjectType,
+                serviceId: service._id,
             }
             : "skip",
     );
@@ -583,44 +493,33 @@ export default function ServiceDetailPage() {
                             </div>
                         </div>
 
-                        {relatedProjectType && (
-                            <div className="mb-6 flex flex-col gap-3 border-y border-border/50 py-4 sm:flex-row sm:items-center sm:justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex size-9 items-center justify-center rounded-lg bg-secondary text-muted-foreground">
-                                        <Layers3 className="size-4" />
-                                    </div>
-
-                                    <div>
-                                        <p className="text-sm font-semibold">
-                                            {
-                                                PROJECT_TYPE_LABELS[
-                                                relatedProjectType
-                                                ]
-                                            }
-                                        </p>
-
-                                        <p className="text-xs text-muted-foreground">
-                                            Projects in this category
-                                        </p>
-                                    </div>
+                        <div className="mb-6 flex flex-col gap-3 border-y border-border/50 py-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="flex size-9 items-center justify-center rounded-lg bg-secondary text-muted-foreground">
+                                    <Layers3 className="size-4" />
                                 </div>
 
-                                <Link
-                                    href={`/projects/${PROJECT_TYPE_ROUTES[relatedProjectType]}`}
-                                    className="group inline-flex items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground"
-                                >
-                                    View all
-                                    <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                                </Link>
-                            </div>
-                        )}
+                                <div>
+                                    <p className="text-sm font-semibold">
+                                        {service.title}
+                                    </p>
 
-                        {!relatedProjectType ? (
-                            <EmptyProjects
-                                title={service.title}
-                                ServiceIcon={ServiceIcon}
-                            />
-                        ) : relatedProjects === undefined ? (
+                                    <p className="text-xs text-muted-foreground">
+                                        Projects in this category
+                                    </p>
+                                </div>
+                            </div>
+
+                            <Link
+                                href={`/projects/${slugify(service.title)}`}
+                                className="group inline-flex items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground"
+                            >
+                                View all
+                                <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                            </Link>
+                        </div>
+
+                        {relatedProjects === undefined ? (
                             <ProjectGridSkeleton />
                         ) : relatedProjects.length > 0 ? (
                             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

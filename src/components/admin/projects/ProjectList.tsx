@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState } from "react";
@@ -11,6 +10,9 @@ import {
     Search,
 } from "lucide-react";
 
+import { useQuery } from "convex/react";
+
+import { api } from "../../../../convex/_generated/api";
 import type { Doc } from "../../../../convex/_generated/dataModel";
 
 import { Button } from "@/components/ui/button";
@@ -27,59 +29,17 @@ import {
 
 type Project = Doc<"projects"> & {
     imageUrl: string | null;
+    /* Service title (project type) added by the backend */
+    typeLabel: string;
 };
 
 type ProjectListProps = {
     projects: Project[] | undefined;
 };
 
-const typeLabels: Record<
-    Project["type"],
-    string
-> = {
-    GEN_AI: "Generative AI",
-    WEB_DEVELOPMENT: "Web Development",
-    MOBILE_APP: "Mobile App",
-    FULL_STACK: "Full Stack",
-    E_COMMERCE: "E-Commerce",
-    SAAS: "SaaS",
-    OTHER: "Other",
-};
-
-const typeOptions = [
-    {
-        value: "ALL",
-        label: "All Types",
-    },
-    {
-        value: "GEN_AI",
-        label: "Generative AI",
-    },
-    {
-        value: "WEB_DEVELOPMENT",
-        label: "Web Development",
-    },
-    {
-        value: "MOBILE_APP",
-        label: "Mobile App",
-    },
-    {
-        value: "FULL_STACK",
-        label: "Full Stack",
-    },
-    {
-        value: "E_COMMERCE",
-        label: "E-Commerce",
-    },
-    {
-        value: "SAAS",
-        label: "SaaS",
-    },
-    {
-        value: "OTHER",
-        label: "Other",
-    },
-] as const;
+/* Special filter values */
+const ALL_TYPES = "ALL";
+const UNCATEGORIZED = "UNCATEGORIZED";
 
 export default function ProjectList({
     projects,
@@ -88,7 +48,60 @@ export default function ProjectList({
         useState("");
 
     const [typeFilter, setTypeFilter] =
-        useState("ALL");
+        useState(ALL_TYPES);
+
+    /*
+     * Project types now come from the services table.
+     */
+    const services = useQuery(
+        api.services.getAll,
+    );
+
+    const typeOptions = useMemo(() => {
+        const options: {
+            value: string;
+            label: string;
+        }[] = [
+                {
+                    value: ALL_TYPES,
+                    label: "All Types",
+                },
+            ];
+
+        (services ?? []).forEach((service) => {
+            options.push({
+                value: service._id,
+                label: service.title,
+            });
+        });
+
+        /*
+         * Show "Uncategorized" only when some projects
+         * have no service yet.
+         */
+        if (
+            projects?.some(
+                (project) => !project.serviceId,
+            )
+        ) {
+            options.push({
+                value: UNCATEGORIZED,
+                label: "Uncategorized",
+            });
+        }
+
+        return options;
+    }, [services, projects]);
+
+    /*
+     * Label of the selected filter, so the Select input
+     * shows the service title instead of the raw id.
+     */
+    const selectedTypeLabel =
+        typeOptions.find(
+            (option) =>
+                option.value === typeFilter,
+        )?.label ?? "All Types";
 
     const filteredProjects = useMemo(() => {
         if (!projects) return [];
@@ -99,8 +112,11 @@ export default function ProjectList({
 
         return projects.filter((project) => {
             const matchesType =
-                typeFilter === "ALL" ||
-                project.type === typeFilter;
+                typeFilter === ALL_TYPES ||
+                (typeFilter === UNCATEGORIZED
+                    ? !project.serviceId
+                    : project.serviceId ===
+                    typeFilter);
 
             const matchesSearch =
                 !query ||
@@ -258,14 +274,16 @@ export default function ProjectList({
                     <Select
                         value={typeFilter}
                         onValueChange={(value) => {
-                            setTypeFilter(value ?? "")
+                            setTypeFilter(value ?? ALL_TYPES)
                         }}
                     >
                         <SelectTrigger
                             id="project-type-filter"
                             className="w-full sm:w-[210px] rounded"
                         >
-                            <SelectValue placeholder="All Types" />
+                            <SelectValue placeholder="All Types">
+                                {selectedTypeLabel}
+                            </SelectValue>
                         </SelectTrigger>
 
                         <SelectContent className=" min-w-[var(--radix-select-trigger-width)]
@@ -451,9 +469,7 @@ export default function ProjectList({
 
                                             <p className="mt-1 text-sm text-secondary">
                                                 {
-                                                    typeLabels[
-                                                    project.type
-                                                    ]
+                                                    project.typeLabel
                                                 }
                                             </p>
 
@@ -517,4 +533,3 @@ export default function ProjectList({
         </div>
     );
 }
-
